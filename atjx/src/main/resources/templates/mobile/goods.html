@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/swiper.min.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+
+		<title></title>
+	</head>
+	<body>
+		<div class="container" >
+<!--			<div class="listhead">-->
+<!--				<img src="../img/headimg.png" />-->
+<!--				<span></span>-->
+<!--			</div>-->
+			<div class="particulars">
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+							<div class="swiper-slide"><img src="../img/projects.png" /></div>
+							<div class="swiper-slide"><img src="../img/projects.png" /></div>
+							<div class="swiper-slide"><img src="../img/projects.png" /></div>
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+				<div class="listcontent-box">
+					<div class="particulars-tit">
+<!--						<div class="titiles"></div>-->
+						<div class="jianjie" th:text="${item.title}"></div>
+					</div>
+					<div class="listcontent-price">
+						<div class="listcontent-price-left particulars-price-left">
+							<span class="prices" th:text="'￥'+${item.price}"></span>
+							<s class="yuan" th:text="'原价'+${item.del_price}"></s>
+							<span class="fan" th:text="'会员立返'+${item.money}+'元'"></span>
+						</div>
+						<div class="particulars-price-right" th:text=" '已售'+${item.sales}+'/'+'剩余'+${item.num}"  ></div>
+					</div>
+				</div>
+			</div>
+			<div class="particulars-goroup">
+				<div class="particularsTie">套餐选择</div>
+				<div class="particularsel">
+					<div class="active">小牛有约99套餐</div>
+					<div>超级牛有约199套餐</div>
+				</div>
+			</div>
+			<div class="particulars-goroup">
+				<div class="particularsTie">商家信息</div>
+				<div class="particularsjxx">
+					<div class="particularsjxx-list">
+						<div class="particularsjxx-name">小牛有约火锅店（八佰伴店）</div>
+						<div class="particularsjxx-jianjie">
+							<img src="../img/address.png" alt=""/>
+							<div class="address">
+								<p><span>张杨路601号101层A-30室</span><a href="tel:852852"><img src="../img/tells.png" /></a></p>
+								<p>营业时间：09:30-14:00 14:00-21:00</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="particulars-goroup">
+				<div class="particularsTie">详细信息</div>
+				<div class="xiangqing">
+					<textarea id="Contents"  name="sell_point" th:utext="${item.sellPoint}" style="width:100%;" >
+                                                        </textarea>
+
+				</div>
+			</div>
+		</div>
+		<div class="hrefbox">
+			<div class="sharebox" id="sharebtn">
+				<div class="shareboxlist"><p th:text="'会员下单返'+${item.money}+'元'"></p></div>
+				<div class="shareboxlist">立即分享</div>
+				<img src="../img/jinbi.png" />
+				<span class="close">x</span>
+			</div>
+			<div class="gotops" id="gotops"><img src="../img/tops.png"/> </div>
+		</div>
+		<div class="footer footlist">
+			<ul>
+				<li>
+					<a onclick="window.history.go(-1)"><p>商城首页</p></a>
+				</li>
+				<li>
+					<a href="tel:666666666"><p>咨询客服</p></a>
+				</li>
+				<li class="active">
+					<a href="placeOrder.html"><p>立即购买</p></a>
+				</li>
+			</ul>
+		</div>
+		<script charset="UTF-8" th:src="@{/js/kindeditor/kindeditor-all-min.js}"></script>
+		<script charset="UTF-8" th:src="@{/js/kindeditor/lang/zh-CN.js}"></script>
+
+
+		<script type="text/javascript">
+			KindEditor
+					.ready(function(K) {
+						window.editor = K
+								.create(
+										'#Contents',
+										{
+
+											// cssPath: "/path",
+											resizeType: 0,
+											// resizeMode: 0,
+											autoHeightMode : true, //启用编辑区自动高度
+											items:[],
+											readOnlyMode:true,
+											afterCreate : function() {
+												editor.sync();
+												var autoheight=editor.edit.doc.body.scrollHeight
+												editor.edit.setHeight(autoheight);
+												// this.sync();
+											}
+											// afterBlur : function() {
+											//     this.sync();
+											// }, //编辑器失去焦点(blur)时执行
+										});
+						editor.readonly(true);
+
+
+					});
+
+		</script>
+		<script th:src="@{/js/jquery-3.4.1.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script th:src="@{/js/swiper.min.js}" type="text/javascript" charset="utf-8"></script>
+		<script th:src="@{/js/particulars.js}" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

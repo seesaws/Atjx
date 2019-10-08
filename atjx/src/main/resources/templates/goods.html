@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<title>艾特鲸选</title>
+<head>
+
+</head>
+
+
+
+<pre name="code" class="html">
+    <style type="text/css">
+    .nocopy {-moz-user-select:none;-webkit-user-select:none}
+</style>
+</pre>
+<body>
+
+<div th:text="${item.title}" >
+
+</div>
+<div>
+  <label><textarea id="Contents"  name="sell_point" th:utext="${item.sellPoint}" style="width:100%;" >
+                                                        </textarea>
+  </label>
+</div>
+</body>
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<!--<script th:src="@{http://css3-mediaqueries-js.googlecode.com/svn/trunkcss3-mediaqueries.js}"></script>-->
+<script charset="UTF-8" th:src="@{/js/kindeditor/kindeditor-all-min.js}"></script>
+<script charset="UTF-8" th:src="@{/js/kindeditor/lang/zh-CN.js}"></script>
+
+<script type="text/javascript">
+    KindEditor
+        .ready(function(K) {
+            window.editor = K
+                .create(
+                    '#Contents',
+                    {
+
+                        // cssPath: "/path",
+                        resizeType: 0,
+                        // resizeMode: 0,
+                        autoHeightMode : true, //启用编辑区自动高度
+                        items:[],
+                        readOnlyMode:true,
+                        afterCreate : function() {
+                            editor.sync();
+                            var autoheight=editor.edit.doc.body.scrollHeight
+                            editor.edit.setHeight(autoheight);
+                            // this.sync();
+                        }
+                        // afterBlur : function() {
+                        //     this.sync();
+                        // }, //编辑器失去焦点(blur)时执行
+                    });
+            editor.readonly(true);
+
+
+        });
+
+</script>
+
+
+
+</html>

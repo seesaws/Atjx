@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atjx.mapper.SpecificationMapper">
+    <resultMap id="spe" type="com.atjx.model.Specification">
+        <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
+        <result column="item_id" property="item_id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+
+    </resultMap>
+
+</mapper>

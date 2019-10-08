@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+		<title></title>
+	</head>
+	<body>
+		<header>
+			<span class="back"></span>
+			<div class="headtit">提交订单</div>
+		</header>
+		<div class="boxs">
+			<div class="orderbox">
+				<div class="order-form">
+					<form action="" method="">
+						<div class="orderform-group">
+							<img src="../img/order1.png" >
+							<span>姓名：</span>
+							<input type="text" name="ordername" id="ordername" value="" />
+						</div>
+						<div class="orderform-group">
+							<img src="../img/order2.png" >
+							<span>手机号：</span>
+							<input type="tel" name="ordertel" id="ordertel" value="" />
+						</div>
+						<div class="orderform-group">
+							<img src="../img/order3.png" >
+							<span>备注：</span>
+							<input type="text" name="orderremark" id="orderremark" value="" />
+						</div>
+					</form>
+				</div>
+				<div class="ordermes">
+					<div class="orderTit">商品信息</div>
+					<div class="ordertypes">
+						<img src="../img/projects.png" >
+						<div>代金券可叠加使用，除餐包、调料、酒水外全场通用～～单张券适合3-4人使用，折后人均50～</div>
+					</div>
+					<div class="ordertypes">
+						<p>A套餐</p>
+						<p>￥99</p>
+					</div>
+				</div>
+				<div class="ordernum">
+					<div class="ordernumtext">购买数量：</div>
+					<div class="orderbtns">
+						 <span data-type="-">-</span>
+						 <input type="tel" name="" id="ordernum" value="1" disabled="disabled"/>
+						 <span data-type="+">+</span>
+					</div>
+				</div>
+				<div class="xieyi">
+					<input type="checkbox" name="" id="readxieyi" value="" />
+					<span>我已阅读，并同意</span>
+					<a href="javascript:;">《平台用户服务协议》</a>
+				</div>
+			</div>
+		</div>
+		<div class="orderpay">
+			<div class="orderpay-left"><span>小计：</span><span id="totalmoney">￥99</span></div>
+			<div class="paybtn" id="paybtn">微信支付</div>
+		</div>
+		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/placeOrder.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
