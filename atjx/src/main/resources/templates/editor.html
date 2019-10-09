@@ -1,0 +1,51 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- https://code.jquery.com/ -->
+    <script th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <!-- http://kindeditor.net 版本 4.x -->
+
+    <script charset="UTF-8" th:src="@{js/editor/assets/nkeditor.min.js}"></script>
+    <script charset="UTF-8" th:src="@{js/editor/assets/lang/zh-CN.js}"></script>
+
+</head>
+<body>
+<h4>创建用户:</h4>
+
+<div>
+    <form name="f" id="f" method="post" action="/createUser" enctype="multipart/form-data">
+        <table width="800" border="0" cellspacing="4" cellpadding="4">
+            <tr>
+                <td align="center" width="80">姓名: </td>
+                <td align="left"><input type="text" name="name" id="name" value="Shawn Joen"/></td>
+            </tr>
+            <tr>
+                <td align="center">个人说明: </td>
+                <td align="left"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="button" value="提交" onclick="createUser()"/></td>
+            </tr>
+        </table>
+
+
+       <center> <textarea id="editor_id" name="content" style="width:80%;height:300px;">
+&lt;strong&gt;HTML内容&lt;/strong&gt;
+</textarea></center>
+
+    </form>
+</div>
+<script>
+    KindEditor.ready(function(K) {
+        window.editor = K.create('#editor_id');
+    });
+</script>
+
+
+
+</body>
+</html>
+

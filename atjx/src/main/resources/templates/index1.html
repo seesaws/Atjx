@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>艾特鲸选</title>
+</head>
+
+<body>
+
+<div th:each="item :${itemlist}">
+
+    <div >
+        <div >
+            <a th:href="@{'goods?id='+${item.id}}">
+                <div >
+                    <span th:text="${item.title}"></span>
+                </div>
+                <p></p>
+                <p ></p>
+                <div>
+                    <p th:text="${item.price}"></p>
+                    <del th:text="${item.del_price}"></del>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+</html>

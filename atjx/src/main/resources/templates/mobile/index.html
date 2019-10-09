@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link th:href="@{/css/styles.css}" rel="stylesheet"/>
+		<link th:href="@{/css/common.css}" rel="stylesheet"/>
+		<script th:src="@{/js/iconfont.js}" type="text/javascript" charset="utf-8"></script>
+		<title>艾特鲸选</title>
+	</head>
+	<body>
+		<div class="container">
+<!--			<div class="listhead" >-->
+<!--				<img src="../img/headimg.png" />-->
+<!--				<span> </span>-->
+<!--			</div>-->
+			<div  th:each="item :${ itemlist}" >
+			<a th:href="@{'goods?id='+${item.id}}">
+				<div class="listcontent" >
+					<img th:src="${item.image}" class="shoppingimg"/>
+					<img th:src="@{img/qianggou.png}" class="qgbtn"/>
+<!--					<div class="daojishi">12:00</div>-->
+					<div class="particulars-box"></div>
+						<div class="listcontent-tit">
+							<!-- <div class="titiles"></div> -->
+							<div class="jianjie" th:text="${item.title}"></div>
+						</div>
+						<div class="listcontent-price">
+							<div class="listcontent-price-left">
+								<span class="prices" th:text="'￥'+${item.price}"></span>
+								<s class="yuan" th:text="${item.del_price}"></s>
+								<span class="fan" th:text="'反'+${item.money}"></span>
+							</div>
+							<div class="listcontent-price-right" th:text="'销量'+${item.sales}"></div>
+							</div>
+				</div>
+			</a>
+			</div>
+		</div>
+
+
+
+
+
+		<div class="footer">
+			<ul>
+				<li><a href="#">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-shouye"></use>
+					</svg>
+					<div>首页</div>
+				</a></li>
+				<li><a href="/mobile/user">
+					<svg class="icon icontwo" aria-hidden="true">
+						<use xlink:href="#icon-jingyu"></use>
+					</svg>
+					<div style="margin-top: -0.28rem;">我的</div>
+				</a></li>
+			</ul>
+		</div>
+	</body>
+</html>
