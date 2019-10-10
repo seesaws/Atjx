@@ -177,7 +177,10 @@
         <div class="footer" th:include="footer :: copyright"></div>
     </div>
 </div>
-
+<!-- UEditor -->
+<script th:src="@{/admin/ueditor/config.js}"></script>
+<script th:src="@{/admin/ueditor/ueditor.all.min.js}"></script>
+<script th:src="@{/admin/ueditor/lang/zh-cn/zh-cn.js}"></script>
 
 
 <!-- Mainly scripts -->
@@ -202,36 +205,9 @@
 <!-- SUMMERNOTE -->
 <script th:src="@{/js/plugins/summernote/summernote.min.js}"></script>
 
-<script charset="UTF-8" th:src="@{/js/kindeditor/kindeditor-all-min.js}"></script>
-<script charset="UTF-8" th:src="@{/js/kindeditor/lang/zh-CN.js}"></script>
-
 
 <script type="text/javascript">
-    KindEditor
-        .ready(function(K) {
-            window.editor = K
-                .create(
-                    '#Contents',
-                    {
-                        uploadJson : '/fileUpload',
-                        fileManagerJson : '/fileManager',
-                        allowImageUpload : true, //多图上传
-                        allowFileManager : true, //浏览图片空间
-                        filterMode : false, //HTML特殊代码过滤
-                        afterBlur : function() {
-                            this.sync();
-                        }, //编辑器失去焦点(blur)时执行的回调函数（将编辑器的HTML数据同步到textarea）
-                        afterUpload : function(url, data, name) { //上传文件后执行的回调函数，必须为3个参数
-                            },
-                        afterChange: function(){ //编辑器内容发生变化后，将编辑器的内容设置到原来的textarea控件里
-                            this.sync();
-                        },
-                        afterCreate: function () {
-                            this.sync();
-                        }
-
-                    });
-        });
+    UE.getEditor("Contents");
 </script>
 
 <script th:inline="javascript">

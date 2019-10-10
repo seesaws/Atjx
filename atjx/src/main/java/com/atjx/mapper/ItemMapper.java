@@ -13,7 +13,7 @@ public interface ItemMapper {
 
     Item findById(Item item);
 
-    Item findMaxId();
+    Integer findMaxId();
 
     void delete(Item item);
 

@@ -129,7 +129,7 @@
     <delete id="delete" parameterType="com.atjx.model.Item">
         DELETE FROM tb_item WHERE id = #{id, jdbcType=INTEGER}
     </delete>
-    <select id="findMaxId" resultType="com.atjx.model.Item">
-       SELECT * FROM tb_item ORDER BY id DESC LIMIT 0,1
+    <select id="findMaxId" resultType="INTEGER">
+       SELECT id FROM tb_item ORDER BY id DESC LIMIT 0,1
     </select>
 </mapper>

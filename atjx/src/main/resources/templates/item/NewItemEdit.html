@@ -53,7 +53,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>新增或修改商品</h5>
+                            <h5>修改商品</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -61,15 +61,18 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <form id="formTag" action="/NewItem" method="POST" class="form-horizontal" name="form1"
+                            <form id="formTag" action="/NewItem" method="POST" class="form-horizontal"
                                   enctype="multipart/form-data">
 
                                 <div class="form-group"><label class="col-sm-2 control-label">商品id：</label>
                                     <div class="col-sm-10">
-                                        <input id="id" name="id" readonly="readonly" type="text" class="form-control" value="0"
+                                        <input id="id" name="id" readonly="readonly" type="text" class="form-control" value=""
+                                               />
+                                        <input id="id1" name="id1" type="hidden"  form="formTag1"
                                                />
                                     </div>
                                 </div>
+
                                 <div class="hr-line-dashed"></div>
 
                                 <div class="form-group"><label class="col-sm-2 control-label">标题：</label>
@@ -82,19 +85,14 @@
                                 <div class="hr-line-dashed"></div>
 
 
-
-                                <div class="hr-line-dashed"></div>
-
-                                <div id="imageCell" class="form-group"><label class="col-sm-2 control-label">图片：</label>
+                                <div id="imageCell" class="form-group"><label class="col-sm-2 control-label">首页图片：</label>
                                     <div class="col-sm-10">
-<!--                                        <img src="" height="250px" width="200px"/>-->
-                                        <button id="imageCellBut" type="button" class="btn btn-white btn-sm">&nbsp;&nbsp;&nbsp;&nbsp;修改&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                                    </div>
-                                </div>
+                                        <input id="image" name="image" type="text" readonly="readonly"/>
+<!--                                        //src-->
+                                        <div   id="uploadImgBtn" form="formTag1" style="width:250px;height:200px;background: url(a.jpg) no-repeat center top;background-size: 100%;">
+                                            <input class="uploadImg" type="file" name="file" id="file" form="formTag1"/>
+                                        </div>
 
-                                <div id="imputCell" class="form-group"><label class="col-sm-2 control-label">图片：</label>
-                                    <div class="col-sm-10">
-                                        <input id="image" name="image" type="text"/>
                                     </div>
                                 </div>
 
@@ -109,24 +107,28 @@
                                     </div>
                                 </div>
 
-
                                 <div class="hr-line-dashed"></div>
 
                                 <div class="form-group"><label class="col-sm-2 control-label">价格：</label>
                                     <div class="col-sm-10">
-                                        <input id="price" name="price" type="text" class="form-control"/>
+                                        <input id="price" name="price" type="text" class="form-control"
+                                               />
                                     </div>
                                 </div>
 
+                                <div class="hr-line-dashed"></div>
+
                                 <div class="form-group"><label class="col-sm-2 control-label">门市价：</label>
                                     <div class="col-sm-10">
-                                        <input id="del_price" name="del_price" type="text" class="form-control"/>
+                                        <input id="del_price" name="del_price" type="text" class="form-control"
+                                              />
                                     </div>
                                 </div>
 
                                 <div class="form-group"><label class="col-sm-2 control-label">返现：</label>
                                     <div class="col-sm-10">
-                                        <input id="money" name="money" type="text" class="form-control"/>
+                                        <input id="money" name="money" type="text" class="form-control"
+                                              />
                                     </div>
                                 </div>
 
@@ -135,9 +137,28 @@
                                 <div class="form-group"><label class="col-sm-2 control-label">库存：</label>
                                     <div class="col-sm-10">
                                         <input id="num" name="num" type="text" class="form-control"
-                                               />
+                                              />
                                     </div>
                                 </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">套餐管理：</label>
+                                    <div class="col-sm-10">
+                                        <div style="margin: 50px;">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">门店地址信息管理：</label>
+                                    <div class="col-sm-10">
+
+                                    </div>
+                                </div>
+
 
                                 <div class="hr-line-dashed"></div>
 
@@ -147,6 +168,7 @@
                                     </div>
                                 </div>
                             </form>
+                            <form id="formTag1" enctype="multipart/form-data"></form>
                         </div>
                     </div>
                 </div>
@@ -156,6 +178,8 @@
         <div class="footer" th:include="footer :: copyright"></div>
     </div>
 </div>
+
+
 
 <!-- Mainly scripts -->
 <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
@@ -195,34 +219,48 @@
                         allowImageUpload : true, //多图上传
                         allowFileManager : true, //浏览图片空间
                         filterMode : false, //HTML特殊代码过滤
-
-                        imageSizeLimit: '10MB', //批量上传图片单张最大容量
-                        imageUploadLimit: 30, //批量上传图片同时上传最多个数
-                        //文件管理处理程序的路径
-
-
-                        //要取值设置这里 这个函数就是同步KindEditor的值到textarea文本框
-                        afterCreate: function () {
-                            this.sync();
-                        },
                         afterBlur : function() {
                             this.sync();
                         }, //编辑器失去焦点(blur)时执行的回调函数（将编辑器的HTML数据同步到textarea）
+                        afterUpload : function(url, data, name) { //上传文件后执行的回调函数，必须为3个参数
+                        },
                         afterChange: function(){ //编辑器内容发生变化后，将编辑器的内容设置到原来的textarea控件里
                             this.sync();
                         },
-                        afterUpload : function(url, data, name) { //上传文件后执行的回调函数，必须为3个参数
-
+                        afterCreate: function () {
+                            this.sync();
                         }
-
 
                     });
         });
 </script>
 
-
-
 <script th:inline="javascript">
+    $(document).ready(function(){
+        $("#file").on("change", upload );
+    })
+    function upload(){
+        var self = this;
+        $.ajax({
+            url: "/newImg",
+            type: "post",
+            dataType: "json",
+            cache: false,
+            data: new FormData($("#formTag1")[0]),
+            processData: false,// 不处理数据
+            contentType: false, // 不设置内容类型
+            success: function(data){
+                $(self).parent().css({
+                    "background-image": "url("+data.url+")"
+                })
+            }
+
+
+        })
+    }
+</script>
+
+<script type="text/javascript">
     $(document).ready(function () {
         //初始化编辑器
         $('#summernote').summernote({

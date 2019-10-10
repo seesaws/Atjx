@@ -1,6 +1,8 @@
 package com.atjx.mobile.controller;
 
 import com.atjx.mapper.ItemMapper;
+import com.atjx.mobile.pojo.WeixinUserInfo;
+import com.atjx.mobile.util.CommonUtil;
 import com.atjx.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,7 @@ public class MobileController {
     @RequestMapping(value = "/mobile/user")
     public String  user(Model model,Item item) {
         // 获取接口访问凭证
-        //String accessToken = CommonUtil.getToken("wxb8ef126b92b8c857", "761a8370a5dd929f19186beacb9545e1").getToken();
+//        String accessToken = CommonUtil.getToken("wxb8ef126b92b8c857", "761a8370a5dd929f19186beacb9545e1").getToken();
         /**
          * 获取用户信息
          */

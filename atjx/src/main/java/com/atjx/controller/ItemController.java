@@ -129,7 +129,7 @@ public class ItemController {
         return "item/NewItemEdit";
     }
     @RequestMapping("/NewItem")
-    public String NewItemEdit(Item item,Model model,HttpServletRequest request){
+    public String NewItemEdit(Item item,HttpServletRequest request){
         String notes = request.getParameter("sell_point");
 
         String html= HtmlUtils.htmlEscape(notes);
@@ -210,21 +210,20 @@ public class ItemController {
     @ResponseBody
     @RequestMapping(value="/uploadImg",method={RequestMethod.POST})
     public  String uploadImg(HttpServletRequest request,@RequestParam(value="file")MultipartFile file,Item item,Model model){
-        String id1=request.getParameter("id1");
-        int id= Integer.parseInt(id1);
+
         Date date = new Date();
+        String id1=request.getParameter("id1");
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         String newFileName = df.format(date) + "_" + new Random().nextInt(1000) ;
-        item.setId(id);
-        //获取图片原始文件名
         String originalFileName=file.getOriginalFilename();
-        String name="P"+id1+"_"+newFileName;
-        //获取后缀
+
         String extension=originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
 
+        int id= Integer.parseInt(id1);
+        item.setId(id);
 
+        String name="P"+id1+"_"+newFileName;
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
-        //相对路径
         String path="/image"+dt+name+extension;
         //绝对路径
 //        String url=request.getSession().getServletContext().getRealPath("")+path;
@@ -233,7 +232,6 @@ public class ItemController {
         String webUrl="127.0.0.1/"+path;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
         webUrl="{\"url\":\""+path+"\",\"path\":\"/upload/"+dt+extension+"\"}";
-
         File dir=new File(url);
         //上传图片
         try {
@@ -244,14 +242,38 @@ public class ItemController {
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-
             item.setImage(path);
-
             itemMapper.update(item);
-
             return webUrl;
         }
 
-
-
+    @ResponseBody
+    @RequestMapping(value="/newImg",method={RequestMethod.POST})
+    public  String NewImage(HttpServletRequest request,@RequestParam(value="file")MultipartFile file,Item item,Model model){
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        String newFileName = df.format(date) + "_" + new Random().nextInt(1000) ;
+        String originalFileName=file.getOriginalFilename();
+        String extension=originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
+        int id=itemMapper.findMaxId();
+        int a=1;
+        id+=a;
+        String name="P"+id+"_"+newFileName;
+        String dt=new SimpleDateFormat("/yyyyMM/").format(date);
+        String path="/image"+dt+name+extension;
+        String url="c://upload/image/"+dt;
+        String webUrl="127.0.0.1/"+path;
+        webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
+        webUrl="{\"url\":\""+path+"\",\"path\":\"/upload/"+dt+extension+"\"}";
+        File dir=new File(url);
+        try {
+            if(!dir.exists()){
+                dir.mkdirs();
+            }
+            file.transferTo(new File(url+name+extension));
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+        return webUrl;
+    }
 }

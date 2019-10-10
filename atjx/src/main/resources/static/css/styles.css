@@ -181,6 +181,19 @@
 	width: 100%;
 	height: 100%;
 }
+.myname{
+	width: 3rem;
+	height: 1rem;
+	padding: 2px;
+	position: absolute;
+	top: 10%;left: 50%;
+	transform: translate(-50%,-50%);
+	text-align: center;
+}
+.myname span{
+	width: 100%;
+	height:100%;
+}
 .navbars{
 	width: 94%;
 	background: #fff;

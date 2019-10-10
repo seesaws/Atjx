@@ -15,12 +15,12 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 @RestController
-@RequestMapping("/wxAuth")
+@RequestMapping("/mobile")
 public class WxLoginController {
-    public static final String WX_APPID = "wxb8ef126b92b8c857";
-    public static final String WX_APPSECRET = "761a8370a5dd929f19186beacb9545e1";
+    public static final String WX_APPID = "wx7738ac5a31d41ee4";
+    public static final String WX_APPSECRET = "7092282a2dd53b572d39c2802b460b2f";
     private WeixinUserInfo weixinUserInfo;
-    @RequestMapping("/login")
+    @RequestMapping("/my")
     public void wxLogin(HttpServletResponse response) throws IOException {
         //请求获取code的回调地址
         //用线上环境的域名或者用内网穿透，不能用ip
@@ -68,7 +68,7 @@ public class WxLoginController {
         System.out.println("请求获取userInfo:" + resultInfo);
         WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
         model.addAttribute("user",infoList);
-        return new ModelAndView("user");
+        return new ModelAndView("my");
 
     }
 }
