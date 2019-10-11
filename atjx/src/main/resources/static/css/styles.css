@@ -161,6 +161,7 @@
 	width: 100%;
 	position: relative;
 	height: 10rem;
+	text-align: center;
 }
 .myimgbj>img{
 	width: 100%;
@@ -176,24 +177,13 @@
 	position: absolute;
 	top: 40%;left: 50%;
 	transform: translate(-50%,-50%);
+	text-align: center;
 }
 .myhead img{
 	width: 100%;
 	height: 100%;
 }
-.myname{
-	width: 3rem;
-	height: 1rem;
-	padding: 2px;
-	position: absolute;
-	top: 10%;left: 50%;
-	transform: translate(-50%,-50%);
-	text-align: center;
-}
-.myname span{
-	width: 100%;
-	height:100%;
-}
+
 .navbars{
 	width: 94%;
 	background: #fff;
@@ -374,12 +364,12 @@
 	overflow: hidden;
 	position: fixed;
 	top: 60%;right: 5%;
-	z-index: 50;
-	width: 23%;
+	z-index: 9999;
+	width: 20%;
 }
 .restell{
-	width: 1.6rem;
-	height: 1.6rem;
+	width: 0.8rem;
+	height: 0.8rem;
 	float: right;
 }
 .restell img,.gotops img{
@@ -391,6 +381,7 @@
 	height: 2rem;
 	float: right;
 	display: none;
+	z-index: 9999;
 }
 .sharebox{
 	float: right;
@@ -411,7 +402,7 @@
 .shareboxlist{
 	background: #FF5252;
 	color: #FFDCDC;
-	font-size: 12px;
+	font-size: 8px;
 	padding: 0.65rem;
 	text-align: center;
 }

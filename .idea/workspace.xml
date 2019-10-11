@@ -1,23 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5e24b60-8982-4a20-98c4-254a4ca78a5e" name="Default Changelist" comment="" />
+    <list default="true" id="740a3df4-b6b5-4714-b475-dffe9191691a" name="Default Changelist" comment="add UEditor file">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/autotypesetpicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/button.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/buttonicon.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/cellalignpicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/colorbutton.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/colorpicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/combox.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/contextmenu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/dialog.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/editor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/menu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/menubutton.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/message.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/multiMenu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/paragraphpicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/pastepicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/popup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/separtor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/shortcutmenu.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/splitbutton.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/tablepicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/toolbar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/uibase.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atjx/controller/UEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atjx/controller/UEditorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/controller.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/lib/commons-codec-1.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/lib/commons-fileupload-1.3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/lib/commons-io-2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/lib/json.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/jsp/lib/ueditor-1.1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/ueditor.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/ueditor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/themes/default/css/ueditor.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/ueditor.all.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/ueditor.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/ueditor.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/ueditor.parse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/ueditor.parse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/ueditor/ueditor.parse.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/item/itemEdit.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/item/itemEdit.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
-  <component name="ProjectId" id="1RurYblJuxWbUDioFi3vdh3msYx" />
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Tag Library Descriptor" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1RoFWxK9ydCHHxXsMUkN0O6CSsy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/atjx" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.19854015" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2019.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com" />
+      <recent name="com.jesper" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\java\com\atjx" />
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\resources\static" />
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\resources\static\admin\ueditor" />
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\resources\static\admin\ueditor\lib" />
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\resources\static\img" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\resources\static\img" />
+      <recent name="C:\Users\Administrator\Desktop\Atjx\atjx\src\main\resources\templates\mobile\img" />
+      <recent name="C:\Users\Administrator\Desktop\demo\demo\atjx\src\main\resources\templates\mobile" />
+      <recent name="C:\Users\Administrator\Desktop\demo\demo\atjx\src\main\resources\static\img" />
+      <recent name="C:\Users\Administrator\Desktop\demo\demo\atjx\src\main\resources\static" />
+    </key>
   </component>
   <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
     <option name="ruleStates">
       <list>
         <RuleState>
@@ -28,19 +147,184 @@
         </RuleState>
       </list>
     </option>
+    <option name="contentProportion" value="0.2267316" />
+  </component>
+  <component name="RunManager" selected="Spring Boot.demoApplication">
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="atjx" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.jesper.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="demoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="atjx" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.demoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <option name="contentProportion" value="0.19264069" />
+        <treeState>
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7397329e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7397329e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@d61536c4" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7397329e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@e4cf6c62" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f5e24b60-8982-4a20-98c4-254a4ca78a5e" name="Default Changelist" comment="" />
-      <created>1570527870187</created>
+      <changelist id="740a3df4-b6b5-4714-b475-dffe9191691a" name="Default Changelist" comment="" />
+      <created>1570000117937</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1570527870187</updated>
-      <workItem from="1570527871652" duration="18000" />
+      <updated>1570000117937</updated>
+      <workItem from="1570000120314" duration="4667000" />
+      <workItem from="1570032031375" duration="5039000" />
+      <workItem from="1570037121080" duration="38000" />
+      <workItem from="1570053127230" duration="11106000" />
+      <workItem from="1570065213640" duration="117000" />
+      <workItem from="1570065436041" duration="8670000" />
+      <workItem from="1570095235809" duration="23756000" />
+      <workItem from="1570168860715" duration="48418000" />
+      <workItem from="1570235657350" duration="9936000" />
+      <workItem from="1570245634229" duration="12032000" />
+      <workItem from="1570285381933" duration="3646000" />
+      <workItem from="1570291636797" duration="349000" />
+      <workItem from="1570325584898" duration="2272000" />
+      <workItem from="1570327895105" duration="369000" />
+      <workItem from="1570328291993" duration="10542000" />
+      <workItem from="1570343430856" duration="8740000" />
+      <workItem from="1570355580931" duration="2335000" />
+      <workItem from="1570410252677" duration="29354000" />
+      <workItem from="1570496430342" duration="260000" />
+      <workItem from="1570496998989" duration="26109000" />
+      <workItem from="1570599387407" duration="8130000" />
+      <workItem from="1570669108928" duration="22850000" />
+      <workItem from="1570755876434" duration="10233000" />
     </task>
+    <task id="LOCAL-00001" summary="可运行，jar包正常">
+      <created>1570614235822</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1570614235825</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Merge branch 'master' of https://github.com/Linran0808/Atjx&#10;&#10;# Conflicts:&#10;#&#9;atjx/pom.xml&#10;#&#9;atjx/src/main/resources/application.properties">
+      <created>1570670072493</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1570670072493</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Merge branch 'master' of https://github.com/Linran0808/Atjx&#10;&#10;# Conflicts:&#10;#&#9;atjx/pom.xml&#10;#&#9;atjx/src/main/resources/application.properties">
+      <created>1570670575134</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1570670575134</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add UEditor file">
+      <created>1570695206263</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1570695206263</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:C:/Users/Administrator/Desktop/Atjx/atjx" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first" />
+    <MESSAGE value="可运行，jar包正常" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/Linran0808/Atjx&#10;&#10;# Conflicts:&#10;#&#9;&#10;#&#9;atjx/src/main/resources/application.properties" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/Linran0808/Atjx&#10;&#10;# Conflicts:&#10;#&#9;atjx/pom.xml&#10;#&#9;atjx/src/main/resources/application.properties" />
+    <MESSAGE value="add UEditor file" />
+    <option name="LAST_COMMIT_MESSAGE" value="add UEditor file" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/demo$demoApplication.ic" NAME="demoApplication Coverage Results" MODIFIED="1570757301916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.*</FILTER>
+    </SUITE>
   </component>
 </project>

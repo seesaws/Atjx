@@ -9,6 +9,37 @@
 
 		<title></title>
 	</head>
+	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
+
+	<script th:inline="javascript">
+		//初始化ueditor  建议放到最开头
+		var ue = UE.getEditor('editor',
+				{
+					toolbars:[[]],
+					//关闭字数统计  
+					wordCount:false,
+					//关闭elementPath  
+					elementPathEnabled:false,
+					//默认的编辑区域高度  
+					initialFrameHeight:400
+					//更多其他参数，请参考ueditor.config.js中的配置项  
+				});
+		ue.ready(function() {
+			//不可编辑
+			ue.setDisabled();
+		});
+		//获取后台传过来的filmVo对象的filmDesc属性的内容(html字符串内容(数据库查到的))
+		// var filmDesc = [[${item.sellPoint}]];
+		// var sp=[[${item.sellPoint}]];
+		//这个监听器是亮点
+		// ue.addListener('ready',function () {
+		// 	ue.execCommand('insertHtml',filmDesc);
+		// });
+
+
+	</script>
 	<body>
 		<div class="container" >
 <!--			<div class="listhead">-->
@@ -65,8 +96,13 @@
 			<div class="particulars-goroup">
 				<div class="particularsTie">详细信息</div>
 				<div class="xiangqing">
-					<textarea id="Contents"  name="sell_point" th:utext="${item.sellPoint}" style="width:100%;" >
-                                                        </textarea>
+
+<!--						<script id="editor" type="text/html" style="width:100%">-->
+<!--						</script>-->
+					<label for="editor"></label><textarea id="editor" name="sellPoint" th:utext="${item.sellPoint}">
+				</textarea >
+
+
 
 				</div>
 			</div>
@@ -97,38 +133,12 @@
 		<script charset="UTF-8" th:src="@{/js/kindeditor/lang/zh-CN.js}"></script>
 
 
-		<script type="text/javascript">
-			KindEditor
-					.ready(function(K) {
-						window.editor = K
-								.create(
-										'#Contents',
-										{
 
-											// cssPath: "/path",
-											resizeType: 0,
-											// resizeMode: 0,
-											autoHeightMode : true, //启用编辑区自动高度
-											items:[],
-											readOnlyMode:true,
-											afterCreate : function() {
-												editor.sync();
-												var autoheight=editor.edit.doc.body.scrollHeight
-												editor.edit.setHeight(autoheight);
-												// this.sync();
-											}
-											// afterBlur : function() {
-											//     this.sync();
-											// }, //编辑器失去焦点(blur)时执行
-										});
-						editor.readonly(true);
-
-
-					});
-
-		</script>
 		<script th:src="@{/js/jquery-3.4.1.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script th:src="@{/js/swiper.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script th:src="@{/js/particulars.js}" type="text/javascript" charset="utf-8"></script>
+
+
+
 	</body>
 </html>

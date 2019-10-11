@@ -36,7 +36,6 @@ public class UserController {
 
     @Value("${spring.mail.username}")
     private String Sender; //读取配置文件中的参数
-
     /**
      * 登录跳转
      *
@@ -68,7 +67,6 @@ public class UserController {
             return "login";
         }
     }
-
     /**
      * 注册
      *
