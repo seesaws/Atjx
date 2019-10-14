@@ -159,7 +159,7 @@ public class ItemController {
         return "item/itemEdit";
     }
 
-    @PostMapping("/itemEdit")
+    @PostMapping("/user/itemEdit")
     public String itemEditPost(HttpServletRequest request, Item item) throws IOException {
 
         Date date=new Date();
