@@ -123,15 +123,15 @@
 .yuan{
 	font-size: 0.7rem;
 	color: #ccc;
-	margin: 0 2%;
+	margin: 0 0;
 }
 .fan{
-	padding: 1.6% 0;
+	padding: 0 0;
 	border-radius: 5px;
-	font-size: 0.5rem;
+	font-size: 0.6em;
 	background: #FF5252;
 	color: #fff;
-	width: 2rem;
+	width: 4em;
 	text-align: center;
 }
 /* 产品详情页 */

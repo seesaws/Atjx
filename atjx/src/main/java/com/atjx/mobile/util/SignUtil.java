@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class SignUtil {
-    private static String token = "linran2019";
+    private static String token = "atjx2019";
 
     /**
      * 校验签名

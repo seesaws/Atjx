@@ -64,7 +64,7 @@
 					<div class="listcontent-price">
 						<div class="listcontent-price-left particulars-price-left">
 							<span class="prices" th:text="'￥'+${item.price}"></span>
-							<s class="yuan" th:text="'原价'+${item.del_price}"></s>
+							<s class="yuan" th:text="'原价'+${item.del_price}"></s>&nbsp;
 							<span class="fan" th:text="'返'+${item.money}+'元'"></span>
 						</div>
 						<div class="particulars-price-right" th:text=" '已售'+${item.sales}+'/'+'剩余'+${item.num}"  ></div>

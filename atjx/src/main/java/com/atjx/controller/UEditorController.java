@@ -19,7 +19,7 @@ public class UEditorController {
     public void config(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
         String rootPath = request.getSession().getServletContext().getRealPath("/");
-        String hostname="/root/";
+        String hostname="/";
 //        Properties pro=new Properties();
 //        String realpath="c:";
 

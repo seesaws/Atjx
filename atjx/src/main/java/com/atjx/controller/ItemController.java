@@ -165,8 +165,6 @@ public class ItemController {
         Date date=new Date();
         item.setUpdated(date);
         item.setBarcode("");
-        String pic=request.getParameter("uploadImgBtn");
-        System.out.println(pic);
         String notes = request.getParameter("sell_point");
         String html= HtmlUtils.htmlEscape(notes);
         item.setSellPoint(html);
@@ -224,14 +222,14 @@ public class ItemController {
         String name="P"+id1+"_"+newFileName;
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
         File path= new File("/");
-        File upload = new File(path.getAbsolutePath(),"static/images/upload/"+dt);
+        File upload = new File(path.getAbsolutePath(),"static/upload/images"+dt);
 
 //        String path="/image"+dt+name+extension;
         //绝对路径
 //        String url=request.getSession().getServletContext().getRealPath("")+path;
 //        String url="/upload/image/"+dt;
         //网站路径
-        String webUrl="../static/images/upload"+dt+name+extension;
+        String webUrl="../static/upload/images"+dt+name+extension;
         String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
         webUrl="{\"url\":\""+webUrl+"\",\"path\":\"/upload"+dt+extension+"\"}";
@@ -268,7 +266,7 @@ public class ItemController {
         File path = null;
         File upload = new File(path.getAbsolutePath(),"static/images/upload/"+dt);
 
-        String webUrl="/images/upload"+dt+name+extension;
+        String webUrl="/upload/images"+dt+name+extension;
 
         String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");

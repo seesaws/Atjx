@@ -103,7 +103,7 @@ public class MenuController {
         menu1.setName("爆品抢购");
         menu1.setType("view");
 //        menu1.setKey("1");
-        menu1.setUrl("http://bkq5b6.natappfree.cc/");
+        menu1.setUrl("http://49.235.1.217/mobile/index");
 //        Menu menu11=new Menu();
 //        menu11.setId("11");
 //        menu11.setName("第一栏的第一个v3");
@@ -122,7 +122,7 @@ public class MenuController {
         menu2.setName("个人中心");
         menu2.setType("view");
 
-        menu2.setUrl("http://bkq5b6.natappfree.cc/wxAuth/login");
+        menu2.setUrl("http://49.235.1.217/mobile/user");
 
 
 //        Menu menu21=new Menu();
