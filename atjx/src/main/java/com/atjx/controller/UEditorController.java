@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 @Controller
 public class UEditorController {
@@ -17,8 +19,13 @@ public class UEditorController {
     public void config(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
         String rootPath = request.getSession().getServletContext().getRealPath("/");
+        String hostname="/root/";
+//        Properties pro=new Properties();
+//        String realpath="c:";
+
         try {
-            String exec = new ActionEnter(request, rootPath).exec();
+
+            String exec = new ActionEnter(request,hostname, rootPath).exec();
             PrintWriter writer = response.getWriter();
             writer.write(exec);
             writer.flush();

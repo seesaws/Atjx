@@ -16,7 +16,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -157,7 +159,7 @@ public class ItemController {
         return "item/itemEdit";
     }
 
-    @PostMapping("/user/itemEdit")
+    @PostMapping("/itemEdit")
     public String itemEditPost(HttpServletRequest request, Item item) throws IOException {
 
         Date date=new Date();
@@ -168,13 +170,10 @@ public class ItemController {
         String notes = request.getParameter("sell_point");
         String html= HtmlUtils.htmlEscape(notes);
         item.setSellPoint(html);
-        if (item.getId() != 0) {
-            itemMapper.update(item);
-            return "redirect:itemManage_0_0_0";
-        } else {
-            itemMapper.insert(item);
-            return "redirect:itemManage_0_0_0";
-        }
+        itemMapper.update(item);
+        return "redirect:itemManage_0_0_0";
+
+
     }
     @GetMapping(value = "/{filename:.+}")
     @ResponseBody
@@ -224,32 +223,37 @@ public class ItemController {
 
         String name="P"+id1+"_"+newFileName;
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
-        String path="/image"+dt+name+extension;
+        File path= new File("/");
+        File upload = new File(path.getAbsolutePath(),"static/images/upload/"+dt);
+
+//        String path="/image"+dt+name+extension;
         //绝对路径
 //        String url=request.getSession().getServletContext().getRealPath("")+path;
-        String url="c://upload/image/"+dt;
+//        String url="/upload/image/"+dt;
         //网站路径
-        String webUrl="127.0.0.1/"+path;
+        String webUrl="../static/images/upload"+dt+name+extension;
+        String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
-        webUrl="{\"url\":\""+path+"\",\"path\":\"/upload/"+dt+extension+"\"}";
-        File dir=new File(url);
+        webUrl="{\"url\":\""+webUrl+"\",\"path\":\"/upload"+dt+extension+"\"}";
+        File dir=new File(String.valueOf(upload));
         //上传图片
         try {
             if(!dir.exists()){
                 dir.mkdirs();
             }
-            file.transferTo(new File(url+name+extension));
+            file.transferTo(new File(upload+"/"+name+extension));
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-            item.setImage(path);
+            item.setImage(url);
             itemMapper.update(item);
+
             return webUrl;
-        }
+    }
 
     @ResponseBody
     @RequestMapping(value="/newImg",method={RequestMethod.POST})
-    public  String NewImage(HttpServletRequest request,@RequestParam(value="file")MultipartFile file,Item item,Model model){
+    public  String NewImage(HttpServletRequest request,@RequestParam(value="file")MultipartFile file,Item item,Model model) throws FileNotFoundException {
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
         String newFileName = df.format(date) + "_" + new Random().nextInt(1000) ;
@@ -260,17 +264,21 @@ public class ItemController {
         id+=a;
         String name="P"+id+"_"+newFileName;
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
-        String path="/image"+dt+name+extension;
-        String url="c://upload/image/"+dt;
-        String webUrl="127.0.0.1/"+path;
+//        String path=ClassUtils.getDefaultClassLoader().getResource("").getPath();
+        File path = null;
+        File upload = new File(path.getAbsolutePath(),"static/images/upload/"+dt);
+
+        String webUrl="/images/upload"+dt+name+extension;
+
+        String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
-        webUrl="{\"url\":\""+path+"\",\"path\":\"/upload/"+dt+extension+"\"}";
-        File dir=new File(url);
+        webUrl="{\"url\":\""+webUrl+"\",\"path\":\"/upload/"+dt+extension+"\"}";
+        File dir=new File(String.valueOf(upload));
         try {
             if(!dir.exists()){
                 dir.mkdirs();
             }
-            file.transferTo(new File(url+name+extension));
+            file.transferTo(new File(upload+"/"+name+extension));
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }

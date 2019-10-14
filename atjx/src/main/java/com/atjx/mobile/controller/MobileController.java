@@ -36,18 +36,18 @@ public class MobileController {
         return "mobile/index";
     }
 
-    @RequestMapping(value = "/mobile/user")
-    public String  user(Model model,Item item) {
-        // 获取接口访问凭证
-//        String accessToken = CommonUtil.getToken("wxb8ef126b92b8c857", "761a8370a5dd929f19186beacb9545e1").getToken();
-        /**
-         * 获取用户信息
-         */
-//        WeixinUserInfo user = CommonUtil.getUserInfo(accessToken, "ocUlj5jz8hHcGur0EmTlyOvfqzKk");
-//            model.addAttribute("user",user);
-
-        return "mobile/my";
-    }
+//    @RequestMapping(value = "/mobile/user")
+//    public String  user(Model model,Item item) {
+//        // 获取接口访问凭证
+////        String accessToken = CommonUtil.getToken("wxb8ef126b92b8c857", "761a8370a5dd929f19186beacb9545e1").getToken();
+//        /**
+//         * 获取用户信息
+//         */
+////        WeixinUserInfo user = CommonUtil.getUserInfo(accessToken, "ocUlj5jz8hHcGur0EmTlyOvfqzKk");
+////            model.addAttribute("user",user);
+//
+//        return "mobile/my";
+//    }
 
     @RequestMapping(value = "/mobile/goods")
     public String  goods(Item item,Model model) {

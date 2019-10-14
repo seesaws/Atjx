@@ -49,7 +49,7 @@ public class RedirectController {
             String WebAccessToken = "";
             String openId = "";
             String nickName,sex,openid = "";
-            String REDIRECT_URI = "http://bkq5b6.natappfree.cc";
+            String REDIRECT_URI = "http://49.235.1.217/mobile/user/";
             String SCOPE = "snsapi_userinfo";
 
             String getCodeUrl = UserInfoUtil.getCode(APPID, REDIRECT_URI, SCOPE);

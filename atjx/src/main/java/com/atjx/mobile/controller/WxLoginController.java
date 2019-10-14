@@ -20,17 +20,17 @@ public class WxLoginController {
     public static final String WX_APPID = "wx7738ac5a31d41ee4";
     public static final String WX_APPSECRET = "7092282a2dd53b572d39c2802b460b2f";
     private WeixinUserInfo weixinUserInfo;
-    @RequestMapping("/my")
+    @RequestMapping("/user")
     public void wxLogin(HttpServletResponse response) throws IOException {
         //请求获取code的回调地址
         //用线上环境的域名或者用内网穿透，不能用ip
 
-        String callBack = "http://bkq5b6.natappfree.cc/wxAuth/callBack";
+        String callBack = "http://49.235.1.217/mobile/user/wxAuth/callBack";
 
         //请求地址
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize" +
                 "?appid=" + WX_APPID +
-                "&redirect_uri=" + URLEncoder.encode(callBack) +
+                "&redirect_uri=" + URLEncoder.encode(callBack,"UTF-8") +
                 "&response_type=code" +
                 "&scope=snsapi_userinfo" +
                 "&state=STATE#wechat_redirect";
@@ -61,14 +61,12 @@ public class WxLoginController {
                 "?access_token=" + resultObject.getString("access_token") +
                 "&openid=" + resultObject.getString("openid") +
                 "&lang=zh_CN";
-
         String resultInfo = HttpClientUtil.doGet(infoUrl);
 
         //此时已获取到userInfo，再根据业务进行处理
         System.out.println("请求获取userInfo:" + resultInfo);
         WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
         model.addAttribute("user",infoList);
-        return new ModelAndView("my");
-
+        return new ModelAndView("mobile/my");
     }
 }

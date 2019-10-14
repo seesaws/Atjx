@@ -15,7 +15,6 @@ public class CommonUtil {
 
 
 
-
     public static class DateUtil {
         public static final String HH = "HH";
         public static final String YYYY_MM_DD = "yyyy-MM-dd";

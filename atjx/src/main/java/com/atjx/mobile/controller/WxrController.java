@@ -9,10 +9,10 @@ import java.util.Arrays;
 @RestController
 public class WxrController {
 
-    private String TOKEN = "linran2019";
+    private String TOKEN = "atjx2019";
 
 
-    @GetMapping("/mobile")
+    @GetMapping("/weixin")
     public String test(@RequestParam("signature") String signature,
                        @RequestParam("timestamp") String timestamp,
                        @RequestParam("nonce") String nonce,

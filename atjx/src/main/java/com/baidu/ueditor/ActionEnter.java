@@ -1,5 +1,6 @@
 package com.baidu.ueditor;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,21 +17,22 @@ import org.json.JSONException;
 public class ActionEnter {
 	
 	private HttpServletRequest request = null;
-	
-	private String rootPath = null;
+	private String rootPath ="/";
 	private String contextPath = null;
-	
+	private String saveRootPath=null;
 	private String actionType = null;
 	
 	private ConfigManager configManager = null;
 
-	public ActionEnter ( HttpServletRequest request, String rootPath ) {
+	public ActionEnter ( HttpServletRequest request, String saveRootPath,String rootPath ) {
 		
 		this.request = request;
 		this.rootPath = rootPath;
+
+		this.saveRootPath=saveRootPath;
 		this.actionType = request.getParameter( "action" );
 		this.contextPath = request.getContextPath();
-		this.configManager = ConfigManager.getInstance( this.rootPath, this.contextPath, request.getRequestURI() );
+		this.configManager = ConfigManager.getInstance( this.rootPath, this.saveRootPath,this.contextPath, request.getRequestURI() );
 		
 	}
 	

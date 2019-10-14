@@ -32,10 +32,11 @@ public class UtilsController {
 //                + File.separatorChar;
 //        String savePath="upload/image";
 
+
         Date date = new Date();
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
-        String savePath="c://upload/image/"+dt;
-        String saveUrl="http://127.0.0.1/image/"+dt;
+        String savePath="/upload/image/"+dt;
+        String saveUrl="http://49.235.1.217/image/"+dt;
         // 定义允许上传的文件扩展名
         HashMap<String, String> extMap = new HashMap<String, String>();
         extMap.put("image", "gif,jpg,jpeg,png,bmp");
@@ -120,11 +121,11 @@ public class UtilsController {
         //根目录路径，可以指定绝对路径，比如 /var/www/attached/
 //        String rootPath = request.getSession().getServletContext().getRealPath("/");
 
-        String rootPath="c:\\upload\\";
+        String rootPath="/root/";
         //根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
 //        String rootUrl = request.getContextPath() + "/image/";
 
-        String rootUrl="http://127.0.0.1/";
+        String rootUrl="http://49.235.1.217/";
         //图片扩展名
         String[] fileTypes = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};
         System.out.println(rootPath);

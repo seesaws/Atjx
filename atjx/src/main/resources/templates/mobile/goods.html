@@ -10,7 +10,7 @@
 		<title></title>
 	</head>
 	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"> </script>
 	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
 
 	<script th:inline="javascript">
@@ -23,7 +23,7 @@
 					//关闭elementPath  
 					elementPathEnabled:false,
 					//默认的编辑区域高度  
-					initialFrameHeight:400
+					initialFrameHeight: '100%'
 					//更多其他参数，请参考ueditor.config.js中的配置项  
 				});
 		ue.ready(function() {
@@ -74,19 +74,19 @@
 			<div class="particulars-goroup">
 				<div class="particularsTie">套餐选择</div>
 				<div class="particularsel">
-					<div class="active">小牛有约99套餐</div>
-					<div>超级牛有约199套餐</div>
+					<div class="active">套餐一</div>
+					<div>套餐二</div>
 				</div>
 			</div>
 			<div class="particulars-goroup">
 				<div class="particularsTie">商家信息</div>
 				<div class="particularsjxx">
 					<div class="particularsjxx-list">
-						<div class="particularsjxx-name">小牛有约火锅店（八佰伴店）</div>
+						<div class="particularsjxx-name">商家名称</div>
 						<div class="particularsjxx-jianjie">
 							<img src="../img/address.png" alt=""/>
 							<div class="address">
-								<p><span>张杨路601号101层A-30室</span><a href="tel:test"><img src="../img/tells.png" /></a></p>
+								<p><span>地址一</span><a href="tel:test"><img src="../img/tells.png" /></a></p>
 								<p>营业时间：09:30-14:00 14:00-21:00</p>
 							</div>
 						</div>
@@ -99,12 +99,10 @@
 
 <!--						<script id="editor" type="text/html" style="width:100%">-->
 <!--						</script>-->
-					<label for="editor"></label><textarea id="editor" name="sellPoint" th:utext="${item.sellPoint}">
+					<label for="editor"></label><textarea id="editor" name="sellPoint" th:utext="${item.sellPoint}" style="width: 100%;">
 				</textarea >
-
-
-
 				</div>
+
 			</div>
 		</div>
 		<div class="hrefbox">
