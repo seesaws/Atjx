@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -23,6 +24,7 @@ public class MobileController {
     @RequestMapping(value = "/mobile/")
     public String index0( Model model) {
         List<Item> list = itemMapper.selectAll();
+        Collections.reverse(list);
         model.addAttribute("itemlist",list);
         return "mobile/index";
     }
@@ -31,6 +33,7 @@ public class MobileController {
     public String index( Model model) {
 
         List<Item> list = itemMapper.selectAll();
+        Collections.reverse(list);
         model.addAttribute("itemlist",list);
 
         return "mobile/index";

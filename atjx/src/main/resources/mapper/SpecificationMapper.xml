@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.atjx.mapper.SpecificationMapper">
-    <resultMap id="spe" type="com.atjx.model.Specification">
+    <resultMap id="speResultMap" type="com.atjx.model.Specification">
         <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
         <result column="item_id" property="item_id" jdbcType="INTEGER"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="tname" property="tname" jdbcType="VARCHAR"/>
         <result column="price" property="price" jdbcType="INTEGER"/>
 
     </resultMap>
+
+    <insert id="insert" parameterType="com.atjx.model.Specification" useGeneratedKeys="true" keyProperty="spe_id">
+        insert into tb_address (spe_id,item_id,tname,price)
+        value (
+        #{spe_id,jdbcType=INTEGER},
+        #{item_id,jdbcType=INTEGER},
+        #{tname,jdbcType=VARCHAR},
+        #{price,jdbcType=INTEGER}
+        )
+    </insert>
+
+
+    <delete id="delete" parameterType="com.atjx.model.Specification">
+        delete from tb_specification where id=#{spe_id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="update" parameterType="com.atjx.model.Specification">
+    UPDATE tb_item SET
+    <if test="tname != null">
+        tname = #{tname, jdbcType=VARCHAR},
+    </if>
+    <if test="price != null">
+        price = #{price, jdbcType=INTEGER}
+    </if>
+    WHERE spe_id = #{spe_id, jdbcType=INTEGER}
+    </update>
 
 </mapper>

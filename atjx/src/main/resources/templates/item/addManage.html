@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>输入框组</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <style>
+        /*.input-group-add .input-group {
+            margin: 10px 0;
+        }*/
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <!--<div class="input-group-add">
+        <div class="input-group">
+            <span class="input-group-addon"> 1 </span>
+            <input type="text" class="form-control" aria-label="...">
+            <span class="input-group-addon">
+                <button class="btn btn-default" type="button"> + </button>
+            </span>
+        </div>
+    </div>-->
+</div>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/inputGroup.js"></script>
+<script>
+    $(function() {
+        $('.input-group-add').initInputGroup({
+            'widget' : 'input', //输入框组中间的空间类型
+            /*'add' : '添加',
+            'del' : '删除'*/
+        });
+    });
+</script>
+</body>
+</html>

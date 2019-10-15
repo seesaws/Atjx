@@ -6,9 +6,13 @@ import java.util.Date;
 
 @Data
 public class Item extends BaseObject {
+    //商品ID
     private int id;
+    //商品标题
     private String title;
+    //商品详情
     private String sellPoint;
+    //商品价格
     private int price;
     private int num;
     private String barcode;

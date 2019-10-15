@@ -132,7 +132,7 @@ public class UserController {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(Sender);
             message.setTo(email); //接收者邮箱
-            message.setSubject("YX后台信息管理系统-密码找回");
+            message.setSubject("后台信息管理系统-密码找回");
             StringBuilder sb = new StringBuilder();
             sb.append(user.getUserName() + "用户您好！您的注册密码是：" + password + "。感谢您使用YX信息管理系统！");
             message.setText(sb.toString());
@@ -160,9 +160,5 @@ public class UserController {
         return "redirect:userManage";
     }
 
-    @RequestMapping("/editor")
-    public String editor(){
-        return "editor";
-    }
 
 }

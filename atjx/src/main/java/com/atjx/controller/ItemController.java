@@ -136,7 +136,6 @@ public class ItemController {
 
         String html= HtmlUtils.htmlEscape(notes);
         item.setSellPoint(html);
-
         itemMapper.insert(item);
         return "redirect:/user/itemManage_0_0_0";
     }
@@ -154,21 +153,27 @@ public class ItemController {
             Item item1 = itemMapper.findById(item);
             itemMapper.update(item1);
             model.addAttribute("item", item1);
-
         }
         return "item/itemEdit";
     }
 
     @PostMapping("/user/itemEdit")
     public String itemEditPost(HttpServletRequest request, Item item) throws IOException {
-
+        //生成日期
         Date date=new Date();
+        //设置商品更新时间
         item.setUpdated(date);
         item.setBarcode("");
+        //获取前端商品详情富文本
         String notes = request.getParameter("sell_point");
         String html= HtmlUtils.htmlEscape(notes);
         item.setSellPoint(html);
-        itemMapper.update(item);
+        if(item.getId() == 0){
+            itemMapper.insert(item);
+        }else{
+            itemMapper.update(item);
+        }
+
         return "redirect:itemManage_0_0_0";
 
 
@@ -281,5 +286,15 @@ public class ItemController {
             e.printStackTrace();
         }
         return webUrl;
+    }
+
+    @RequestMapping("/user/addEdit")
+    public String addEdit(){
+        return "item/addManage";
+    }
+
+    @RequestMapping("/user/speEdit")
+    public String speEdit(){
+        return "item/speManage";
     }
 }

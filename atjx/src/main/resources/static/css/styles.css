@@ -402,7 +402,7 @@
 .shareboxlist{
 	background: #FF5252;
 	color: #FFDCDC;
-	font-size: 8px;
+	font-size: 0.5rem;
 	padding: 0.65rem;
 	text-align: center;
 }
