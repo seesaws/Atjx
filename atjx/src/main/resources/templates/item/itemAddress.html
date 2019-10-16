@@ -21,7 +21,7 @@
         <div class="border-bottom" th:include="header :: headerTop"></div>
         <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
             <div class="col-lg-10">
-                <h2>套餐管理</h2>
+                <h2>地址管理</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="#">首页</a>
@@ -30,7 +30,7 @@
                         <a>商品管理</a>
                     </li>
                     <li class="active">
-                        <strong>套餐管理</strong>
+                        <strong>地址管理</strong>
                     </li>
                 </ol>
             </div>
@@ -71,7 +71,7 @@
                                         <td th:text="${item.createdStr}">Onions</td>
                                         <td th:text="${item.updatedStr}">Onions</td>
                                         <td>
-                                            <a th:href="@{'speEdit?id='+${item.id}}" title="修改"><i
+                                            <a th:href="@{'addEdit?id='+${item.id}}" title="修改"><i
                                                     class="fa fa-edit text-navy"></i></a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <a href="#" th:onclick="'javascript:updateState('+${item.id}+',2,0);'"

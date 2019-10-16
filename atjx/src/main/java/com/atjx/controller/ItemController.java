@@ -1,6 +1,5 @@
 package com.atjx.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.atjx.mapper.ItemCategoryMapper;
 import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.ReItemMapper;
@@ -10,26 +9,18 @@ import com.atjx.model.ReItem;
 import com.atjx.model.ResObject;
 import com.atjx.util.*;
 //import com.mongodb.gridfs.GridFSDBFile;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -94,6 +85,67 @@ public class ItemController {
         model.addAttribute("pageHTML", pageHTML);
         model.addAttribute("item", item);
         return "item/itemManage";
+    }
+
+    @RequestMapping("/user/itemAddress_{pageCurrent}_{pageSize}_{pageCount}")
+    public String itemAddManage(Item item, @PathVariable Integer pageCurrent,
+                             @PathVariable Integer pageSize,
+                             @PathVariable Integer pageCount,
+                             Model model) {
+        if (pageSize == 0) pageSize = 50;
+        if (pageCurrent == 0) pageCurrent = 1;
+
+        int rows = itemMapper.count(item);
+        if (pageCount == 0) pageCount = rows % pageSize == 0 ? (rows / pageSize) : (rows / pageSize) + 1;
+        item.setStart((pageCurrent - 1) * pageSize);
+        item.setEnd(pageSize);
+        itemList = itemMapper.list(item);
+        for (Item i : itemList) {
+            i.setCreatedStr(DateUtil.getDateStr(i.getCreated()));
+            i.setUpdatedStr(DateUtil.getDateStr(i.getUpdated()));
+        }
+        ItemCategory itemCategory = new ItemCategory();
+        itemCategory.setStart(0);
+        itemCategory.setEnd(Integer.MAX_VALUE);
+        List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
+        model.addAttribute("itemCategoryList", itemCategoryList);
+        model.addAttribute("itemList", itemList);
+        String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
+        model.addAttribute("pageHTML", pageHTML);
+        model.addAttribute("item", item);
+        return "item/itemAddress";
+    }
+    @RequestMapping("/user/itemSpeManage_{pageCurrent}_{pageSize}_{pageCount}")
+    public String itemSpeManage(Item item, @PathVariable Integer pageCurrent,
+                                @PathVariable Integer pageSize,
+                                @PathVariable Integer pageCount,
+                                Model model) {
+        if (pageSize == 0) pageSize = 50;
+        if (pageCurrent == 0) pageCurrent = 1;
+
+        int rows = itemMapper.count(item);
+        if (pageCount == 0) pageCount = rows % pageSize == 0 ? (rows / pageSize) : (rows / pageSize) + 1;
+        item.setStart((pageCurrent - 1) * pageSize);
+        item.setEnd(pageSize);
+        itemList = itemMapper.list(item);
+        for (Item i : itemList) {
+            i.setCreatedStr(DateUtil.getDateStr(i.getCreated()));
+            i.setUpdatedStr(DateUtil.getDateStr(i.getUpdated()));
+        }
+        ItemCategory itemCategory = new ItemCategory();
+        itemCategory.setStart(0);
+        itemCategory.setEnd(Integer.MAX_VALUE);
+        List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
+        model.addAttribute("itemCategoryList", itemCategoryList);
+        model.addAttribute("itemList", itemList);
+        String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
+        model.addAttribute("pageHTML", pageHTML);
+        model.addAttribute("item", item);
+        return "item/speManage";
     }
 
     @RequestMapping("/user/download1")
@@ -229,11 +281,6 @@ public class ItemController {
         File path= new File("/");
         File upload = new File(path.getAbsolutePath(),"static/upload/images"+dt);
 
-//        String path="/image"+dt+name+extension;
-        //绝对路径
-//        String url=request.getSession().getServletContext().getRealPath("")+path;
-//        String url="/upload/image/"+dt;
-        //网站路径
         String webUrl="../static/upload/images"+dt+name+extension;
         String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
@@ -268,10 +315,10 @@ public class ItemController {
         String name="P"+id+"_"+newFileName;
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
 //        String path=ClassUtils.getDefaultClassLoader().getResource("").getPath();
-        File path = null;
+        File path = new File("/");
         File upload = new File(path.getAbsolutePath(),"static/images/upload/"+dt);
 
-        String webUrl="/upload/images"+dt+name+extension;
+        String webUrl="../static/upload/images"+dt+name+extension;
 
         String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
@@ -289,12 +336,36 @@ public class ItemController {
     }
 
     @RequestMapping("/user/addEdit")
-    public String addEdit(){
-        return "item/addManage";
+    public String addEdit(Item item,Model model){
+        if (item.getId() != 0) {
+            Item item1 = itemMapper.findById(item);
+            model.addAttribute("item", item1);
+        }
+        return "item/addManageEdit";
     }
 
+    @RequestMapping("/user/addPost")
+    public String addPost(Item item,Model model){
+
+
+        return "redirect:itemAddress_0_0_0";
+    }
+
+
+
     @RequestMapping("/user/speEdit")
-    public String speEdit(){
-        return "item/speManage";
+    public String speEdit(Item item,Model model)
+    {
+        if (item.getId() != 0) {
+            Item item1 = itemMapper.findById(item);
+            model.addAttribute("item", item1);
+        }
+        return "item/speEdit";
+    }
+
+
+    @RequestMapping("/user/spePost")
+    public String spePost(){
+        return "redirect:itemAddress_0_0_0";
     }
 }
