@@ -28,10 +28,10 @@
 						<div class="listcontent-price">
 							<div class="listcontent-price-left">
 								<span class="prices" th:text="'￥'+${item.price}"></span>
-								<p class="yuan">原价：</p><s class="yuan" th:text="${item.del_price}"></s>&nbsp;
+								<p class="yuan">&nbsp;原价：</p><s class="yuan" th:text="${item.del_price}"></s>&nbsp;
 								<span class="fan" th:text="'返'+${item.money}+'元'"></span>
 							</div>
-							<div class="listcontent-price-right" th:text="'销量'+${item.sales}"></div>
+							<div class="listcontent-price-right"><p class="yuan" th:style="yuan" th:text="'销量'+${item.sales}"></p></div>
 							</div>
 				</div>
 			</a>
@@ -40,22 +40,30 @@
 
 
 
-
-
 		<div class="footer">
 			<ul>
 				<li><a href="#">
+					<div>
+
 					<svg class="icon" aria-hidden="true">
 						<use xlink:href="#icon-shouye"></use>
 					</svg>
-					<div>首页</div>
-				</a></li>
-				<li><a href="/mobile/user">
+					<div  style="margin-top: -0.2rem;">首页</div>
+
+					</div>
+					</a>
+				</li>
+				<li>
+
+					<a href="/mobile/user">
+
+					<div>
 					<svg class="icon icontwo" aria-hidden="true">
 						<use xlink:href="#icon-jingyu"></use>
 					</svg>
-					<div style="margin-top: -0.28rem;">我的</div>
-				</a></li>
+					<div style="margin-top: -0.2rem;">我</div>
+					</div>
+					</a></li>
 			</ul>
 		</div>
 	</body>

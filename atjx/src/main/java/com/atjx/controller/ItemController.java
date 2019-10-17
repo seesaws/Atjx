@@ -117,6 +117,37 @@ public class ItemController {
         model.addAttribute("item", item);
         return "item/itemAddress";
     }
+    @RequestMapping("/user/picManage_{pageCurrent}_{pageSize}_{pageCount}")
+    public String PicManage(Item item, @PathVariable Integer pageCurrent,
+                                @PathVariable Integer pageSize,
+                                @PathVariable Integer pageCount,
+                                Model model) {
+        if (pageSize == 0) pageSize = 50;
+        if (pageCurrent == 0) pageCurrent = 1;
+
+        int rows = itemMapper.count(item);
+        if (pageCount == 0) pageCount = rows % pageSize == 0 ? (rows / pageSize) : (rows / pageSize) + 1;
+        item.setStart((pageCurrent - 1) * pageSize);
+        item.setEnd(pageSize);
+        itemList = itemMapper.list(item);
+        for (Item i : itemList) {
+            i.setCreatedStr(DateUtil.getDateStr(i.getCreated()));
+            i.setUpdatedStr(DateUtil.getDateStr(i.getUpdated()));
+        }
+        ItemCategory itemCategory = new ItemCategory();
+        itemCategory.setStart(0);
+        itemCategory.setEnd(Integer.MAX_VALUE);
+        List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
+        model.addAttribute("itemCategoryList", itemCategoryList);
+        model.addAttribute("itemList", itemList);
+        String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
+        model.addAttribute("pageHTML", pageHTML);
+        model.addAttribute("item", item);
+        return "item/picManage";
+    }
+
     @RequestMapping("/user/itemSpeManage_{pageCurrent}_{pageSize}_{pageCount}")
     public String itemSpeManage(Item item, @PathVariable Integer pageCurrent,
                                 @PathVariable Integer pageSize,
@@ -367,5 +398,23 @@ public class ItemController {
     @RequestMapping("/user/spePost")
     public String spePost(){
         return "redirect:itemAddress_0_0_0";
+    }
+
+
+
+    @RequestMapping("/user/itemPicEdit")
+    public String picEdit(Item item,Model model)
+    {
+        if (item.getId() != 0) {
+            Item item1 = itemMapper.findById(item);
+            model.addAttribute("item", item1);
+        }
+        return "item/itemPicEdit";
+    }
+
+
+    @RequestMapping("/user/itemPicPost")
+    public String picPost(){
+        return "redirect:picManage_0_0_0";
     }
 }

@@ -32,11 +32,12 @@
                 <a th:href="@{dashboard}"><i class="fa fa-diamond"></i> <span class="nav-label">仪表盘</span></a>
             </li>
 
-            <li>
+            <li class="active">
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">商品管理</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li id="itemManage"><a th:href="@{itemManage_0_0_0}">商品管理</a></li>
+                    <li id="picManage"><a th:href="@{picManage_0_0_0}">相册管理</a></li>
                     <li id="speManage"><a th:href="@{itemSpeManage_0_0_0}">套餐管理</a></li>
                     <li id="addManage"><a th:href="@{itemAddress_0_0_0}">地址管理</a></li>
                     <li id="stockManage"><a th:href="@{stockManage_0_0_0}">库存管理</a></li>
@@ -46,7 +47,9 @@
             </li>
             <li>
                 <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">订单管理</span><span
-                        class="label label-warning pull-right">16</span></a>
+                        class="fa arrow"></span>
+                    </a>
+<!--                <span class="label label-warning pull-right">16</span>-->
                 <ul class="nav nav-second-level collapse">
                     <li id="orderManage"><a th:href="@{orderManage_0_0_0}">订单管理</a></li>
                     <li id="orderRefund"><a th:href="@{orderRefund_0_0_0}">订单退款</a></li>

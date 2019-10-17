@@ -624,10 +624,10 @@
 	padding: 0;
 }
 .footlist ul li{
-	width: 33.33%;
+	width: 50%;
 }
 .footlist ul li p{
-	font-size: 0.9rem;
+	font-size: 0.8rem;
 	line-height: 2.2rem;
 	color: #3F3F3F;
 }
