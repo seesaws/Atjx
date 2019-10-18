@@ -1,6 +1,7 @@
 package com.baidu.ueditor;
 
 import java.io.File;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,10 @@ public class ActionEnter {
 	
 	private ConfigManager configManager = null;
 
-	public ActionEnter ( HttpServletRequest request, String saveRootPath,String rootPath ) {
+	public ActionEnter (HttpServletRequest request, String saveRootPath, String rootPath ) {
 		
 		this.request = request;
-		this.rootPath = rootPath;
+		this.rootPath = String.valueOf(rootPath);
 
 		this.saveRootPath=saveRootPath;
 		this.actionType = request.getParameter( "action" );
