@@ -1,12 +1,6 @@
 package com.baidu.ueditor;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -155,25 +149,45 @@ public final class ConfigManager {
 		
 	}
 	
+//	private void initEnv () throws FileNotFoundException, IOException {
+//
+//		File file = new File( this.originalPath );
+//
+//		if ( !file.isAbsolute() ) {
+//			file = new File( file.getAbsolutePath() );
+//		}
+//
+//		this.parentPath = file.getParent();
+//
+//		String configContent = this.readFile( this.getConfigPath() );
+//
+//		try{
+//			JSONObject jsonConfig = new JSONObject( configContent );
+//			this.jsonConfig = jsonConfig;
+//		} catch ( Exception e ) {
+//			this.jsonConfig = null;
+//		}
+//
+//	}
+		//流读取
 	private void initEnv () throws FileNotFoundException, IOException {
-		
+
 		File file = new File( this.originalPath );
-		
+
 		if ( !file.isAbsolute() ) {
 			file = new File( file.getAbsolutePath() );
 		}
-		
+
 		this.parentPath = file.getParent();
-		
-		String configContent = this.readFile( this.getConfigPath() );
-		
+
+		String configContent = this.getConfigContent();
 		try{
 			JSONObject jsonConfig = new JSONObject( configContent );
 			this.jsonConfig = jsonConfig;
 		} catch ( Exception e ) {
 			this.jsonConfig = null;
 		}
-		
+
 	}
 	
 	private String getConfigPath () {
@@ -230,6 +244,29 @@ public final class ConfigManager {
 		
 		return input.replaceAll( "/\\*[\\s\\S]*?\\*/", "" );
 		
+	}
+
+	private String getConfigContent(){
+		InputStream in = this.getClass().getResourceAsStream("/config.json");
+		String result = null;
+		try {
+			StringBuffer sb = new StringBuffer();
+			byte[] b = new byte[1024];
+			int length=0;
+			while(-1!=(length=in.read(b))){
+				sb.append(new String(b,0,length,"utf-8"));
+			}
+			result = sb.toString().replaceAll("/\\*(.|[\\r\\n])*?\\*/","");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 	
 }

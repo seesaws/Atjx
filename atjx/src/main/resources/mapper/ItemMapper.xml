@@ -5,7 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
-        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
         <result column="num" property="num" jdbcType="INTEGER"/>
         <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
         <result column="image" property="image" jdbcType="VARCHAR"/>
@@ -14,14 +14,14 @@
         <result column="created" property="created" jdbcType="TIMESTAMP"/>
         <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
         <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
-        <result column="del_price" property="del_price" jdbcType="INTEGER"/>
+        <result column="del_price" property="del_price" jdbcType="DECIMAL"/>
         <result column="sales" property="sales" jdbcType="INTEGER"/>
-        <result column="money" property="money" jdbcType="INTEGER"/>
-
+        <result column="money" property="money" jdbcType="DECIMAL"/>
     </resultMap>
 
     <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT * from tb_item where id = #{id, jdbcType=INTEGER}
+        SELECT * from tb_item
+        where id = #{id, jdbcType=INTEGER}
     </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
@@ -78,7 +78,7 @@
          #{id, jdbcType=INTEGER},
          #{title, jdbcType=VARCHAR},
          #{sellPoint, jdbcType=VARCHAR},
-         #{price, jdbcType=INTEGER},
+         #{price, jdbcType=DOUBLE},
          #{num, jdbcType=INTEGER},
          #{barcode, jdbcType=VARCHAR},
          #{image, jdbcType=VARCHAR},
@@ -86,9 +86,9 @@
          1,
          NOW(),
          NOW(),
-         #{del_price, jdbcType=INTEGER},
+         #{del_price, jdbcType=DOUBLE},
          0,
-         #{money, jdbcType=INTEGER}
+         #{money, jdbcType=DOUBLE}
           )
     </insert>
 
@@ -101,7 +101,7 @@
             sell_point= #{sellPoint, jdbcType=VARCHAR},
         </if>
         <if test="price != null">
-            price = #{price, jdbcType=INTEGER},
+            price = #{price, jdbcType=DOUBLE},
         </if>
         <if test="num != null">
             num = #{num, jdbcType=INTEGER},
@@ -116,13 +116,13 @@
             image = #{image, jdbcType=VARCHAR},
         </if>
         <if test="del_price != null">
-            del_price = #{del_price, jdbcType=INTEGER}
+            del_price = #{del_price, jdbcType=DOUBLE}
         </if>,
         <if test="sales != null">
             sales = #{sales, jdbcType=INTEGER}
         </if>,
         <if test="money != null">
-            money = #{money, jdbcType=INTEGER}
+            money = #{money, jdbcType=DOUBLE}
         </if>
         WHERE id = #{id, jdbcType=INTEGER}
     </update>
@@ -132,4 +132,7 @@
     <select id="findMaxId" resultType="INTEGER">
        SELECT id FROM tb_item ORDER BY id DESC LIMIT 0,1
     </select>
+
+
+    
 </mapper>

@@ -2,6 +2,7 @@ package com.atjx.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -13,7 +14,7 @@ public class Item extends BaseObject {
     //商品详情
     private String sellPoint;
     //商品价格
-    private int price;
+    private BigDecimal price;
     private int num;
     private String barcode;
     private String image;
@@ -24,13 +25,13 @@ public class Item extends BaseObject {
     private String createdStr;
     private String updatedStr;
     private String categoryName;
-    private Integer minPrice;
-    private Integer maxPrice;
+    private BigDecimal minPrice;
+    private BigDecimal maxPrice;
     private Integer minNum;
     private Integer maxNum;
-    private int del_price;
+    private BigDecimal del_price;
     private int sales;
-    private int money;
+    private BigDecimal money;
     private Address address;
     private Specification specification;
 

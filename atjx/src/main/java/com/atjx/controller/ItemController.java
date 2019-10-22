@@ -21,6 +21,7 @@ import org.springframework.web.util.HtmlUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -77,8 +78,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        Integer minPrice = item.getMinPrice();
-        Integer maxPrice = item.getMaxPrice();
+        BigDecimal minPrice = item.getMinPrice();
+        BigDecimal maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -108,8 +109,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        Integer minPrice = item.getMinPrice();
-        Integer maxPrice = item.getMaxPrice();
+        BigDecimal minPrice = item.getMinPrice();
+        BigDecimal maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -138,8 +139,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        Integer minPrice = item.getMinPrice();
-        Integer maxPrice = item.getMaxPrice();
+        BigDecimal minPrice = item.getMinPrice();
+        BigDecimal maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -169,8 +170,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        Integer minPrice = item.getMinPrice();
-        Integer maxPrice = item.getMaxPrice();
+        BigDecimal minPrice = item.getMinPrice();
+        BigDecimal maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -347,7 +348,7 @@ public class ItemController {
         String dt=new SimpleDateFormat("/yyyyMM/").format(date);
 //        String path=ClassUtils.getDefaultClassLoader().getResource("").getPath();
         File path = new File("/");
-        File upload = new File(path.getAbsolutePath(),"static/images/upload/"+dt);
+        File upload = new File(path.getAbsolutePath(),"static/upload/images"+dt);
 
         String webUrl="../static/upload/images"+dt+name+extension;
 
