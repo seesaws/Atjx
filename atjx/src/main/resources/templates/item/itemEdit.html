@@ -110,7 +110,7 @@
 
                                 <div class="form-group"><label class="col-sm-2 control-label">价格：</label>
                                     <div class="col-sm-10">
-                                        <input id="price" name="price" type="text" class="form-control"
+                                        <input id="price" name="price" type="" class="form-control"
                                                th:value="${item.price}"/>
                                     </div>
                                 </div>
@@ -211,6 +211,10 @@
             contentType: false, // 不设置内容类型
             success: function(data){
                 $("#image").attr("src",data.url);
+            },
+            error: function(xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                console.log(err.Message);
             }
 
         })
@@ -255,5 +259,5 @@
 </script>
 
 </body>
-
+ <!-- 底部注释 -->
 </html>

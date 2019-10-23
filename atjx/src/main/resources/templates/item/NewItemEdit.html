@@ -325,6 +325,10 @@
             success: function(data){
                 $("#image1").attr("src",data.url);
                $("#image").attr("value",data.url)
+            },
+            error: function(xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                console.log(err.Message);
             }
 
         })

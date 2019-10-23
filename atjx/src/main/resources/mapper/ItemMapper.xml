@@ -5,7 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
-        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
         <result column="num" property="num" jdbcType="INTEGER"/>
         <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
         <result column="image" property="image" jdbcType="VARCHAR"/>
@@ -14,9 +14,9 @@
         <result column="created" property="created" jdbcType="TIMESTAMP"/>
         <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
         <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
-        <result column="del_price" property="del_price" jdbcType="DECIMAL"/>
+        <result column="del_price" property="del_price" jdbcType="BIGINT"/>
         <result column="sales" property="sales" jdbcType="INTEGER"/>
-        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="money" property="money" jdbcType="BIGINT"/>
     </resultMap>
 
     <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -37,7 +37,7 @@
             AND cid = #{cid, jdbcType=INTEGER}
         </if>
         <if test="minPrice != null and maxPrice != null">
-            AND price BETWEEN #{minPrice, jdbcType=INTEGER} AND #{maxPrice, jdbcType=INTEGER}
+            AND price BETWEEN #{minPrice, jdbcType=BIGINT} AND #{maxPrice, jdbcType=BIGINT}
         </if>
         ORDER BY updated desc
         limit #{start, jdbcType=INTEGER},#{end, jdbcType=INTEGER}
@@ -68,7 +68,7 @@
         </if>
 
         <if test="minPrice != null and maxPrice != null">
-            AND price BETWEEN #{minPrice, jdbcType=INTEGER} AND #{maxPrice, jdbcType=INTEGER}
+            AND price BETWEEN #{minPrice, jdbcType=BIGINT} AND #{maxPrice, jdbcType=BIGINT}
             ORDER BY price
         </if>
     </select>
@@ -78,7 +78,7 @@
          #{id, jdbcType=INTEGER},
          #{title, jdbcType=VARCHAR},
          #{sellPoint, jdbcType=VARCHAR},
-         #{price, jdbcType=DOUBLE},
+         #{price, jdbcType=BIGINT},
          #{num, jdbcType=INTEGER},
          #{barcode, jdbcType=VARCHAR},
          #{image, jdbcType=VARCHAR},
@@ -86,9 +86,9 @@
          1,
          NOW(),
          NOW(),
-         #{del_price, jdbcType=DOUBLE},
+         #{del_price, jdbcType=BIGINT},
          0,
-         #{money, jdbcType=DOUBLE}
+         #{money, jdbcType=BIGINT}
           )
     </insert>
 
@@ -101,7 +101,7 @@
             sell_point= #{sellPoint, jdbcType=VARCHAR},
         </if>
         <if test="price != null">
-            price = #{price, jdbcType=DOUBLE},
+            price = #{price, jdbcType=BIGINT},
         </if>
         <if test="num != null">
             num = #{num, jdbcType=INTEGER},
@@ -116,13 +116,13 @@
             image = #{image, jdbcType=VARCHAR},
         </if>
         <if test="del_price != null">
-            del_price = #{del_price, jdbcType=DOUBLE}
-        </if>,
+            del_price = #{del_price, jdbcType=BIGINT},
+        </if>
         <if test="sales != null">
-            sales = #{sales, jdbcType=INTEGER}
-        </if>,
+            sales = #{sales, jdbcType=INTEGER},
+        </if>
         <if test="money != null">
-            money = #{money, jdbcType=DOUBLE}
+            money = #{money, jdbcType=BIGINT}
         </if>
         WHERE id = #{id, jdbcType=INTEGER}
     </update>

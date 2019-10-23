@@ -78,8 +78,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        BigDecimal minPrice = item.getMinPrice();
-        BigDecimal maxPrice = item.getMaxPrice();
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -109,8 +109,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        BigDecimal minPrice = item.getMinPrice();
-        BigDecimal maxPrice = item.getMaxPrice();
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -139,8 +139,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        BigDecimal minPrice = item.getMinPrice();
-        BigDecimal maxPrice = item.getMaxPrice();
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -170,8 +170,8 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
         List<ItemCategory> itemCategoryList = itemCategoryMapper.list(itemCategory);
-        BigDecimal minPrice = item.getMinPrice();
-        BigDecimal maxPrice = item.getMaxPrice();
+        Integer minPrice = item.getMinPrice();
+        Integer maxPrice = item.getMaxPrice();
         model.addAttribute("itemCategoryList", itemCategoryList);
         model.addAttribute("itemList", itemList);
         String pageHTML = PageUtil.getPageContent("itemManage_{pageCurrent}_{pageSize}_{pageCount}?title=" + item.getTitle() + "&cid=" + item.getCid() + "&minPrice" + minPrice + "&maxPrice" + maxPrice, pageCurrent, pageSize, pageCount);
@@ -313,10 +313,12 @@ public class ItemController {
         File path= new File("/");
         File upload = new File(path.getAbsolutePath(),"static/upload/images"+dt);
 
-        String webUrl="../static/upload/images"+dt+name+extension;
-        String url=webUrl;
-        webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
+        String webUrl="/static/upload/images"+dt+name+extension;
+        item=itemMapper.findById(item);
+        item.setImage(webUrl);
+//        webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
         webUrl="{\"url\":\""+webUrl+"\",\"path\":\"/upload"+dt+extension+"\"}";
+
         File dir=new File(String.valueOf(upload));
         //上传图片
         try {
@@ -327,7 +329,7 @@ public class ItemController {
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-            item.setImage(url);
+
             itemMapper.update(item);
 
             return webUrl;
@@ -350,9 +352,8 @@ public class ItemController {
         File path = new File("/");
         File upload = new File(path.getAbsolutePath(),"static/upload/images"+dt);
 
-        String webUrl="../static/upload/images"+dt+name+extension;
+        String webUrl="/static/upload/images"+dt+name+extension;
 
-        String url=webUrl;
         webUrl=webUrl.replaceAll("http://", "").replaceAll("/uploadImg/WEB-INF", "");
         webUrl="{\"url\":\""+webUrl+"\",\"path\":\"/upload/"+dt+extension+"\"}";
         File dir=new File(String.valueOf(upload));

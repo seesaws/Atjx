@@ -122,7 +122,9 @@
 <!-- common -->
 <script th:src="@{/js/common1.js}"></script>
 
+
 <script th:inline="javascript">
+
     var pageHTML = [[${pageHTML}]];
     $(document).ready(function () {
         $("#pageHTML").html(pageHTML);

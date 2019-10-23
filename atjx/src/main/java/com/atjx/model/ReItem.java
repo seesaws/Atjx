@@ -10,7 +10,7 @@ public class ReItem extends BaseObject {
     private int id;
     private String title;
     private String sellPoint;
-    private BigDecimal price;
+    private Integer price;
     private int num;
     private String barcode;
     private String image;
@@ -18,5 +18,5 @@ public class ReItem extends BaseObject {
     private int status;
     private Date recovered;
     private String recoveredStr;
-    private BigDecimal del_price;
+    private Integer del_price;
 }
