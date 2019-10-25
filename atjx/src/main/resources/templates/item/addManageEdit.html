@@ -95,17 +95,17 @@
                                             </thead>
                                             <tbody>
                                             <!-- BEGIN list -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td th:text="${item.id}"></td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                                <td>5</td>
-                                                <td>6</td>
+                                            <tr th:each="l : ${list}">
+                                                <td th:text="${l.add_id}"></td>
+                                                <td th:text="${l.item_id}"></td>
+                                                <td th:text="${l.shopname}"></td>
+                                                <td th:text="${l.addressInfo}"></td>
+                                                <td th:text="${l.starttime}"></td>
+                                                <td th:text="${l.tel}"></td>
                                                 <td>
                                                     <button type="button" class="btn btn-info" data-toggle="modal" onclick="" data-target="#addUserModal">编辑</button>
                                                     &nbsp;&nbsp;
-                                                    <button type="button" class="btn btn-danger" onclick="">删除</button>
+                                                    <a type="button" th:href="'/addDelete?add_id='+${l.add_id}+'&amp;id='+${item.id}" class="btn btn-danger" >删除</a>
                                                 </td>
 
                                             </tr>
@@ -131,24 +131,27 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">添加地址信息</h4>
                                             </div>
+                                            <form id="form1" name="form1" action="/user/addPost" method="post">
                                             <div class="modal-body">
-
-
-                                                <label for="name">店铺:</label>
-                                                <input type="text" class="form-control" id="m_code" placeholder="请输入店铺名"/>
-                                                <label for="name">地址:</label>
-                                                <input type="text" class="form-control" id="m_userName" placeholder="请输入地址"/>
-                                                <label for="name">电话:</label>
-                                                <input type="text" class="form-control" id="m_sex" placeholder="请输入电话"/>
-                                                <label for="name">营业:</label>
-                                                <input type="text" class="form-control" id="m_passWord" placeholder="请输入营业时间"/>
-
-
+                                                <label for="add_id">套餐id：</label>
+                                                <input  id="add_id" name="add_id" readonly="readonly" type="text" class="form-control" value="0"/>
+                                                <label for="item_id">商品id：</label>
+                                                <input  id="item_id" name="item_id" readonly="readonly" type="text" class="form-control" th:value="${item.id}"/>
+                                                <label for="shopname">店铺:</label>
+                                                <input id="shopname" name="shopname" type="text" class="form-control"  placeholder="请输入店铺名"/>
+                                                <label for="addressInfo">地址:</label>
+                                                <input id="addressInfo" name="addressInfo" type="text" class="form-control"  placeholder="请输入地址"/>
+                                                <label for="tel">电话:</label>
+                                                <input id="tel" name="tel" type="text" class="form-control"  placeholder="请输入电话"/>
+                                                <label for="starttime">营业:</label>
+                                                <input id="starttime" name="starttime" type="text" class="form-control"  placeholder="请输入营业时间"/>
                                             </div>
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="button" class="btn btn-primary">确认添加</button>
+                                                <button type="submit" class="btn btn-primary">确认添加</button>
                                             </div>
+                                            </form>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
                                 </div>

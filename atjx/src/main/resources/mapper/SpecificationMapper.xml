@@ -10,7 +10,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.atjx.model.Specification" useGeneratedKeys="true" keyProperty="spe_id">
-        insert into tb_address (spe_id,item_id,tname,price)
+        insert into tb_specification (spe_id,item_id,tname,price)
         value (
         #{spe_id,jdbcType=INTEGER},
         #{item_id,jdbcType=INTEGER},
@@ -20,8 +20,8 @@
     </insert>
 
 
-    <delete id="delete" parameterType="com.atjx.model.Specification">
-        delete from tb_specification where id=#{spe_id,jdbcType=INTEGER}
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from tb_specification where spe_id=#{spe_id,jdbcType=INTEGER}
     </delete>
 
     <update id="update" parameterType="com.atjx.model.Specification">
@@ -34,5 +34,9 @@
     </if>
     WHERE spe_id = #{spe_id, jdbcType=INTEGER}
     </update>
+
+    <select id="selectAll" resultMap="speResultMap">
+        SELECT * from tb_specification where item_id=#{item_id,jdbcType=INTEGER}
+    </select>
 
 </mapper>

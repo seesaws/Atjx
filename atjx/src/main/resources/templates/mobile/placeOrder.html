@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<header>
-			<span class="back"></span>
+			<a  onclick="window.history.go(-1)"><div><span class="back"></span></div></a>
 			<div class="headtit">提交订单</div>
 		</header>
 		<div class="boxs">
@@ -17,31 +17,31 @@
 				<div class="order-form">
 					<form action="" method="">
 						<div class="orderform-group">
-							<img src="../img/order1.png" >
+							<img src="../img/order1.png" />
 							<span>姓名：</span>
 							<input type="text" name="ordername" id="ordername" value="" />
 						</div>
 						<div class="orderform-group">
-							<img src="../img/order2.png" >
+							<img src="../img/order2.png" />
 							<span>手机号：</span>
-							<input type="tel" name="ordertel" id="ordertel" value="" />
+							<input type="text" name="ordertel" id="ordertel" value=""  oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11"/>
 						</div>
 						<div class="orderform-group">
-							<img src="../img/order3.png" >
+							<img src="../img/order3.png" />
 							<span>备注：</span>
-							<input type="text" name="orderremark" id="orderremark" value="" />
+							<input type="text" name="orderremark" id="orderremark" value="" placeholder="备注信息"/>
 						</div>
 					</form>
 				</div>
 				<div class="ordermes">
 					<div class="orderTit">商品信息</div>
 					<div class="ordertypes">
-						<img src="../img/projects.png" >
-						<div>代金券可叠加使用，除餐包、调料、酒水外全场通用～～单张券适合3-4人使用，折后人均50～</div>
+						<img th:src="${item.image}" />
+						<div th:text="${item.title}"></div>
 					</div>
 					<div class="ordertypes">
 						<p>A套餐</p>
-						<p>￥99</p>
+						<p id="price" th:text="'￥'+${item.price}"></p>
 					</div>
 				</div>
 				<div class="ordernum">
@@ -60,11 +60,104 @@
 			</div>
 		</div>
 		<div class="orderpay">
-			<div class="orderpay-left"><span>小计：</span><span id="totalmoney">￥99</span></div>
+			<div class="orderpay-left"><span>小计：</span><span id="totalmoney" th:text="'￥'+${item.price}"></span></div>
 			<div class="paybtn" id="paybtn">微信支付</div>
 		</div>
 		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/placeOrder.js" type="text/javascript" charset="utf-8"></script>
+		<script th:inline="javascript" charset="utf-8">
+			$(function() {
+				var p=[[${item.price}]];
+				console.log(p);
+				var price =parseInt(p,10); //商品单价
+				// 商品数量增减
+				$(".orderbtns").on("click", "span", function() {
+					var num = $("#ordernum").val();
+					/*<![CDATA[*/
+					if ($(this).data("type") == "-" && $("#ordernum").val() > 1) {
+						num--;
+					} else if ($(this).data("type") == "+") {
+						num++;
+					}
+					/*]]>*/
+					$("#ordernum").val(num);
+					$("#totalmoney").text('￥' + price * num)
+				})
+				// 商品支付
+				$("#paybtn").click(function() {
+					if($("#ordername").val() == ""){
+						return
+					}
+					if($("#ordertel").val() == ""){
+						return
+					}
+					var username = $("#ordername").val();//用户姓名
+					var usertel = $("#ordertel").val();//用户电话
+					var orderremark = $("#ordertel").val();//用户备注
+					var num = $("#ordernum").val();//数量
+					var totalmoney = $("#totalmoney").text().slice(1);//总价
+					var currurl = decodeURIComponent(location.href.split('#')[0]);
+					//ajax注入权限验证
+					$.ajax({
+						url: "", //后台接口地址
+						dataType: 'json',
+						data: {
+							'url': currurl
+						},
+						complete: function(XMLHttpRequest, textStatus) {},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							alert("发生错误：" + errorThrown);
+						},
+						success: function(res) {
+							var appId = res.appId;
+							var nonceStr = res.nonceStr;
+							var jsapi_ticket = res.jsapi_ticket;
+							var timestamp = res.timestamp;
+							var signature = res.signature;
+							// alert(appId +" " + nonceStr +" "+jsapi_ticket+" "+timestamp+" "+signature);
+							wx.config({
+								debug: false, //开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+								appId: appId, //必填，公众号的唯一标识
+								timestamp: timestamp, // 必填，生成签名的时间戳
+								nonceStr: nonceStr, //必填，生成签名的随机串
+								signature: signature, // 必填，签名，见附录1
+								jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] //必填，需要使用的JS接口列表，所有JS接口列表 见附录2
+							}); // end wx.config
+							wx.ready(function() {
+								$.ajax({
+									url: "",//后台支付接口
+									type: "post",
+									dataType: "json",
+									success: function(result) {
+										wx.chooseWXPay({
+											timestamp: result.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+											nonceStr: result.nonceStr, // 支付签名随机串，不长于 32 位
+											package: "prepay_id=" + result.prepay_id,
+											signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+											paySign: result.paySign, // 支付签名
+											success: function(res) {
+
+											}
+										});
+									},
+									error: function(data) {
+										alert(data);
+									}
+								})
+							}); // end ready
+
+							wx.error(function(res) {
+								// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+								alert('error');
+							});
+						}
+					});
+				})
+			})
+
+
+
+		</script>
+
 	</body>
 </html>

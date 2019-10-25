@@ -8,7 +8,7 @@ public class Address {
     private int add_id;
     private int item_id;
     private String shopname;
-    private String address;
+    private String addressInfo;
     private String tel;
     private String starttime;
 

@@ -87,7 +87,7 @@
 						<div class="particularsjxx-jianjie">
 							<img src="../img/address.png" alt=""/>
 							<div class="address">
-								<p><span>地址一</span><a href="tel:test"><img src="../img/tells.png" /></a></p>
+								<p><span>地址一</span><a href="tel:888"><img src="../img/tells.png"  alt="电话"/></a></p>
 								<p>营业时间：09:30-14:00 14:00-21:00</p>
 							</div>
 						</div>
@@ -124,7 +124,7 @@
 					<a href="tel:666666666"><p>咨询客服</p></a>
 				</li>
 				<li class="active">
-					<a href="placeOrder.html"><p>立即购买</p></a>
+					<a th:href="@{'/mobile/placeOrder?id='+${item.id}}"><p>立即购买</p></a>
 				</li>
 			</ul>
 		</div>

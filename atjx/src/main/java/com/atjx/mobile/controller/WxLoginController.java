@@ -6,6 +6,7 @@ import com.atjx.mobile.pojo.WeixinUserInfo;
 import com.atjx.mobile.util.HttpClientUtil;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +26,7 @@ public class WxLoginController {
         //请求获取code的回调地址
         //用线上环境的域名或者用内网穿透，不能用ip
 
-        String callBack = "http://49.235.1.217/mobile/user/wxAuth/callBack";
+        String callBack = "https://atjx.mynatapp.cc/mobile/callBack";
 
         //请求地址
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize" +

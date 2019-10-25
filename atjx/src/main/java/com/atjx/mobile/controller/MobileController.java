@@ -65,6 +65,14 @@ public class MobileController {
              return "mobile/goods";
     }
 
+    @RequestMapping(value = "/mobile/placeOrder")
+    public String  PlaceOrder(Item item,Model model) {
+
+        Item item1=itemMapper.findById(item);
+        model.addAttribute("item",item1);
+        return "mobile/placeOrder";
+    }
+
 
 
 }

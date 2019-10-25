@@ -13,39 +13,47 @@
 	<body>
 		<div class="container">
 			<div class="myimgbj">
-				<img src="../img/timg.jpg" />
-				<div class="myhead"><img th:src="${user.getHeadImgUrl()}" />
+				<img src="../img/timg4.jpg" />
+				<div class="myhead"><img th:src="${user.getHeadImgUrl()}"/>
+
 				</div><br/>
 				<span class="myimgbj" style="bottom: 45%;font-size:0.65rem" th:text="${user.getNickname()}"></span>
-
 
 
 			</div>
 
 			<ul class="navbars">
-				<li><a href="javascript:;">
+				<li>
+					<a href="javascript:;">
+						<div>
 					<img src="../img/mynavbar1.png" />
-					<p>全部订单</p></a>
+					<p>全部订单</p></div></a>
 				</li>
 				<li><a href="javascript:;">
+					<div>
 					<img src="../img/mynavbar2.png"/>
-					<p>已支付</p></a>
+					<p>已支付</p></div></a>
 				</li>
 				<li><a href="javascript:;">
+					<div>
 					<img src="../img/mynavbar3.png"/>
-					<p>已预约</p></a>
+					<p>已预约</p></div></a>
 				</li>
 				<li><a href="javascript:;">
+					<div>
 					<img src="../img/mynavbar4.png"/>
-					<p>已完成</p></a>
+					<p>已完成</p></div></a>
 				</li>
-				<li><a href="jingku.html">
+				<li><a href="">
+					<div>
 					<img src="../img/mynavbar5.png"/>
-					<p>我的鲸库</p></a>
+					<p>我的鲸库</p></div></a>
 				</li>
-				<li><a href="jingku.html">
+				<li><a href="">
+					<div>
 					<img src="../img/mynavbar6.png"/>
-					<p>我的鲸币</p></a>
+					<p>我的鲸币</p></div>
+				</a>
 				</li>
 			</ul>
 			<div class="listdingdan">
@@ -56,7 +64,7 @@
 						<img src="../img/projects.png" />
 						<p>代金券可叠加使用，除餐包、调料、酒水外全场通用～～单张券适合3-4人使用，折后人均50～</p>
 					</div>
-					<div class="listdingdanone-usernames">用户名：test</div>
+					<div class="listdingdanone-usernames">用户名：<p th:text="${user.getNickname()}"></p></div>
 					<div class="listdingdanone-usernames">手机号：123</div>
 					<div class="listdingdanone-btns">
 						<div class="listdingdanone-btns-left">￥99</div>
@@ -69,16 +77,20 @@
 		<div class="footer">
 			<ul>
 				<li><a href="/mobile/index">
+					<div>
 					<svg class="icon" aria-hidden="true">
 						<use xlink:href="#icon-shouye"></use>
 					</svg>
 					<div>首页</div>
+					</div>
 				</a></li>
 				<li><a href="#">
+					<div>
 					<svg class="icon icontwo" aria-hidden="true">
 						<use xlink:href="#icon-jingyu"></use>
 					</svg>
 					<div style="margin-top: -0.28rem;">我的</div>
+					</div>
 				</a></li>
 			</ul>
 		</div>

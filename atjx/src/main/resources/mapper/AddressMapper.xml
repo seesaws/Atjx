@@ -3,23 +3,33 @@
 <mapper namespace="com.atjx.mapper.AddressMapper">
     <resultMap id="AddResultMap" type="com.atjx.model.Address">
         <id column="add_id" property="add_id" jdbcType="INTEGER"/>
+        <result column="item_id" property="item_id" jdbcType="INTEGER"/>
         <result column="shopname" property="shopname" jdbcType="VARCHAR"/>
-        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="address" property="addressInfo" jdbcType="VARCHAR"/>
         <result column="tel" property="tel" jdbcType="INTEGER"/>
         <result column="strattime" property="strattime" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="insert" parameterType="com.atjx.model.Address" useGeneratedKeys="true" keyProperty="add_id">
-        insert into tb_address (shopname,address,tel,starttime)
+        insert into tb_address (add_id,item_id,shopname,address,tel,starttime)
         value (
+        #{add_id,jdbcType=INTEGER},
+        #{item_id,jdbcType=INTEGER},
         #{shopname,jdbcType=VARCHAR},
-        #{address,jdbcType=VARCHAR},
+        #{addressInfo,jdbcType=VARCHAR},
         #{tel,jdbcType=INTEGER},
-        #{strattime,jdbcType=VARCHAR}
+        #{starttime,jdbcType=VARCHAR}
         )
     </insert>
 
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from tb_address where add_id=#{add_id,jdbcType=INTEGER}
+    </delete>
+
     <select id="findByItem" resultMap="AddResultMap" parameterType="java.lang.Integer">
         SELECT * from tb_address where add_id = #{add_id, jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="AddResultMap">
+        SELECT * from tb_address where item_id=#{item_id,jdbcType=INTEGER}
     </select>
 
 

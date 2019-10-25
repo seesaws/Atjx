@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -195,7 +196,7 @@ public final class ConfigManager {
 		/*=========手动修改部分=========*/
 		try{
 			//获取classpath下的config.json路径
-			return this.getClass().getClassLoader().getResource("config.json").toURI().getPath();
+			return Objects.requireNonNull(this.getClass().getClassLoader().getResource("config.json")).toURI().getPath();
 		}catch (URISyntaxException e){
 			return null;
 		}

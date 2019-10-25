@@ -1,5 +1,7 @@
 $(function() {
-	var price = 99; //商品单价
+	var p=$("#price").val();
+	console.log(p);
+	var price =parseInt(p,10); //商品单价
 	// 商品数量增减
 	$(".orderbtns").on("click", "span", function() {
 		var num = $("#ordernum").val();

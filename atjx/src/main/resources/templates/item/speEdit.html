@@ -63,8 +63,8 @@
 
                                 <div class="form-group"><label class="col-sm-2 control-label">商品id：</label>
                                     <div class="col-sm-10">
-                                        <input id="id" name="id" readonly="readonly" type="text" class="form-control"
-                                               th:value="${item.id}"/>
+                                        <label for="id"></label><input id="id" name="id" readonly="readonly" type="text" class="form-control"
+                                                                       th:value="${item.id}"/>
                                     </div>
                                 </div>
 
@@ -72,14 +72,14 @@
 
                                 <div class="form-group"><label class="col-sm-2 control-label">标题：</label>
                                     <div class="col-sm-10">
-                                        <input id="title" name="title" type="text" class="form-control"
-                                               th:value="${item.title}" readonly="readonly"/>
+                                        <label for="title"></label><input id="title" name="title" type="text" class="form-control"
+                                                                          th:value="${item.title}" readonly="readonly"/>
                                     </div>
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
 
-                                <div class="form-group"><label class="col-sm-2 control-label">门店地址信息管理：</label>
+                                <div class="form-group"><label class="col-sm-2 control-label">套餐信息管理：</label>
                                     <div class="col-sm-10">
                                         <table class="table table-hover table-bordered" >
                                             <thead>
@@ -93,15 +93,16 @@
                                             </thead>
                                             <tbody>
                                             <!-- BEGIN list -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td th:text="${item.id}"></td>
-                                                <td>3</td>
-                                                <td>4</td>
+                                            <tr th:each="l :${list}">
+                                                <td th:text="${l.spe_id}"></td>
+                                                <td th:text="${l.item_id}"></td>
+                                                <td th:text="${l.tname}"></td>
+                                                <td th:text="${l.price}"></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-info" data-toggle="modal" onclick="" data-target="#addUserModal">编辑</button>
+                                                    <button id="" type="button" class="btn btn-info" data-toggle="modal" onclick="" data-target="#addUserModal">编辑</button>
                                                     &nbsp;&nbsp;
-                                                    <button type="button" class="btn btn-danger" onclick="">删除</button>
+                                                    <a id="DelSpe" th:href="'/speDelete?spe_id='+${l.spe_id}+'&amp;id='+${item.id}" type="button" class="btn btn-danger"
+                                                            title="彻底删除">删除</a>
                                                 </td>
 
                                             </tr>
@@ -128,21 +129,24 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">添加套餐信息</h4>
                                             </div>
+                                            <form id="form1" name="form1" action="/user/spePost" method="post">
                                             <div class="modal-body">
-
-
-                                                <label for="name">套餐:</label>
-                                                <input type="text" class="form-control" id="m_code" placeholder="请输入套餐名"/>
-                                                <label for="name">价格:</label>
-                                                <input type="text" class="form-control" id="m_userName" placeholder="请输入价格"/>
-
+                                                <label for="spe_id">套餐id：</label>
+                                                <input  id="spe_id" name="spe_id" readonly="readonly" type="text" class="form-control" value="0"/>
+                                                <label for="item_id">商品id：</label>
+                                                <input  id="item_id" name="item_id" readonly="readonly" type="text" class="form-control" th:value="${item.id}"/>
+                                                <label for="tname">套餐:</label>
+                                                <input type="text" class="form-control" id="tname" name="tname" placeholder="请输入套餐名"/>
+                                                <label for="price">价格:</label>
+                                                <input type="text" class="form-control" id="price" name="price" placeholder="请输入价格"/>
 
 
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                                <button type="button" class="btn btn-primary">确认添加</button>
+                                                <button type="submit" class="btn btn-primary">确认添加</button>
                                             </div>
+                                            </form>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
                                 </div>
@@ -183,6 +187,32 @@
 
 <!-- SUMMERNOTE -->
 <script th:src="@{/js/plugins/summernote/summernote.min.js}"></script>
+
+<!--<script th:inline="javascript">-->
+<!--    var pageHTML = [[${pageHTML}]];-->
+<!--    $(document).ready(function () {-->
+<!--        $("#pageHTML").html(pageHTML);-->
+<!--    });-->
+
+<!--    /*<![CDATA[*/-->
+<!--    function speDelete(spe_id) {-->
+
+<!--            $.ajax({-->
+<!--                type: "POST",-->
+<!--                url: "/speDelete?spe_id=" + spe_id,-->
+<!--                success: function () {-->
+<!--                    window.location.reload();-->
+<!--                },-->
+<!--                error: function () {-->
+<!--                    alert("系统异常！");-->
+<!--                }-->
+<!--            });-->
+
+<!--    }-->
+
+<!--    /*]]>*/-->
+<!--</script>-->
+
 
 
 </body>

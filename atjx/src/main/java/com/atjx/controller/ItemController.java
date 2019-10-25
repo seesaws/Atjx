@@ -1,12 +1,7 @@
 package com.atjx.controller;
 
-import com.atjx.mapper.ItemCategoryMapper;
-import com.atjx.mapper.ItemMapper;
-import com.atjx.mapper.ReItemMapper;
-import com.atjx.model.Item;
-import com.atjx.model.ItemCategory;
-import com.atjx.model.ReItem;
-import com.atjx.model.ResObject;
+import com.atjx.mapper.*;
+import com.atjx.model.*;
 import com.atjx.util.*;
 //import com.mongodb.gridfs.GridFSDBFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +36,11 @@ public class ItemController {
 
     @Autowired
     private ReItemMapper reItemMapper;
+
+    @Autowired
+    private SpecificationMapper specificationMapper;
+    @Autowired
+    private AddressMapper addressMapper;
 
     public static final String ROOT = "src/main/resources/static/img/item/";
 
@@ -373,15 +373,27 @@ public class ItemController {
         if (item.getId() != 0) {
             Item item1 = itemMapper.findById(item);
             model.addAttribute("item", item1);
+            List<Address> list=addressMapper.selectAll(item1.getId());
+            model.addAttribute("list", list);
         }
         return "item/addManageEdit";
     }
 
     @RequestMapping("/user/addPost")
-    public String addPost(Item item,Model model){
+    public String addPost(Item item,Address address,Model model,HttpServletRequest request){
+        String id=request.getParameter("item_id");
+        address.setItem_id(Integer.parseInt(id));
+        addressMapper.insert(address);
+        return "redirect:/user/addEdit?id="+id;
+    }
 
-
-        return "redirect:itemAddress_0_0_0";
+    //删除地址
+    @RequestMapping("/addDelete")
+    public String addDelete(HttpServletRequest request, Address address){
+        String add_id=request.getParameter("add_id");
+        String id=request.getParameter("id");
+        addressMapper.delete(Integer.parseInt(add_id));
+        return "redirect:/user/addEdit?id="+id;
     }
 
 
@@ -392,15 +404,30 @@ public class ItemController {
         if (item.getId() != 0) {
             Item item1 = itemMapper.findById(item);
             model.addAttribute("item", item1);
+            List<Specification> list=specificationMapper.selectAll(item1.getId());
+            model.addAttribute("list", list);
         }
         return "item/speEdit";
     }
 
-
+    //增加套餐信息
     @RequestMapping("/user/spePost")
-    public String spePost(){
-        return "redirect:itemAddress_0_0_0";
+    public String spePost(HttpServletRequest request, Specification spe){
+        String id=request.getParameter("item_id");
+
+        spe.setItem_id(Integer.parseInt(id));
+        specificationMapper.insert(spe);
+        return "redirect:/user/speEdit?id="+id;
     }
+    //删除套餐
+    @RequestMapping("/speDelete")
+    public String speDelete(HttpServletRequest request, Specification spe){
+        String spe_id=request.getParameter("spe_id");
+        String id=request.getParameter("id");
+        specificationMapper.delete(Integer.parseInt(spe_id));
+        return "redirect:/user/speEdit?id="+id;
+    }
+
 
 
 
