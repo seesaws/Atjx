@@ -32,11 +32,11 @@ public class UserInfoUtil {
 
 
     public static void main(String[] args) {
-        String REDIRECT_URI = "http://bkq5b6.natappfree.cc/";
+        String REDIRECT_URI = "http://atjx.club/mobile/";
         String SCOPE = "snsapi_login"; // snsapi_userinfo // snsapi_login
 
         //appId
-        String appId = "wxb8ef126b92b8c857";
+        String appId = "wx7738ac5a31d41ee4";
 
         String getCodeUrl = getCode(appId, REDIRECT_URI, SCOPE);
         System.out.println("getCodeUrl:"+getCodeUrl);

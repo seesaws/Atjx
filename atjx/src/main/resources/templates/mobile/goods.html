@@ -124,12 +124,10 @@
 					<a href="tel:666666666"><p>咨询客服</p></a>
 				</li>
 				<li class="active">
-					<a th:href="@{'/mobile/placeOrder?id='+${item.id}}"><p>立即购买</p></a>
+					<a th:href="@{'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&amp;redirect_uri=http://atjx.mynatapp.cc/mobile/placeOrder?id='+${item.id}+'&amp;response_type=code&amp;scope=snsapi_base&amp;state=123#wechat_redirect'}"><p>立即购买</p></a>
 				</li>
 			</ul>
 		</div>
-		<script charset="UTF-8" th:src="@{/js/kindeditor/kindeditor-all-min.js}"></script>
-		<script charset="UTF-8" th:src="@{/js/kindeditor/lang/zh-CN.js}"></script>
 
 
 

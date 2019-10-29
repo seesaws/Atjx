@@ -1,8 +1,6 @@
 package com.atjx.mobile.controller;
 
 import com.atjx.mapper.ItemMapper;
-import com.atjx.mobile.pojo.WeixinUserInfo;
-import com.atjx.mobile.util.CommonUtil;
 import com.atjx.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,5 +72,9 @@ public class MobileController {
     }
 
 
+    @RequestMapping(value = "/mobile/rechargeSuccess")
+    public String  rechargeSuccess() {
 
+        return "mobile/rechargeSuccess";
+    }
 }

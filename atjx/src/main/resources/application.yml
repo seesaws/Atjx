@@ -1,0 +1,17 @@
+#  微信公众号支付配置
+weixinpay:
+  mchId:  # 商户Id
+  storePassword:  # 秘钥支付密码
+  appid:
+  secretKey:  # 秘钥
+  notifyUrl:  #微信支付回调
+  keystore:    # 证书所在位置
+
+# app微信支付
+appweixinpay:
+  mchId:
+  appid:
+  secretKey:
+  notifyUrl:
+  keystore:
+  storePassword:
