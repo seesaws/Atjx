@@ -2,7 +2,6 @@ package com.atjx.mobile.controller;
 
 
 import com.atjx.mobile.model.ResultInfo;
-import com.atjx.mobile.util.HttpRequest;
 import com.atjx.mobile.util.WXPayUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,7 @@ public class WeChatPayController {
         String code = request.getParameter("code");
         String appId = "wx7738ac5a31d41ee4";
         String appSecret = "7092282a2dd53b572d39c2802b460b2f";
-        String result = "";
+        String result = null;
         try {
             String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?grant_type=authorization_code";
             String getDataStr = "&appid=" + appId + "&secret=" + appSecret+"&code="+code;
@@ -88,11 +87,14 @@ public class WeChatPayController {
     @ResponseBody
     public ResultInfo order(HttpServletRequest request,ResultInfo resultInfo)
     {
-        String orderAccount= request.getParameter("accountID"); //充值账户
+//        String orderAccount= request.getParameter("accountID"); //充值账户
         String orderFee1= request.getParameter("orderFee"); //充值金额（单位：分）
+
+        String openId= request.getParameter("openid");//openid
         String paternerKey="atjx100410251625asd15gf15r51g54s";
         String appId = "wx7738ac5a31d41ee4";
-        String openId= "当前用户的openid";
+
+//        System.out.println(openId);
 
         // 将充值金额的单位由元转换为分
         int index = orderFee1.indexOf(".");
@@ -108,6 +110,7 @@ public class WeChatPayController {
             amLong = Long.valueOf((orderFee1.substring(0, index+1)).replace(".", "")+"00");
         }
         String orderFee= amLong.toString();
+
 
 
         try {
@@ -145,7 +148,7 @@ public class WeChatPayController {
             paraMap.put("openid", openId);
             paraMap.put("out_trade_no",orderId );//订单号
             paraMap.put("spbill_create_ip", ip);
-            paraMap.put("total_fee",orderFee);
+            paraMap.put("total_fee","1");
             paraMap.put("trade_type", "JSAPI");
             paraMap.put("notify_url","http://atjx.mynatapp.cc/callback");// 此路径是微信服务器调用支付结果通知路径
             String sign = WXPayUtil.generateSignature(paraMap, paternerKey);
@@ -157,8 +160,8 @@ public class WeChatPayController {
             String unifiedorder_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
             //发送post请求"统一下单接口"返回预支付id:prepay_id
-            String xmlStr = HttpRequest.sendPost(unifiedorder_url, xml);
-            //System.out.println("xml是"+xmlStr);
+            String xmlStr = sendPost(unifiedorder_url, xml);
+
 
             //以下内容是返回前端页面的json数据
             String prepay_id = "";//预支付id
@@ -166,6 +169,7 @@ public class WeChatPayController {
                 System.out.println("支付系统返回了prepay_id");
                 Map<String, String> map = WXPayUtil.xmlToMap(xmlStr);
                 prepay_id =map.get("prepay_id");
+                System.out.println(prepay_id);
             }else {
                 System.out.println("prepay_id获取失败");
             }
@@ -198,7 +202,7 @@ public class WeChatPayController {
             resultInfo.setMessage("异常：" + e.toString());
             resultInfo.setData(null);
         }
-        System.out.println(resultInfo.getType()+"...."+resultInfo.getMessage()+"...."+resultInfo.getData());
+//        System.out.println(resultInfo.getType()+"...."+resultInfo.getMessage()+"...."+resultInfo.getData());
 
         return resultInfo;
     }

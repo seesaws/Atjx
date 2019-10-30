@@ -61,7 +61,7 @@
 		</div>
 		<div class="orderpay">
 			<div class="orderpay-left"><span>小计：</span><span id="totalmoney" th:text="'￥'+${item.price}"></span></div>
-			<div class="paybtn" id="paybtn">微信支付</div>
+			<div class="paybtn" id="paybtn" onclick="pay()">微信支付</div>
 		</div>
 		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
@@ -75,36 +75,27 @@
 				/*]]>*/
 				return null; //返回参数值
 			}
+			var openid=null;
 			window.onload = function () {
 				var code = GetQueryString("code"); //获取code
 				$.post("/getOpenid", {code: code}, function (msg) {  //将code传到后台用于获取openid
-					if (msg.type == true) {
-						var openid = msg.data;
-						alert("您的openID是" + openid);
-					}
-					else if (msg.type == false)
-					{
-						alert("获取openid失败");
-						return;
-					}
-					else {
-						alert("异常！")
-					}
-
-				})
-			};
+					openid=msg;
+				})};
 			function pay(){
-
-				var orderFee =  document.getElementById("totalmoney").value;
+				var orderFee = [[${item.price}]];
+				// var price =orderFee.replace(/[^0-9]/ig,"");
+				var price=parseInt(orderFee);
+				console.log("金额："+price);
 				// 将用户的金额
-				$.post("pay/order", { orderFee: orderFee ,accountID:accountID}, function (result) {
+
+				$.post("/pay/order", { orderFee: price,openid: openid}, function (result) {
 					// 以下是后台发来的“第二堆参数”，
-					var appId=result.appId;
-					var timeStamp=result.timeStamp;
-					var nonceStr=result.nonceStr;
-					var packageStr=result.package;
-					var signType=result.signType;
-					var paySign=result.paySign;
+					var appId=result.data.appId;
+					var timeStamp=result.data.timeStamp;
+					var nonceStr=result.data.nonceStr;
+					var packageStr=result.data.package;
+					var signType=result.data.signType;
+					var paySign=result.data.paySign;
 					if (typeof WeixinJSBridge == "undefined") {
 						if (document.addEventListener) {
 							document.addEventListener('WeixinJSBridgeReady',
@@ -120,7 +111,6 @@
 						onBridgeReady(appId,timeStamp,nonceStr,packageStr,signType,paySign);
 					}
 				});
-
 
 				//微信JSDK唤起支付
 				function onBridgeReady (appId,timeStamp,nonceStr,packageStr,signType,paySign) {
@@ -138,7 +128,7 @@
 								if (msg.message == "get_brand_wcpay_request:ok") {
 									console.log('支付成功');
 									//支付成功后跳转的页面
-									window.location.href = "mobile/rechargeSuccess.html";
+									window.location.href = "/mobile/rechargeSuccess";
 								} else if (msg.message == "get_brand_wcpay_request:cancel") {
 									console.log('支付取消');
 								} else if (msg.message == "get_brand_wcpay_request:fail") {
@@ -156,99 +146,99 @@
 
 
 
-<!--		<script th:inline="javascript" charset="utf-8">-->
-<!--			$(function() {-->
-<!--				var p=[[${item.price}]];-->
-<!--				console.log(p);-->
-<!--				var price =parseInt(p,10); //商品单价-->
-<!--				// 商品数量增减-->
-<!--				$(".orderbtns").on("click", "span", function() {-->
-<!--					var num = $("#ordernum").val();-->
-<!--					/*<![CDATA[*/-->
-<!--					if ($(this).data("type") == "-" && $("#ordernum").val() > 1) {-->
-<!--						num&#45;&#45;;-->
-<!--					} else if ($(this).data("type") == "+") {-->
-<!--						num++;-->
-<!--					}-->
-<!--					/*]]>*/-->
-<!--					$("#ordernum").val(num);-->
-<!--					$("#totalmoney").text('￥' + price * num)-->
-<!--				})-->
-<!--				// 商品支付-->
-<!--				$("#paybtn").click(function() {-->
-<!--					if($("#ordername").val() == ""){-->
-<!--						return-->
-<!--					}-->
-<!--					if($("#ordertel").val() == ""){-->
-<!--						return-->
-<!--					}-->
-<!--					var username = $("#ordername").val();//用户姓名-->
-<!--					var usertel = $("#ordertel").val();//用户电话-->
-<!--					var orderremark = $("#orderremark").val();//用户备注-->
-<!--					var num = $("#ordernum").val();//数量-->
-<!--					var totalmoney = $("#totalmoney").text().slice(1);//总价-->
-<!--					var currurl = decodeURIComponent(location.href.split('#')[0]);-->
-<!--					//ajax注入权限验证-->
-<!--					$.ajax({-->
-<!--						url: "", //后台接口地址-->
-<!--						dataType: 'json',-->
-<!--						data: {-->
-<!--							'url': currurl-->
-<!--						},-->
-<!--						complete: function(XMLHttpRequest, textStatus) {},-->
-<!--						error: function(XMLHttpRequest, textStatus, errorThrown) {-->
-<!--							alert("发生错误：" + errorThrown);-->
-<!--						},-->
-<!--						success: function(res) {-->
-<!--							var appId = res.appId;-->
-<!--							var nonceStr = res.nonceStr;-->
-<!--							var jsapi_ticket = res.jsapi_ticket;-->
-<!--							var timestamp = res.timestamp;-->
-<!--							var signature = res.signature;-->
-<!--							// alert(appId +" " + nonceStr +" "+jsapi_ticket+" "+timestamp+" "+signature);-->
-<!--							wx.config({-->
-<!--								debug: false, //开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。-->
-<!--								appId: appId, //必填，公众号的唯一标识-->
-<!--								timestamp: timestamp, // 必填，生成签名的时间戳-->
-<!--								nonceStr: nonceStr, //必填，生成签名的随机串-->
-<!--								signature: signature, // 必填，签名，见附录1-->
-<!--								jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] //必填，需要使用的JS接口列表，所有JS接口列表 见附录2-->
-<!--							}); // end wx.config-->
-<!--							wx.ready(function() {-->
-<!--								$.ajax({-->
-<!--									url: "",//后台支付接口-->
-<!--									type: "post",-->
-<!--									dataType: "json",-->
-<!--									success: function(result) {-->
-<!--										wx.chooseWXPay({-->
-<!--											timestamp: result.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符-->
-<!--											nonceStr: result.nonceStr, // 支付签名随机串，不长于 32 位-->
-<!--											package: "prepay_id=" + result.prepay_id,-->
-<!--											signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'-->
-<!--											paySign: result.paySign, // 支付签名-->
-<!--											success: function(res) {-->
+		<!--<script th:inline="javascript" charset="utf-8">
+			$(function() {
+				var p=[[${item.price}]];
+				console.log(p);
+				var price =parseInt(p,10); //商品单价
+				// 商品数量增减
+				$(".orderbtns").on("click", "span", function() {
+					var num = $("#ordernum").val();
+					/*<![CDATA[*/
+					if ($(this).data("type") == "-" && $("#ordernum").val() > 1) {
+						num&#45;&#45;;
+					} else if ($(this).data("type") == "+") {
+						num++;
+					}
+					/*]]>*/
+					$("#ordernum").val(num);
+					$("#totalmoney").text('￥' + price * num)
+				})
+				// 商品支付
+				$("#paybtn").click(function() {
+					if($("#ordername").val() == ""){
+						return
+					}
+					if($("#ordertel").val() == ""){
+						return
+					}
+					var username = $("#ordername").val();//用户姓名
+					var usertel = $("#ordertel").val();//用户电话
+					var orderremark = $("#orderremark").val();//用户备注
+					var num = $("#ordernum").val();//数量
+					var totalmoney = $("#totalmoney").text().slice(1);//总价
+					var currurl = decodeURIComponent(location.href.split('#')[0]);
+					//ajax注入权限验证
+					$.ajax({
+						url: "", //后台接口地址
+						dataType: 'json',
+						data: {
+							'url': currurl
+						},
+						complete: function(XMLHttpRequest, textStatus) {},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							alert("发生错误：" + errorThrown);
+						},
+						success: function(res) {
+							var appId = res.appId;
+							var nonceStr = res.nonceStr;
+							var jsapi_ticket = res.jsapi_ticket;
+							var timestamp = res.timestamp;
+							var signature = res.signature;
+							// alert(appId +" " + nonceStr +" "+jsapi_ticket+" "+timestamp+" "+signature);
+							wx.config({
+								debug: false, //开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+								appId: appId, //必填，公众号的唯一标识
+								timestamp: timestamp, // 必填，生成签名的时间戳
+								nonceStr: nonceStr, //必填，生成签名的随机串
+								signature: signature, // 必填，签名，见附录1
+								jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] //必填，需要使用的JS接口列表，所有JS接口列表 见附录2
+							}); // end wx.config
+							wx.ready(function() {
+								$.ajax({
+									url: "",//后台支付接口
+									type: "post",
+									dataType: "json",
+									success: function(result) {
+										wx.chooseWXPay({
+											timestamp: result.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+											nonceStr: result.nonceStr, // 支付签名随机串，不长于 32 位
+											package: "prepay_id=" + result.prepay_id,
+											signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+											paySign: result.paySign, // 支付签名
+											success: function(res) {
 
-<!--											}-->
-<!--										});-->
-<!--									},-->
-<!--									error: function(data) {-->
-<!--										alert(data);-->
-<!--									}-->
-<!--								})-->
-<!--							}); // end ready-->
+											}
+										});
+									},
+									error: function(data) {
+										alert(data);
+									}
+								})
+							}); // end ready
 
-<!--							wx.error(function(res) {-->
-<!--								// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。-->
-<!--								alert('error');-->
-<!--							});-->
-<!--						}-->
-<!--					});-->
-<!--				})-->
-<!--			})-->
+							wx.error(function(res) {
+								// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+								alert('error');
+							});
+						}
+					});
+				})
+			})
 
 
 
-<!--		</script>-->
+		</script>-->
 
 	</body>
 </html>
