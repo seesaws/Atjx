@@ -53,7 +53,7 @@ public class MobileController {
     @RequestMapping(value = "/mobile/goods")
     public String  goods(Item item,Model model) {
 
-            Item item1 = itemMapper.findById(item);
+            Item item1 = itemMapper.findAllInfo(item);
 //            String html=item1.getSellPoint();
 //            String unhtml= HtmlUtils.htmlUnescape(html);
 //            item.setSellPoint(unhtml);
@@ -66,8 +66,9 @@ public class MobileController {
     @RequestMapping(value = "/mobile/placeOrder")
     public String  PlaceOrder(Item item,Model model) {
 
-        Item item1=itemMapper.findById(item);
+        Item item1=itemMapper.findAllInfo(item);
         model.addAttribute("item",item1);
+
         return "mobile/placeOrder";
     }
 

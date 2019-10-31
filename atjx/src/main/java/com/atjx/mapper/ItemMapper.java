@@ -30,4 +30,6 @@ public interface ItemMapper {
 
     List<Item> selectAll();
 
+    Item findAllInfo(Item item);
+
 }

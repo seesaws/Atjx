@@ -87,14 +87,16 @@ public class WeChatPayController {
     @ResponseBody
     public ResultInfo order(HttpServletRequest request,ResultInfo resultInfo)
     {
-//        String orderAccount= request.getParameter("accountID"); //充值账户
-        String orderFee1= request.getParameter("orderFee"); //充值金额（单位：分）
-
+//        String orderAccount= request.getParameter("accountID"); //账户
+        String orderFee1= request.getParameter("orderFee"); //金额（单位：分）
+        String username= request.getParameter("name");
+        String usertel= request.getParameter("tel");
+        String remark= request.getParameter("remark");
         String openId= request.getParameter("openid");//openid
         String paternerKey="atjx100410251625asd15gf15r51g54s";
         String appId = "wx7738ac5a31d41ee4";
 
-//        System.out.println(openId);
+        System.out.println(username+"_"+usertel+"_"+remark);
 
         // 将充值金额的单位由元转换为分
         int index = orderFee1.indexOf(".");
@@ -150,7 +152,7 @@ public class WeChatPayController {
             paraMap.put("spbill_create_ip", ip);
             paraMap.put("total_fee","1");
             paraMap.put("trade_type", "JSAPI");
-            paraMap.put("notify_url","http://atjx.mynatapp.cc/callback");// 此路径是微信服务器调用支付结果通知路径
+            paraMap.put("notify_url","http://atjx.club/callback");// 此路径是微信服务器调用支付结果通知路径
             String sign = WXPayUtil.generateSignature(paraMap, paternerKey);
             System.out.println("签名是"+sign);
             paraMap.put("sign", sign);
@@ -244,11 +246,13 @@ public class WeChatPayController {
         finally{
             try{
                 if(out!=null){
+                    out.flush();
                     out.close();
                 }
                 if(in!=null){
                     in.close();
                 }
+
             }
             catch(IOException ex){
                 ex.printStackTrace();
@@ -267,22 +271,23 @@ public class WeChatPayController {
             String xml = WXPayUtil.inputStream2String(inputStream, "UTF-8");
             Map<String, String> notifyMap = WXPayUtil.xmlToMap(xml);//将微信发的xml转map
             //System.out.println("支付系统返回支付结果"+xml);
-
             if(notifyMap.get("return_code").equals("SUCCESS")){
                 System.out.println("return_code是："+notifyMap.get("return_code"));
                 // 交易成功
                 if(notifyMap.get("result_code").equals("SUCCESS")){
-
                     // 接下来进行一些业务处理
 
                 }
             }else{
                 // 交易失败的处理
             }
-            response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code></xml>"); //告知微信支付系统已收到消息
+            response.reset();
+            response.setContentType("application/xml");
+            response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"); //告知微信支付系统已收到消息
             inputStream.close();
         } catch (Exception e) {
             // 异常的处理
+            System.out.println("回调异常");
         }
         return resultInfo;
     }

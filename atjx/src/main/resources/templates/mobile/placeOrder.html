@@ -87,8 +87,11 @@
 				var price=parseInt(orderFee);
 				console.log("金额："+price);
 				// 将用户的金额
+				var username = $("#ordername").val();//用户姓名
+				var usertel = $("#ordertel").val();//用户电话
+				var orderremark = $("#orderremark").val();//用户备注
 
-				$.post("/pay/order", { orderFee: price,openid: openid}, function (result) {
+				$.post("/pay/order", { orderFee: price,openid: openid,name:username,tel:usertel,remark:orderremark}, function (result) {
 					// 以下是后台发来的“第二堆参数”，
 					var appId=result.data.appId;
 					var timeStamp=result.data.timeStamp;
@@ -128,7 +131,7 @@
 								if (msg.message == "get_brand_wcpay_request:ok") {
 									console.log('支付成功');
 									//支付成功后跳转的页面
-									window.location.href = "/mobile/rechargeSuccess";
+									window.location.href = "/mobile/user";
 								} else if (msg.message == "get_brand_wcpay_request:cancel") {
 									console.log('支付取消');
 								} else if (msg.message == "get_brand_wcpay_request:fail") {

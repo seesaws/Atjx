@@ -14,10 +14,9 @@
 		<div class="container">
 			<div class="myimgbj">
 				<img src="../img/timg4.jpg" />
-				<div class="myhead"><img th:src="${user.getHeadImgUrl()}"/>
-
+				<div class="myhead" th:style="'background:url(' + ${user.getHeadImgUrl()} + ');'">
 				</div><br/>
-				<span class="myimgbj" style="bottom: 45%;font-size:0.65rem" th:text="${user.getNickname()}"></span>
+				<span style="bottom: 45%;font-size:0.65rem" th:text="${user.getNickname()}"></span>
 
 
 			</div>
@@ -64,7 +63,7 @@
 						<img src="../img/projects.png" />
 						<p>代金券可叠加使用，除餐包、调料、酒水外全场通用～～单张券适合3-4人使用，折后人均50～</p>
 					</div>
-					<div class="listdingdanone-usernames">用户名：<p th:text="${user.getNickname()}"></p></div>
+					<div class="listdingdanone-usernames" th:text="'用户名：'+${user.getNickname()}"></div>
 					<div class="listdingdanone-usernames">手机号：123</div>
 					<div class="listdingdanone-btns">
 						<div class="listdingdanone-btns-left">￥99</div>

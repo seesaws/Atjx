@@ -75,20 +75,22 @@
 			<div class="particulars-goroup">
 				<div class="particularsTie">套餐选择</div>
 				<div class="particularsel">
-					<div class="active">套餐一</div>
-					<div>套餐二</div>
+					<div th:each="s :${item.specification}" >
+						<div th:text="${s.tname}"></div>
+					</div>
+
 				</div>
 			</div>
 			<div class="particulars-goroup">
 				<div class="particularsTie">商家信息</div>
 				<div class="particularsjxx">
-					<div class="particularsjxx-list">
-						<div class="particularsjxx-name">商家名称</div>
+					<div class="particularsjxx-list" th:each="a : ${item.address}">
+						<div class="particularsjxx-name" th:text="${a?.shopname}"></div>
 						<div class="particularsjxx-jianjie">
 							<img src="../img/address.png" alt=""/>
 							<div class="address">
-								<p><span>地址一</span><a href="tel:888"><img src="../img/tells.png"  alt="电话"/></a></p>
-								<p>营业时间：09:30-14:00 14:00-21:00</p>
+								<p><span th:text="${a?.addressInfo}"></span><a th:href="${a?.tel}"><img src="../img/tells.png"  alt="电话"/></a></p>
+								<p th:text="'营业时间：'+${a?.starttime}"></p>
 							</div>
 						</div>
 					</div>
@@ -100,7 +102,8 @@
 
 <!--						<script id="editor" type="text/html" style="width:100%">-->
 <!--						</script>-->
-					<label for="editor"></label><textarea id="editor" name="sellPoint" th:utext="${item.sellPoint}" style="width: 100%;">
+					<!--th:value="${item?.sellPoint}"-->
+					<label for="editor"></label><textarea id="editor" name="sellPoint" th:utext="${item?.sellPoint}" style="width: 100%;">
 				</textarea >
 				</div>
 

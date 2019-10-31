@@ -3,6 +3,7 @@ package com.atjx.model;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Item extends BaseObject {
@@ -31,7 +32,7 @@ public class Item extends BaseObject {
     private Integer del_price;
     private int sales;
     private Integer money;
-    private Address address;
-    private Specification specification;
+    private List<Address> address;
+    private List<Specification> specification;
 
 }
