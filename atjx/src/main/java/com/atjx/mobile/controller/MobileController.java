@@ -1,12 +1,16 @@
 package com.atjx.mobile.controller;
 
 import com.atjx.mapper.ItemMapper;
+import com.atjx.mapper.PicMapper;
 import com.atjx.model.Item;
+import com.atjx.model.Item_Pic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +21,8 @@ public class MobileController {
 
     @Autowired
     private ItemMapper itemMapper;
+    @Autowired
+    private PicMapper picMapper;
 
     //初始页
     @RequestMapping(value = "/mobile/")
@@ -51,25 +57,35 @@ public class MobileController {
 //    }
 
     @RequestMapping(value = "/mobile/goods")
-    public String  goods(Item item,Model model) {
+    public String goods(Item item, Model model, HttpServletRequest request) throws Exception {
+        System.out.println(item.getId());
 
-            Item item1 = itemMapper.findAllInfo(item);
-//            String html=item1.getSellPoint();
-//            String unhtml= HtmlUtils.htmlUnescape(html);
-//            item.setSellPoint(unhtml);
+            Item item1 = itemMapper.findAllInfo(item.getId());
+        System.out.println(item1);
+            String html=item1.getSell_Point();
+            String unhtml= HtmlUtils.htmlUnescape(html);
+            item.setSell_Point(unhtml);
 //            System.out.println(unhtml);
+        List<Item_Pic> pic=picMapper.selectAll(item1.getId());
+        model.addAttribute("picList",pic);
             model.addAttribute("item", item1);
 
              return "mobile/goods";
     }
 
     @RequestMapping(value = "/mobile/placeOrder")
-    public String  PlaceOrder(Item item,Model model) {
-
-        Item item1=itemMapper.findAllInfo(item);
+    public String  PlaceOrder(Item item,Model model, HttpServletRequest request) {
+        Integer id=item.getId();
+        Item item1 = itemMapper.findAllInfo(id);
         model.addAttribute("item",item1);
 
         return "mobile/placeOrder";
+    }
+
+    @RequestMapping(value = "/mobile/jingku")
+    public String  jingku() {
+
+        return "mobile/jingku";
     }
 
 

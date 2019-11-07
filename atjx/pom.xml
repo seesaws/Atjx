@@ -5,7 +5,7 @@
 
     <groupId>com.atjx</groupId>
     <artifactId>atjx</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>a1</version>
 
     <!-- <packaging>war</packaging>  -->
     <packaging>jar</packaging>
@@ -150,12 +150,6 @@
             <classifier>jdk15</classifier>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.3.5</version>
-        </dependency>
 
         <dependency>
             <groupId>com.vaadin.external.google</groupId>

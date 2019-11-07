@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.atjx.model.Item">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sell_Point" jdbcType="VARCHAR"/>
         <result column="price" property="price" jdbcType="BIGINT"/>
         <result column="num" property="num" jdbcType="INTEGER"/>
         <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
@@ -77,7 +77,7 @@
          VALUE (
          #{id, jdbcType=INTEGER},
          #{title, jdbcType=VARCHAR},
-         #{sellPoint, jdbcType=VARCHAR},
+         #{sell_Point, jdbcType=VARCHAR},
          #{price, jdbcType=BIGINT},
          #{num, jdbcType=INTEGER},
          #{barcode, jdbcType=VARCHAR},
@@ -92,13 +92,14 @@
           )
     </insert>
 
-    <update id="update" parameterType="com.atjx.model.Item">
-        UPDATE tb_item SET
+    <update id="update" parameterType="com.atjx.model.Item" >
+        UPDATE tb_item
+        <trim prefix="set" suffixOverrides=",">
         <if test="title != null">
             title = #{title, jdbcType=VARCHAR},
         </if>
-        <if test="sellPoint != null">
-            sell_point= #{sellPoint, jdbcType=VARCHAR},
+        <if test="sell_Point != null">
+            sell_point= #{sell_Point, jdbcType=VARCHAR},
         </if>
         <if test="price != null">
             price = #{price, jdbcType=BIGINT},
@@ -122,22 +123,24 @@
             sales = #{sales, jdbcType=INTEGER},
         </if>
         <if test="money != null">
-            money = #{money, jdbcType=BIGINT}
+            money = #{money, jdbcType=BIGINT},
         </if>
+        </trim>
         WHERE id = #{id, jdbcType=INTEGER}
     </update>
+
     <delete id="delete" parameterType="com.atjx.model.Item">
         DELETE FROM tb_item WHERE id = #{id, jdbcType=INTEGER}
     </delete>
+
     <select id="findMaxId" resultType="INTEGER">
        SELECT id FROM tb_item ORDER BY id DESC LIMIT 0,1
     </select>
 
-
     <resultMap id="AllInfoResultMap" type="com.atjx.model.Item">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sell_Point" jdbcType="VARCHAR"/>
         <result column="price" property="price" jdbcType="BIGINT"/>
         <result column="num" property="num" jdbcType="INTEGER"/>
         <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
@@ -165,12 +168,12 @@
         </collection>
     </resultMap>
 
-    <select id="findAllInfo" resultMap="AllInfoResultMap">
+    <select id="findAllInfo" resultMap="AllInfoResultMap" >
         select i.*,a.*,s.*
         from tb_item i
-        join tb_address a
+        left join tb_address a
         on i.id = a.item_id
-        join tb_specification s
+        left join tb_specification s
         on s.item_id = i.id
         where id = #{id, jdbcType=INTEGER}
     </select>

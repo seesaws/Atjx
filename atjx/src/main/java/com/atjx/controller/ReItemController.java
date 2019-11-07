@@ -64,7 +64,7 @@ public class ReItemController {
 
         item.setPrice(reItem1.getPrice());
         item.setNum(reItem1.getNum());
-        item.setSellPoint(reItem1.getSellPoint());
+        item.setSell_Point(reItem1.getSell_Point());
         item.setStatus(reItem1.getStatus());
         item.setTitle(reItem1.getTitle());
 

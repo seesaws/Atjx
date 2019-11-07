@@ -12,7 +12,7 @@ public class Item extends BaseObject {
     //商品标题
     private String title;
     //商品详情
-    private String sellPoint;
+    private String sell_Point;
     //商品价格
     private Integer price;
     private int num;

@@ -2,8 +2,10 @@ package com.atjx.controller;
 
 import com.atjx.mapper.*;
 import com.atjx.model.*;
-import com.atjx.util.*;
-//import com.mongodb.gridfs.GridFSDBFile;
+import com.atjx.util.Constant;
+import com.atjx.util.DateUtil;
+import com.atjx.util.ExcelUtil;
+import com.atjx.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,18 @@ import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.math.BigDecimal;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Random;
+
+//import com.mongodb.gridfs.GridFSDBFile;
 
 
 /**
@@ -187,7 +196,7 @@ public class ItemController {
         LinkedHashMap<String, String> fieldMap = new LinkedHashMap<String, String>();
         fieldMap.put("id", "商品id");
         fieldMap.put("title", "商品标题");
-        fieldMap.put("sellPoint", "商品卖点");
+        fieldMap.put("sell_Point", "商品卖点");
         fieldMap.put("price", "商品价格");
         fieldMap.put("num", "库存数量");
         fieldMap.put("image", "商品图片");
@@ -219,7 +228,7 @@ public class ItemController {
         String notes = request.getParameter("sell_point");
 
         String html= HtmlUtils.htmlEscape(notes);
-        item.setSellPoint(html);
+        item.setSell_Point(html);
         itemMapper.insert(item);
         return "redirect:/user/itemManage_0_0_0";
     }
@@ -230,9 +239,9 @@ public class ItemController {
         itemCategory.setStart(0);
         itemCategory.setEnd(Integer.MAX_VALUE);
 
-        String html=item.getSellPoint();
+        String html=item.getSell_Point();
         String unhtml=HtmlUtils.htmlUnescape(html);
-        item.setSellPoint(unhtml);
+        item.setSell_Point(unhtml);
         if (item.getId() != 0) {
             Item item1 = itemMapper.findById(item);
             itemMapper.update(item1);
@@ -251,7 +260,7 @@ public class ItemController {
         //获取前端商品详情富文本
         String notes = request.getParameter("sell_point");
         String html= HtmlUtils.htmlEscape(notes);
-        item.setSellPoint(html);
+        item.setSell_Point(html);
         if(item.getId() == 0){
             itemMapper.insert(item);
         }else{
@@ -282,7 +291,7 @@ public class ItemController {
         reItem.setImage(item.getImage());
         reItem.setPrice(item.getPrice());
         reItem.setNum(item.getNum());
-        reItem.setSellPoint(item.getSellPoint());
+        reItem.setSell_Point(item.getSell_Point());
         reItem.setStatus(item.getStatus());
         reItem.setTitle(item.getTitle());
         reItem.setRecovered(new Date());
@@ -397,7 +406,7 @@ public class ItemController {
     }
 
 
-
+    //商品套餐列表
     @RequestMapping("/user/speEdit")
     public String speEdit(Item item,Model model)
     {
@@ -410,14 +419,22 @@ public class ItemController {
         return "item/speEdit";
     }
 
-    //增加套餐信息
+    //增加或修改套餐信息
     @RequestMapping("/user/spePost")
     public String spePost(HttpServletRequest request, Specification spe){
-        String id=request.getParameter("item_id");
+        String item_id=request.getParameter("item_id");
 
-        spe.setItem_id(Integer.parseInt(id));
-        specificationMapper.insert(spe);
-        return "redirect:/user/speEdit?id="+id;
+        spe.setItem_id(Integer.parseInt(item_id));
+        if(!item_id.equals("0")){
+            specificationMapper.insert(spe);
+        }else {
+            specificationMapper.update(spe);
+        }
+
+        String spe_id=request.getParameter("spe_id");
+//        String id=request.getParameter("id");
+
+        return "redirect:/user/speEdit?id="+item_id;
     }
     //删除套餐
     @RequestMapping("/speDelete")
@@ -429,6 +446,16 @@ public class ItemController {
     }
 
 
+    //查询套餐
+    @RequestMapping("/user/speFind")
+    public String speFind(Item item, Model model, Specification spe, HttpServletRequest request)
+    {
+        String spe_id=request.getParameter("spe_id");
+        String id=request.getParameter("id");
+        Specification spe1=specificationMapper.find(spe);
+        model.addAttribute("spe",spe1);
+        return "user/speEdit";
+    }
 
 
     @RequestMapping("/user/itemPicEdit")

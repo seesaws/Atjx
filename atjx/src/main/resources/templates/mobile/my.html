@@ -14,9 +14,10 @@
 		<div class="container">
 			<div class="myimgbj">
 				<img src="../img/timg4.jpg" />
-				<div class="myhead" th:style="'background:url(' + ${user.getHeadImgUrl()} + ');'">
-				</div><br/>
-				<span style="bottom: 45%;font-size:0.65rem" th:text="${user.getNickname()}"></span>
+				<div class="myhead">
+					<img th:src="${user.getHeadImgUrl()}"/><br/>
+					<span style="bottom: 45%;font-size:0.65rem" th:text="${user.getNickname()}"></span>
+				</div>
 
 
 			</div>
@@ -43,12 +44,12 @@
 					<img src="../img/mynavbar4.png"/>
 					<p>已完成</p></div></a>
 				</li>
-				<li><a href="">
+				<li><a href="/mobile/jingku">
 					<div>
 					<img src="../img/mynavbar5.png"/>
 					<p>我的鲸库</p></div></a>
 				</li>
-				<li><a href="">
+				<li><a href="#">
 					<div>
 					<img src="../img/mynavbar6.png"/>
 					<p>我的鲸币</p></div>

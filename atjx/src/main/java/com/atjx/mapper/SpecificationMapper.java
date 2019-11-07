@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface SpecificationMapper {
 
-
+    Specification find(Specification spe);
 
     int insert(Specification spe);
 

@@ -9,7 +9,7 @@ import java.util.Date;
 public class ReItem extends BaseObject {
     private int id;
     private String title;
-    private String sellPoint;
+    private String sell_Point;
     private Integer price;
     private int num;
     private String barcode;

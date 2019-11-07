@@ -1,6 +1,9 @@
 package com.atjx.controller;
 
+import com.atjx.mapper.PicMapper;
+import com.atjx.model.Item_Pic;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,10 @@ import java.util.Random;
 @Controller
 public class FileInputController {
 
+
+    @Autowired
+    private PicMapper picMapper;
+
     @RequestMapping("/user/fileinput")
     public String FileInput(){
 
@@ -27,7 +34,7 @@ public class FileInputController {
     @RequestMapping("/uploadPicFile")
     @ResponseBody
     public String saveFile(@RequestParam(value="file") MultipartFile file,
-                           HttpServletRequest request, HttpServletResponse response){
+                           HttpServletRequest request, HttpServletResponse response, Item_Pic pic){
         OutputStream os = null;
         InputStream is = null;
         boolean returnBoolean = false;
@@ -35,6 +42,7 @@ public class FileInputController {
         String fileName = file.getOriginalFilename();
         String fileExt = fileName.substring(fileName.lastIndexOf(".")+1);
         String bug_id = request.getParameter("id");   // 传过来的额外参数
+        pic.setItem_id(Integer.parseInt(bug_id));
         SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddHHmmss");
         String newFileName ="IMG"+bug_id+"_"+ dt.format(new Date()) + "_" + new Random().nextInt(1000) ;
         try {
@@ -58,6 +66,8 @@ public class FileInputController {
                 os.write(buf, 0, length);
             }
             returnBoolean = true;
+            pic.setPic_url(fullFilePath);
+            picMapper.insert(pic);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

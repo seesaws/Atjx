@@ -295,14 +295,14 @@
 	width: 36%;
 	font-size: 0.8rem;
 	color: #4D4D4D;
-	padding: 0.3rem 1rem;
+	padding: 0.3rem 1rem 1rem 1rem;
 	background: #F5F5F5;
 	text-align: center;
-	margin-left: 1rem;
+	margin: 10px;
 }
 .particularsel div.active{
-	background: #FFF3F3;
-	color: #FF7F7F;
+	background: #ff0b00;
+	color: #ff0600;
 }
 .particularsjxx{
 	width: 100%;

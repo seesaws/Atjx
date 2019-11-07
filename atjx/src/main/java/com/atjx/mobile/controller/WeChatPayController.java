@@ -1,8 +1,11 @@
 package com.atjx.mobile.controller;
 
 
+import com.atjx.mapper.ItemMapper;
 import com.atjx.mobile.model.ResultInfo;
 import com.atjx.mobile.util.WXPayUtil;
+import com.atjx.model.Item;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,12 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 
 @Controller
 public class WeChatPayController {
+
+    @Autowired
+    private ItemMapper itemMapper;
     @RequestMapping("/getOpenid")
     @ResponseBody
     public String getOpenid(HttpServletRequest request)
@@ -85,17 +92,19 @@ public class WeChatPayController {
 // 得到prepay_id后，将一堆信息打包发送到前端，由前端调起支付界面
     @RequestMapping(path = {"/pay/order"}, method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public ResultInfo order(HttpServletRequest request,ResultInfo resultInfo)
+    public ResultInfo order(HttpServletRequest request,ResultInfo resultInfo,Item item)
     {
+        System.out.println(item);
 //        String orderAccount= request.getParameter("accountID"); //账户
         String orderFee1= request.getParameter("orderFee"); //金额（单位：分）
         String username= request.getParameter("name");
         String usertel= request.getParameter("tel");
         String remark= request.getParameter("remark");
         String openId= request.getParameter("openid");//openid
+        String item_id= request.getParameter("item_id");
         String paternerKey="atjx100410251625asd15gf15r51g54s";
         String appId = "wx7738ac5a31d41ee4";
-
+        System.out.println(item_id);
         System.out.println(username+"_"+usertel+"_"+remark);
 
         // 将充值金额的单位由元转换为分
@@ -154,7 +163,7 @@ public class WeChatPayController {
             paraMap.put("trade_type", "JSAPI");
             paraMap.put("notify_url","http://atjx.club/callback");// 此路径是微信服务器调用支付结果通知路径
             String sign = WXPayUtil.generateSignature(paraMap, paternerKey);
-            System.out.println("签名是"+sign);
+
             paraMap.put("sign", sign);
             String xml = WXPayUtil.mapToXml(paraMap);//将所有参数(map)转xml格式
 
@@ -171,7 +180,7 @@ public class WeChatPayController {
                 System.out.println("支付系统返回了prepay_id");
                 Map<String, String> map = WXPayUtil.xmlToMap(xmlStr);
                 prepay_id =map.get("prepay_id");
-                System.out.println(prepay_id);
+
             }else {
                 System.out.println("prepay_id获取失败");
             }
@@ -231,6 +240,8 @@ public class WeChatPayController {
             out.print(param);
             // flush输出流的缓冲
             out.flush();
+
+            out.close();
             // 定义BufferedReader输入流来读取URL的响应
             in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));
@@ -254,6 +265,7 @@ public class WeChatPayController {
                 }
 
             }
+
             catch(IOException ex){
                 ex.printStackTrace();
             }
@@ -263,7 +275,7 @@ public class WeChatPayController {
 
     @RequestMapping("/callback")
     @ResponseBody
-    public ResultInfo payCallBack(HttpServletRequest request, HttpServletResponse response){
+    public ResultInfo payCallBack(HttpServletRequest request, HttpServletResponse response, Item item){
         ResultInfo resultInfo =new ResultInfo();
         InputStream inputStream = null;
         try {
@@ -276,19 +288,31 @@ public class WeChatPayController {
                 // 交易成功
                 if(notifyMap.get("result_code").equals("SUCCESS")){
                     // 接下来进行一些业务处理
+                    //更新商品销量+1,库存-1
+                    itemMapper.update(item);
+                    System.out.println("库存更新成功");
+                    //更新用户金库
 
                 }
             }else{
                 // 交易失败的处理
             }
+
             response.reset();
             response.setContentType("application/xml");
-            response.getWriter().write("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>"); //告知微信支付系统已收到消息
+
+            response.getOutputStream().write("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>".getBytes(StandardCharsets.UTF_8)); //告知微信支付系统已收到消息
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+            response.getWriter().flush();
+            response.getWriter().close();
             inputStream.close();
+
         } catch (Exception e) {
             // 异常的处理
             System.out.println("回调异常");
         }
+
         return resultInfo;
     }
 

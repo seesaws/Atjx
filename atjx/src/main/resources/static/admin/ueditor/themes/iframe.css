@@ -2,3 +2,5 @@
 img {
     max-width:100%;
 }
+
+.edui-popup-content.edui-default{ height: auto !important; }

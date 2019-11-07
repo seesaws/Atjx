@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.atjx.model.ReItem">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sell_Point" jdbcType="VARCHAR"/>
         <result column="price" property="price" jdbcType="INTEGER"/>
         <result column="num" property="num" jdbcType="INTEGER"/>
         <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
       price, num, barcode, 
       image, cid, status, 
       recovered,del_price,money)
-    values ( #{id, jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sellPoint,jdbcType=VARCHAR},
+    values ( #{id, jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sell_Point,jdbcType=VARCHAR},
       #{price,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR},
       #{image,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT},
       #{recovered,jdbcType=TIMESTAMP},#{del_price,jdbcType=INTEGER},#{money,jdbcType=INTEGER})
@@ -33,7 +33,7 @@
     <update id="updateByPrimaryKey" parameterType="com.atjx.model.ReItem">
     update tb_re_item
     set title = #{title,jdbcType=VARCHAR},
-      sell_point = #{sellPoint,jdbcType=VARCHAR},
+      sell_point = #{sell_Point,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},
       num = #{num,jdbcType=INTEGER},
       barcode = #{barcode,jdbcType=VARCHAR},
