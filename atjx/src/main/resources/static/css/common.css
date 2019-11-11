@@ -65,7 +65,7 @@ header .headtit{
 	z-index: 99999;
 	width: 100%;
 	background: #fff;
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 }
 .footer ul{

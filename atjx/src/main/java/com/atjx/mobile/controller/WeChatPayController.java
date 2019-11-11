@@ -304,8 +304,8 @@ public class WeChatPayController {
             response.getOutputStream().write("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>".getBytes(StandardCharsets.UTF_8)); //告知微信支付系统已收到消息
             response.getOutputStream().flush();
             response.getOutputStream().close();
-            response.getWriter().flush();
-            response.getWriter().close();
+//            response.getWriter().flush();
+//            response.getWriter().close();
             inputStream.close();
 
         } catch (Exception e) {

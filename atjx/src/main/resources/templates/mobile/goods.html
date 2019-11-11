@@ -13,7 +13,7 @@
 	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"> </script>
 	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
-
+	<script th:src="@{/js/jquery-3.4.1.min.js}" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" ></script>
 
 	<script th:inline="javascript">
@@ -75,9 +75,9 @@
 			<div class="particulars-goroup">
 				<div class="particularsTie">套餐选择</div>
 				<div class="particularsel" >
-						<div  th:each="s :${item.specification}" th:text="${s.tname}">
-                            <input type="text" th:text="${s.price}" />
-                        </div>
+						<div  th:each="s ,speStat:${item.specification}"  th:text="${s.tname}" th:classappend="${speStat.index==0} ? 'active' : '' ">
+							<span th:text="${s.spe_id}"></span>
+						</div>
 				</div><br/>
 				<hr style="align:center;border:1px dashed #C0C0C0;"/>
 			</div><br/>
@@ -122,7 +122,7 @@
 				<img src="../img/jinbi.png" />
 				<span class="close">x</span>
 			</div>
-			<div class="gotops" id="gotops"><img src="../img/tops.png"/> </div>
+			<div class="gotops" id="gotops"><img src="../img/tops.png" alt="top"/> </div>
 		</div>
 		<div class="footer footlist">
 			<ul>
@@ -133,7 +133,7 @@
 					<a href="tel:666666666"><p>咨询客服</p></a>
 				</li>
 				<li class="active">
-					<a th:href="@{'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&amp;redirect_uri=http://atjx.club/mobile/placeOrder?id='+${item.id}+'&amp;response_type=code&amp;scope=snsapi_base&amp;state=100#wechat_redirect'}"><p>立即购买</p></a>
+					<a id="item_url" ><p>立即购买</p></a>
 				</li>
 			</ul>
 		</div>
@@ -169,10 +169,127 @@
 
 
 		</script>
+		<script th:inline="javascript">
+			var num=[[${item.num}]];
+			var nums=parseInt(num);
+			if(nums===0){
+				// alert("判断成功");
+				$(".active").attr("disabled",true);
+				$(".footer footlist li").removeClass();
+				$('.footer footlist a').css("pointer-events","none");
+				$('.footlist ul li.active').css("background","#808080");
+			}
+
+		</script>
+
+		<script>
+			var jsonObject={};
+			$.ajax({
+
+				type: "POST",//请求方式
+
+				url: '/PostServlet',//指定的链接
+
+				data: JSON.stringify({//请求后端的参数
+
+					tokenID: Token,
+
+					schema: Schema,
+
+					funData: JSON.stringify({
+
+						func: 'doFunc',
+
+						params: param
+
+					})
+
+				}),
+
+				dataType: "JSON",//或"TEXT" //请求返回的数据类型
+				async: false,  //是否需要同步
+				cache: true,
+				success: function (data) { //请求返回成功后执行的function
+					//后端返回json数据可以在这里，应用上面所说的解析json方法解析
+					var jsonArray=JSON.parse(data);//一般使用这种方法，将数据转换成JavaScript对象
+				},
+				error: function (data) {
+					console.log(data.result);
+				}
+
+			})
+		</script>
+
+<!--		获取套餐价格-->
+		<script th:inline="javascript">
+			var jsonObject=[[${itemJson}]];
+			console.log(jsonObject);
+			$(function(){
+				$(".particularsel").each(function(){
+					var i=$(this);
+					var p=i.find("div");
+					p.click(function(){
+						// if(!!$(this).hasClass("active")){
+						// 	$(this).removeClass("active");
+						// 	i.removeAttr("data-attrval");
+						// }else{
+						// 	$(this).addClass("active").siblings().removeClass("active");
+							i.attr("data-attrval",$(this).attr("data-aid"));
+						// }
+						//选择套餐
+						$(".particularsel").on("click","div",function(){
+							$(this).addClass("active").siblings().removeClass("active");
+						});
+						getattrprice(); //输出价格
+					})
+				});
+
+				//获取对应属性的价格
+				function getattrprice(){
+					var defaultstats=true;
+					var _val='';
+					var _resp={
+						mktprice:".yuan",
+						price:".prices"
+					};  //输出对应的class
+					$(".particularsjxx .particularsel").each(function(){
+						var i=$(this);
+						var v=i.attr("data-attrval");
+						if(!v){
+							defaultstats=false;
+						}else{
+							_val+=_val!=""?"_":"";
+							_val+=v;
+						}
+					});
+					if(!!defaultstats){
+						_mktprice=jsonObject['specification'][_val]['sdel_price'];
+						_price=jsonObject['specification'][_val]['sprice'];
+					}else{
+						_mktprice=jsonObject['sdel_price'];
+						_price=jsonObject['sprice'];
+					}
+
+					//输出价格
+					$(_resp.mktprice).text(_mktprice);  ///其中的math.round为截取小数点位数
+					$(_resp.price).text(_price);
+				}
+			})
+		</script>
+
+		<script th:inline="javascript">
+			var item_id = [[${item.id}]];
+			var price = $(".active span").val();
+			$(document).ready(function() {
+				//设置href的值
+				$("#item_url").attr("href", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&amp;redirect_uri=http://atjx.club/mobile/placeOrder?id=" + item_id + "&amp;spe_id=" + price + "&amp;response_type=code&amp;scope=snsapi_base&amp;state=100#wechat_redirect");
+			});
+
+		</script>
 
 
 
-		<script th:src="@{/js/jquery-3.4.1.min.js}" type="text/javascript" charset="utf-8"></script>
+
 		<script th:src="@{/js/swiper.min.js}" type="text/javascript" charset="utf-8"></script>
 		<script th:src="@{/js/particulars.js}" type="text/javascript" charset="utf-8"></script>
 

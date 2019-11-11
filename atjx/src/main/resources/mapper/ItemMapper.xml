@@ -164,7 +164,9 @@
             <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
             <result column="item_id" property="item_id" jdbcType="INTEGER"/>
             <result column="tname" property="tname" jdbcType="VARCHAR"/>
-            <result column="price" property="price" jdbcType="INTEGER"/>
+            <result column="sprice" property="sprice" jdbcType="BIGINT"/>
+            <result column="sdel_price" property="sdel_price" jdbcType="BIGINT"/>
+            <result column="t_describe" property="t_describe" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
 
@@ -174,7 +176,7 @@
         left join tb_address a
         on i.id = a.item_id
         left join tb_specification s
-        on s.item_id = i.id
+        on i.id=s.item_id
         where id = #{id, jdbcType=INTEGER}
     </select>
 

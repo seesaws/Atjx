@@ -7,8 +7,8 @@ public class Specification {
     private int spe_id;
     private int item_id;
     private String tname;
-    private int price;
-    private int del_price;
+    private int sprice;
+    private int sdel_price;
     private String t_describe;
 
 

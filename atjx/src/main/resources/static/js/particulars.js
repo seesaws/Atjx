@@ -87,9 +87,9 @@ $(function() {
 		$('body,html').animate({scrollTop:0},800);
 	})
 	//选择套餐
-	$(".particularsel").on("click","div",function(){
-		$(this).addClass("active").siblings().removeClass("active");
-	})
+	// $(".particularsel").on("click","div",function(){
+	// 	$(this).addClass("active").siblings().removeClass("active");
+	// })
 	//关闭分享悬浮框
 	$(".close").click(function(){
 		$("#sharebtn").hide();

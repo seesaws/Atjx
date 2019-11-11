@@ -4,6 +4,7 @@ import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.PicMapper;
 import com.atjx.model.Item;
 import com.atjx.model.Item_Pic;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,7 +62,6 @@ public class MobileController {
         System.out.println(item.getId());
 
             Item item1 = itemMapper.findAllInfo(item.getId());
-        System.out.println(item1);
             String html=item1.getSell_Point();
             String unhtml= HtmlUtils.htmlUnescape(html);
             item.setSell_Point(unhtml);
@@ -69,6 +69,16 @@ public class MobileController {
         List<Item_Pic> pic=picMapper.selectAll(item1.getId());
         model.addAttribute("picList",pic);
             model.addAttribute("item", item1);
+        //1、使用JSONObject
+        JSONObject json = JSONObject.fromObject(item1);
+        //2、使用JSONArray
+//        JSONArray array=JSONArray.fromObject(item1);
+        model.addAttribute("itemJson",json);
+//        String strJson=json.toString();
+//        String strArray=array.toString();
+//
+//        System.out.println("strJson:"+strJson);
+//        System.out.println("strArray:"+strArray);
 
              return "mobile/goods";
     }
