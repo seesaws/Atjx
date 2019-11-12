@@ -40,8 +40,8 @@
 						<div th:text="${item.title}"></div>
 					</div>
 					<div class="ordertypes">
-						<p>A套餐</p>
-						<p id="price" th:text="'￥'+${item.price}"></p>
+						<p th:text="${specification.tname}"></p>
+						<p id="price" th:text="'￥'+${specification.sprice}"></p>
 					</div>
 				</div>
 				<div class="ordernum">

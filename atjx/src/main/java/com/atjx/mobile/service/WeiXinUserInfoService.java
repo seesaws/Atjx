@@ -1,6 +1,6 @@
 package com.atjx.mobile.service;
 
-import com.atjx.mobile.pojo.WeiXinUser;
+import com.atjx.mobile.pojo.WeixinUserInfo;
 import java.util.Map;
 /**
  * 用于进行微信用户个人信息的操作接口
@@ -12,7 +12,7 @@ public interface WeiXinUserInfoService {
      * @param openId
      * @return
      */
-    WeiXinUser getUserInfo(String accessToken, String openId);
+    WeixinUserInfo getUserInfo(String accessToken, String openId);
 
     /**
      *用于获取网页授权后的信息字段，其中主要是获取openId

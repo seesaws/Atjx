@@ -2,8 +2,10 @@ package com.atjx.mobile.controller;
 
 import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.PicMapper;
+import com.atjx.mapper.SpecificationMapper;
 import com.atjx.model.Item;
 import com.atjx.model.Item_Pic;
+import com.atjx.model.Specification;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class MobileController {
     private ItemMapper itemMapper;
     @Autowired
     private PicMapper picMapper;
+    @Autowired
+    private SpecificationMapper specificationMapper;
 
     //初始页
     @RequestMapping(value = "/mobile/")
@@ -59,7 +63,6 @@ public class MobileController {
 
     @RequestMapping(value = "/mobile/goods")
     public String goods(Item item, Model model, HttpServletRequest request) throws Exception {
-        System.out.println(item.getId());
 
             Item item1 = itemMapper.findAllInfo(item.getId());
             String html=item1.getSell_Point();
@@ -84,10 +87,12 @@ public class MobileController {
     }
 
     @RequestMapping(value = "/mobile/placeOrder")
-    public String  PlaceOrder(Item item,Model model, HttpServletRequest request) {
+    public String  PlaceOrder(Item item, Model model, HttpServletRequest request, Specification specification) {
         Integer id=item.getId();
+        Specification specification1=specificationMapper.find(specification);
         Item item1 = itemMapper.findAllInfo(id);
         model.addAttribute("item",item1);
+        model.addAttribute("specification",specification1);
 
         return "mobile/placeOrder";
     }

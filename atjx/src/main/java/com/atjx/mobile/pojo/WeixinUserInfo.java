@@ -6,7 +6,7 @@ package com.atjx.mobile.pojo;
  *
  */
 public class WeixinUserInfo {
-
+    private String user_id;
     // 用户的标识
     private String openId;
     // 关注状态（1是关注，0是未关注），未关注时获取不到其余信息
@@ -27,6 +27,24 @@ public class WeixinUserInfo {
     private String language;
     // 用户头像
     private String headImgUrl;
+
+    private int money;
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 
     public String getOpenId() {
         return openId;

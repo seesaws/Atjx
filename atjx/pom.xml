@@ -44,13 +44,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
 
         </dependency>
-        <dependency>
 
-            <groupId>org.springframework.boot</groupId>
-
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-
-        </dependency>
 
         <!-- druid -->
         <dependency>
@@ -99,6 +93,7 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
+
 
         <!--thymeleaf  -->
         <dependency>
@@ -192,6 +187,13 @@
             <version>1.4.3.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+
+
         <!-- WeChatPay   -->
         <dependency>
             <groupId>cn.springboot</groupId>
@@ -221,6 +223,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
 

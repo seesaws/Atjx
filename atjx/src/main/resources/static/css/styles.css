@@ -288,23 +288,29 @@
 }
 .particularsel{
 	width: 100%;
-	display: flex;
+	display: inline-flex;
 	flex-wrap: wrap;
 	background: #fff;
-	padding: 1rem 0.6rem;
+	padding: 0.6em 0.6em 0.6em 0.6em;
 }
 .particularsel div{
-	width: 36%;
-	font-size: 0.8rem;
+	width: 25%;
+	font-size: small;
 	color: #4D4D4D;
-	padding: 0.3rem 1rem;
+	position: relative;
+	padding: 0.3rem 0.3rem 0.3rem 0.3rem;
 	background: #F5F5F5;
 	text-align: center;
 	margin-left: 1rem;
+	margin-top: 0.5rem;
+
+
 }
 .particularsel div.active{
 	background: #FFF3F3;
-	color: #FF7F7F;
+	color: #ff0000;
+	border: 1px solid red;
+
 }
 .particularsjxx{
 	width: 100%;

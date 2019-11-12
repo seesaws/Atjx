@@ -15,8 +15,8 @@
 			<div class="myimgbj">
 				<img src="../img/timg4.jpg" />
 				<div class="myhead">
-					<img th:src="${user.getHeadImgUrl()}" alt="HeadImg"/><br/>
-					<span style="bottom: 45%;font-size:0.65rem" th:text="${user.getNickname()}"></span>
+					<img th:src="${session.weixinUserInfo.getHeadImgUrl()}" alt="HeadImg"/><br/>
+					<span style="bottom: 45%;font-size:0.65rem" th:text="${session.weixinUserInfo.getNickname()}"></span>
 				</div>
 
 

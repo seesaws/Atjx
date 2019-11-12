@@ -53,4 +53,8 @@
         SELECT * from tb_specification where item_id=#{item_id,jdbcType=INTEGER}
     </select>
 
+    <select id="find" resultMap="speResultMap" parameterType="com.atjx.model.Specification">
+        SELECT * from tb_specification where spe_id=#{spe_id,jdbcType=INTEGER}
+    </select>
+
 </mapper>
