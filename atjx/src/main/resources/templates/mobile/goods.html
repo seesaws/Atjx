@@ -261,7 +261,10 @@
 					var spe = $(".active ").data('s_id');
 					var spe_id=jsonObject['specification'][spe]['spe_id'];
 						//设置href的值
-					$("#item_url").attr("href", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&amp;redirect_uri=http://atjx.club/mobile/placeOrder?id=" + item_id + "&amp;spe_id=" + spe_id + "&amp;response_type=code&amp;scope=snsapi_base&amp;state=100#wechat_redirect");
+					/*<![CDATA[*/
+					var str="http://atjx.club/mobile/placeOrder?id=" + item_id;
+					$("#item_url").attr("href", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&redirect_uri=" +str+ "&response_type=code&scope=snsapi_base&state="+spe_id+"#wechat_redirect");
+					/*]]>*/
 					// $(".particularsjxx .particularsel").each(function(){
 					// 	var i=$(this);
 					// 	var v=i.attr("data-attrval");

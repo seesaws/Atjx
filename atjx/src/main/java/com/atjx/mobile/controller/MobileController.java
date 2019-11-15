@@ -89,9 +89,13 @@ public class MobileController {
     @RequestMapping(value = "/mobile/placeOrder")
     public String  PlaceOrder(Item item, Model model, HttpServletRequest request, Specification specification) {
         Integer id=item.getId();
+        String spe_id=request.getParameter("state");
+        specification.setSpe_id(Integer.parseInt(spe_id));
         Specification specification1=specificationMapper.find(specification);
         Item item1 = itemMapper.findAllInfo(id);
         model.addAttribute("item",item1);
+//        List<Item_Pic> pic=picMapper.selectAll(item1.getId());
+//        model.addAttribute("picList",pic);
         model.addAttribute("specification",specification1);
 
         return "mobile/placeOrder";

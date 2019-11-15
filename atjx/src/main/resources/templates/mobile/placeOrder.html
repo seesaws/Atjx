@@ -19,7 +19,7 @@
 						<div class="orderform-group">
 							<img src="../img/order1.png" />
 							<span>姓名：</span>
-							<input type="text" name="ordername" id="ordername" value="" />
+							<input type="text" name="ordername" id="ordername" value=""  maxlength="10" />
 						</div>
 						<div class="orderform-group">
 							<img src="../img/order2.png" />
@@ -53,14 +53,14 @@
 					</div>
 				</div>
 				<div class="xieyi">
-					<input type="checkbox" name="" id="readxieyi" value="" />
+					<input type="checkbox" name="" id="readxieyi" value="" checked="checked"/>
 					<span>我已阅读，并同意</span>
 					<a href="javascript:;">《平台用户服务协议》</a>
 				</div>
 			</div>
 		</div>
 		<div class="orderpay">
-			<div class="orderpay-left"><span>小计：</span><span id="totalmoney" th:text="'￥'+${item.price}"></span></div>
+			<div class="orderpay-left"><span>小计：</span><span id="totalmoney" th:text="'￥'+${specification.sprice}"></span></div>
 			<div class="paybtn" id="paybtn" onclick="pay()">微信支付</div>
 		</div>
 		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -81,42 +81,50 @@
 				$.post("/getOpenid", {code: code}, function (msg) {  //将code传到后台用于获取openid
 					openid=msg;
 				})};
-			function pay(){
-				var orderFee = [[${item.price}]];
-				var item_id = [[${item.id}]];
+			function pay() {
 
-				// var price =orderFee.replace(/[^0-9]/ig,"");
-				var price=parseInt(orderFee);
-				console.log("金额："+price);
-				// 将用户的金额
-				var username = $("#ordername").val();//用户姓名
-				var usertel = $("#ordertel").val();//用户电话
-				var orderremark = $("#orderremark").val();//用户备注
 
-				$.post("/pay/order", { orderFee: price,openid: openid,name:username,tel:usertel,remark:orderremark,item_id:item_id}, function (result) {
-					// 以下是后台发来的“第二堆参数”，
-					var appId=result.data.appId;
-					var timeStamp=result.data.timeStamp;
-					var nonceStr=result.data.nonceStr;
-					var packageStr=result.data.package;
-					var signType=result.data.signType;
-					var paySign=result.data.paySign;
-					if (typeof WeixinJSBridge == "undefined") {
-						if (document.addEventListener) {
-							document.addEventListener('WeixinJSBridgeReady',
-									onBridgeReady, false);
-						} else if (document.attachEvent) {
-							document.attachEvent('WeixinJSBridgeReady',
-									onBridgeReady);
-							document.attachEvent('onWeixinJSBridgeReady',
-									onBridgeReady);
+					var orderFee = [[${specification.sprice}]];
+					var item_id = [[${item.id}]];
+					var spe_id = [[${specification.spe_id}]];
+					// var price =orderFee.replace(/[^0-9]/ig,"");
+					var price = parseInt(orderFee);
+					// 将用户的金额
+					var username = $("#ordername").val();//用户姓名
+					var usertel = $("#ordertel").val();//用户电话
+					var orderremark = $("#orderremark").val();//用户备注
+
+					$.post("/pay/order", {
+						orderFee: price,
+						openid: openid,
+						name: username,
+						tel: usertel,
+						remark: orderremark,
+						item_id: item_id,
+						spe_id: spe_id
+					}, function (result) {
+						// 以下是后台发来的“第二堆参数”，
+						var appId = result.data.appId;
+						var timeStamp = result.data.timeStamp;
+						var nonceStr = result.data.nonceStr;
+						var packageStr = result.data.package;
+						var signType = result.data.signType;
+						var paySign = result.data.paySign;
+						if (typeof WeixinJSBridge == "undefined") {
+							if (document.addEventListener) {
+								document.addEventListener('WeixinJSBridgeReady',
+										onBridgeReady, false);
+							} else if (document.attachEvent) {
+								document.attachEvent('WeixinJSBridgeReady',
+										onBridgeReady);
+								document.attachEvent('onWeixinJSBridgeReady',
+										onBridgeReady);
+							}
+						} else {
+							// 唤起支付页面
+							onBridgeReady(appId, timeStamp, nonceStr, packageStr, signType, paySign);
 						}
-					} else {
-						// 唤起支付页面
-						onBridgeReady(appId,timeStamp,nonceStr,packageStr,signType,paySign);
-					}
-				});
-
+					});
 				//微信JSDK唤起支付
 				function onBridgeReady (appId,timeStamp,nonceStr,packageStr,signType,paySign) {
 					//放到pay里了，这些数据啥时候用？zx
@@ -131,9 +139,13 @@
 							function (res) {
 								if (res.err_msg == "get_brand_wcpay_request:ok") {
 									console.log('支付成功');
-									alert("成功");
+									// alert("成功");
 									//支付成功后跳转的页面
-									window.location.href = "http://atjx.club/mobile/user";
+									setTimeout(
+											function(){
+												window.location.href = "http://atjx.club/mobile/user";
+											}, 0);
+
 								} else if (msg.err_msg == "get_brand_wcpay_request:cancel") {
 
 									console.log('支付取消');
@@ -145,8 +157,30 @@
 								} //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok,但并不保证它绝对可靠。
 							}
 					);
+
 				}
+
 			}
+
+
+		</script>
+
+		<script type="text/javascript">
+
+			var ordertel = document.getElementById('ordertel');
+			var ordername = document.getElementById('ordername');
+			var namestr = ordername.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+			var str = ordertel.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+
+			if (str == '' || str == undefined || str == null) {
+
+				alert('请填写手机号码');
+			}
+			if(namestr==''||namestr==null||namestr==undefined) {
+				alert('请填写姓名');
+
+			}
+			//return false;
 
 		</script>
 

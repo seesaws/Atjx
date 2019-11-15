@@ -2,10 +2,11 @@ package com.atjx.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class User extends BaseObject {
+public class User extends BaseObject implements Serializable {
     private int id;
     private String userName;
     private String password;

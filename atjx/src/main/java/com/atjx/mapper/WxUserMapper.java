@@ -15,4 +15,6 @@ public interface WxUserMapper {
 
     WeixinUserInfo select(String openid);
 
+    Integer findByOpenid(String openid);
+
 }

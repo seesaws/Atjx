@@ -2,8 +2,10 @@ package com.atjx.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class OrderItem extends BaseObject {
+public class OrderItem extends BaseObject implements Serializable {
     private String id;
 
     private String itemId;

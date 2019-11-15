@@ -1,3 +1,4 @@
+/*
 package com.atjx.mobile.util;
 
 import com.atjx.mobile.model.AccessToken;
@@ -17,11 +18,13 @@ import java.net.ConnectException;
 import java.net.URL;
 
 
+*/
 /**
  * 通用工具类
  * @author
  *
- */
+ *//*
+
 
 public class CommonUtil {
     private static Logger log = (Logger) LoggerFactory.getLogger(CommonUtil.class);
@@ -29,14 +32,16 @@ public class CommonUtil {
     // 凭证获取（GET）
     public final static String token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
-    /**
+    */
+/**
      * 发送https请求
      *
      * @param requestUrl 请求地址
      * @param requestMethod 请求方式（GET、POST）
      * @param outputStr 提交的数据
      * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
-     */
+     *//*
+
     public static JSONObject httpsRequest(String requestUrl, String requestMethod, String outputStr) {
         JSONObject jsonObject = null;
         try {
@@ -90,13 +95,15 @@ public class CommonUtil {
         return jsonObject;
     }
 
-    /**
+    */
+/**
      * 获取接口访问凭证
      *
      * @param appid 凭证
      * @param appsecret 密钥
      * @return
-     */
+     *//*
+
     public static AccessToken getToken(String appid, String appsecret) {
         AccessToken token = null;
         String requestUrl = token_url.replace("APPID", appid).replace("APPSECRET", appsecret);
@@ -122,12 +129,14 @@ public class CommonUtil {
         return token;
     }
 
-    /**
+    */
+/**
      * URL编码（utf-8）
      *
      * @param source
      * @return
-     */
+     *//*
+
     public static String urlEncodeUTF8(String source) {
         String result = source;
         try {
@@ -138,12 +147,14 @@ public class CommonUtil {
         return result;
     }
 
-    /**
+    */
+/**
      * 根据内容类型判断文件扩展名
      *
      * @param contentType 内容类型
      * @return
-     */
+     *//*
+
     public static String getFileExt(String contentType) {
         String fileExt = "";
         if ("image/jpeg".equals(contentType))
@@ -158,13 +169,15 @@ public class CommonUtil {
             fileExt = ".mp4";
         return fileExt;
     }
-    /**
+    */
+/**
      * 获取用户信息
      *
      * @param accessToken 接口访问凭证
      * @param openId 用户标识
      * @return WeixinUserInfo
-     */
+     *//*
+
     public static WeixinUserInfo getUserInfo(String accessToken, String openId) {
         WeixinUserInfo weixinUserInfo = null;
         // 拼接请求地址
@@ -208,4 +221,4 @@ public class CommonUtil {
         }
         return weixinUserInfo;
     }
-}
+}*/

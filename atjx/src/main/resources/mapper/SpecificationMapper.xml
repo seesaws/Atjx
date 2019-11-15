@@ -36,10 +36,10 @@
         <if test="item_id != null">
             item_id = #{item_id, jdbcType=INTEGER},
         </if>
-    <if test="price != null">
+    <if test="sprice != null">
         sprice = #{sprice, jdbcType=INTEGER},
     </if>
-        <if test="del_price != null">
+        <if test="sdel_price != null">
             sdel_price = #{sdel_Sprice, jdbcType=INTEGER},
         </if>
         <if test="t_describe != null">

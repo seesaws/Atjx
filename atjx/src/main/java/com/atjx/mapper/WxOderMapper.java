@@ -1,10 +1,12 @@
 package com.atjx.mapper;
 
-import com.atjx.model.Address;
 import com.atjx.model.WxOrder;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+
+@Mapper
 public interface WxOderMapper {
 
     int insert(WxOrder wxOrder);
@@ -14,5 +16,7 @@ public interface WxOderMapper {
     void delete(Integer order_id);
 
 
-    List<Address> selectAll(Integer item_id);
+    List<WxOrder> selectStatus(String status_code,String openid);
+
+    List<WxOrder> findByUser(String openid);
 }

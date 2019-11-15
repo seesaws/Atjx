@@ -1,12 +1,15 @@
 package com.atjx.mobile.pojo;
 
+import java.io.Serializable;
+
 /**
  * 微信用户的基本信息
  * @author
  *
  */
-public class WeixinUserInfo {
-    private String user_id;
+public class WeixinUserInfo implements Serializable {
+
+    private Integer user_id;
     // 用户的标识
     private String openId;
     // 关注状态（1是关注，0是未关注），未关注时获取不到其余信息
@@ -30,6 +33,7 @@ public class WeixinUserInfo {
 
     private int money;
 
+
     public int getMoney() {
         return money;
     }
@@ -38,11 +42,11 @@ public class WeixinUserInfo {
         this.money = money;
     }
 
-    public String getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 
@@ -105,5 +109,9 @@ public class WeixinUserInfo {
     }
     public void setHeadImgUrl(String headImgUrl) {
         this.headImgUrl = headImgUrl;
+    }
+
+    public WeixinUserInfo() {
+
     }
 }

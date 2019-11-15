@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.atjx.mapper.WxUserMapper">
-    <resultMap id="BaseResultMap" type="com.atjx.mobile.pojo.WeixinUserInfo">
+    <resultMap id="WeixinUserResultMap" type="com.atjx.mobile.pojo.WeixinUserInfo">
         <id column="user_id" property="user_id" jdbcType="INTEGER"/>
         <result column="openId" property="openId" jdbcType="VARCHAR"/>
         <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
@@ -10,19 +10,55 @@
 
     </resultMap>
 
-    <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="select" resultMap="WeixinUserResultMap" parameterType="java.lang.String">
       SELECT * from tb_wxuserinfo  where openId = #{openId, jdbcType=VARCHAR}
-  </select>
+    </select>
+
+    <select id="findByOpenid" resultType="INTEGER" parameterType="java.lang.String">
+      SELECT * from tb_wxuserinfo  where openId = #{openId, jdbcType=VARCHAR}
+    </select>
 
     <delete id="delete" parameterType="java.lang.Integer">
         DELETE FROM tb_wxuserinfo WHERE user_id = #{user_id, jdbcType=INTEGER}
     </delete>
 
 
-
-    <insert id="insert" parameterType="com.atjx.mobile.pojo.WeixinUserInfo">
-        INSERT INTO tb_wxuserinfo (user_id, openId, nickname, headImgUrl,money)
-        VALUES   (null, #{openId, jdbcType=VARCHAR}, #{nickname, jdbcType=VARCHAR}, #{headImgUrl, jdbcType=VARCHAR}, 0)
+    <insert id="insert" parameterType="com.atjx.mobile.pojo.WeixinUserInfo" useGeneratedKeys="true" keyProperty="user_id">
+        INSERT INTO tb_wxuserinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user_id != null">
+                user_id,
+            </if>
+            <if test="openId != null">
+                openId,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="headImgUrl != null">
+                headImgUrl,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="user_id != null">
+                #{user_id,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="headImgUrl != null">
+                #{headImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=BIGINT},
+            </if>
+        </trim>
     </insert>
 
     <update id="update" parameterType="com.atjx.mobile.pojo.WeixinUserInfo">
@@ -44,5 +80,6 @@
                 money = #{money, jdbcType=BIGINT},
             </if>
         </trim>
+        WHERE user_id = #{user_id, jdbcType=INTEGER}
     </update>
 </mapper>

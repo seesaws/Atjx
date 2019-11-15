@@ -3,6 +3,11 @@
 	<head>
 		<meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<script src="../js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script th:src="@{/js/jquery-2.1.1.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+        <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
 		<script src="../js/iconfont.js" type="text/javascript" charset="utf-8"></script>
@@ -57,23 +62,43 @@
 				</li>
 			</ul>
 			<div class="listdingdan">
-				<div class="listdingdanone">
-					<div class="listdingdanone-dianzima"><span>电子码：</span><span>852852852</span></div>
-					<div class="listdingdanone-bianhao">订单编号：7416532963</div>
+				<div class="listdingdanone" th:if="${wxOders!=null}" th:each="w : ${wxOders}">
+					<div class="listdingdanone-dianzima"><span>电子码：</span><span></span></div>
+					<input id="order_id" type="text" hidden="hidden" th:text="${w.getWxorder_id()}"/>
+					<div class="listdingdanone-bianhao" ><span id="order_no" th:text="'订单号:'+${w.getOrder_no()}"></span></div>
+					<div class="listdingdanone-bianhao" ><span th:text="'创建时间:'+${w.getCreatedStr()}"></span></div>
 					<div class="listdingdanone-xiangqing">
-						<img src="../img/projects.png" />
-						<p>代金券可叠加使用，除餐包、调料、酒水外全场通用～～单张券适合3-4人使用，折后人均50～</p>
+<!--						<div id="qrcode"></div>-->
+						<p th:text="${w.getItem_title()}"></p>
 					</div>
-					<div class="listdingdanone-usernames" th:text="'用户名：'+${user.getNickname()}"></div>
-					<div class="listdingdanone-usernames">手机号：123</div>
+					<div class="listdingdanone-usernames" th:text="'姓名：'+${w.getUsername()}"></div>
+					<div class="listdingdanone-usernames" th:text="'手机号:'+${w.getPhone()}"></div>
 					<div class="listdingdanone-btns">
-						<div class="listdingdanone-btns-left">￥99</div>
-						<div class="listdingdanone-btns-right">查看详情</div>
+						<div class="listdingdanone-btns-left" th:text="'￥'+${w.getPayment()}"></div>
+						<div class="listdingdanone-btns-right" data-toggle="modal" data-target="#myModal"   onclick="showZhuCeBig();">查看详情</div>
+					</div>
+					<!-- 模态框（Modal） -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closed()">
+										&times;
+									</button>
+									<h4 class="modal-title" id="myModalLabel">二维码</h4>
+								</div>
+								<div class="modal-body" style="text-align: center">
+									<div style="margin:0 auto;width:200px;"  id="zhuce_big" ></div>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div><!-- /.modal -->
 					</div>
 				</div>
 
 			</div>
 		</div>
+
 		<div class="footer">
 			<ul>
 				<li><a href="/mobile/index">
@@ -89,10 +114,87 @@
 					<svg class="icon icontwo" aria-hidden="true">
 						<use xlink:href="#icon-jingyu"></use>
 					</svg>
-					<div style="margin-top: -0.28rem;">我的</div>
+					<div style="margin-top: -0.28rem;">我</div>
 					</div>
 				</a></li>
 			</ul>
 		</div>
 	</body>
+	<script th:inline="javascript">
+		// $.modal({
+		// 	autoClose : false,
+		// 	title: "测试",
+		// 	text: "文本框1<input type='text' id='test01' value=''/><br/>  文本框2<input type='text' id='test02' value=''/>",
+		// 	buttons: [
+		// 		{ text: "获取test01和test02的value值", onClick: function(){
+		//
+		// 				alert($("#test01").val());
+		// 				alert($("#test02").val());
+		// 				$.closeModal();
+		// 			} },
+		// 	]
+		// });
+		// $().ready(function() {
+		// 	$('#qrcode').qrcode({
+		// 		render:"table",//设置渲染方式 （有两种方式 table和canvas，默认是canvas）
+		// 		width: 50,//宽度
+		// 		height: 50,//高度
+		// 		correctLevel:0,//纠错等级
+		// 		typeNumber  : -1,      //计算模式
+		// 		text: "http://atjx.club/mobile/",//生成二维码的文本
+		// 		background:"rgba(0,255,0,0)",//背景色
+		// 		foreground:"#000000",//前景色
+		// 	});
+		// });
+		//模态框 关闭前事件
+		$('#myModal').on('hide.bs.modal', function () {
+			$("#zhuce_big").empty();
+		});
+		//关闭大图，同时清空加载的图片，否则第二次就有两张了
+		function closed(){
+			$("#zhuce_big").empty();
+		}
+		//查看大图
+		/*<![CDATA[*/
+
+
+		function showZhuCeBig(){
+			var order_no=$("#order_no").val();
+			var order_id=$("#order_id").val();
+			var renderStr;
+			if (window.applicationCache) {
+				renderStr = 'canvas';
+			}
+			else{
+				renderStr = 'image';
+			}
+			$('#zhuce_big').qrcode({
+				render: renderStr,
+				width: 200, //宽度
+				height:200, //高度
+				correctLevel:0,//纠错等级
+				typeNumber  : -1,      //计算模式
+				text:"http://atjx.club/mobile/"+order_no+"/"+order_id
+			});
+		}
+		/*]]>*/
+		$(function(){
+			// dom加载完毕
+			var $m_btn = $('#modalBtn');
+			var $modal = $('#myModal');
+			$m_btn.on('click', function(){
+				$modal.modal({backdrop: 'static'});
+			});
+
+			// 测试 bootstrap 居中
+			$modal.on('show.bs.modal', function(){
+				var $this = $(this);
+				var $modal_dialog = $this.find('.modal-dialog');
+				// 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
+				$this.css('display', 'block');
+				$modal_dialog.css({'margin-top': Math.max(0, ($(window).height() - $modal_dialog.height()) / 2) });
+			});
+
+		});
+	</script>
 </html>

@@ -14,6 +14,7 @@ public class RedisService {
     @Autowired
     JedisPool jedisPool;
 
+
     /**
      * 从redis连接池获取redis实例
      */
@@ -24,7 +25,8 @@ public class RedisService {
             //对key增加前缀，即可用于分类，也避免key重复
             String realKey = prefix.getPrefix() + key;
             String str = jedis.get(realKey);
-            return stringToBean(str, clazz);
+            T t = stringToBean(str, clazz);
+            return t;
         } finally {
             returnToPool(jedis);
         }
@@ -151,6 +153,8 @@ public class RedisService {
             return JSON.toJavaObject(JSON.parseObject(str), clazz);
         }
     }
+
+
 
     private void returnToPool(Jedis jedis) {
         if (jedis != null) {
