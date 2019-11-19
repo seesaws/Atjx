@@ -151,6 +151,7 @@ public class HttpRequest {
         finally
         {
             try {
+                assert br != null;
                 br.close();
                 isr.close();
             } catch (IOException e) {

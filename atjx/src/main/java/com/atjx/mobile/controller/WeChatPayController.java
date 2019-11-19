@@ -9,12 +9,12 @@ import com.atjx.mobile.util.WXPayUtil;
 import com.atjx.model.Item;
 import com.atjx.model.Specification;
 import com.atjx.model.WxOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -29,11 +29,11 @@ import java.util.Map;
 @Controller
 public class WeChatPayController {
 
-    @Autowired
+    @Resource
     private ItemMapper itemMapper;
-    @Autowired
+    @Resource
     private WxOderMapper wxOderMapper;
-    @Autowired
+    @Resource
     private SpecificationMapper specificationMapper;
     @RequestMapping("/getOpenid")
     @ResponseBody
@@ -278,6 +278,7 @@ public class WeChatPayController {
                 wxOrder.setOrder_no(paraMap.get("out_trade_no"));
                 wxOrder.setItem_title(item.getTitle());
                 wxOrder.setOrder_desc(specification.getT_describe());
+                wxOrder.setSpe_id(Integer.parseInt(spe_id));
                 //入库
                 //更新商品销量+1,库存-1
                 //先查询库存

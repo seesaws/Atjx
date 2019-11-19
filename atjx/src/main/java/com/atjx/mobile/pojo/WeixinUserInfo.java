@@ -33,6 +33,15 @@ public class WeixinUserInfo implements Serializable {
 
     private int money;
 
+    private String supplyer;
+
+    public String getSupplyer() {
+        return supplyer;
+    }
+
+    public void setSupplyer(String supplyer) {
+        this.supplyer = supplyer;
+    }
 
     public int getMoney() {
         return money;

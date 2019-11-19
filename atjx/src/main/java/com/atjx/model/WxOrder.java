@@ -19,6 +19,8 @@ public class WxOrder {
     private String order_no;
     private String item_title;
     private String order_desc;
+    private Integer spe_id;
+    private Specification specification;
 
 
 }

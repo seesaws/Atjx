@@ -7,6 +7,7 @@
         <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
         <result column="headImgUrl" property="headImgUrl" jdbcType="VARCHAR"/>
         <result column="money" property="money" jdbcType="BIGINT"/>
+        <result column="supplyer" property="supplyer" jdbcType="VARCHAR"/>
 
     </resultMap>
 
@@ -41,6 +42,9 @@
             <if test="money != null">
                 money,
             </if>
+            <if test="supplyer != null">
+                supplyer,
+            </if>
         </trim>
         <trim prefix="value (" suffix=")" suffixOverrides=",">
             <if test="user_id != null">
@@ -57,6 +61,9 @@
             </if>
             <if test="money != null">
                 #{money,jdbcType=BIGINT},
+            </if>
+            <if test="supplyer != null">
+                #{supplyer,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -78,6 +85,9 @@
             </if>
             <if test="money != null">
                 money = #{money, jdbcType=BIGINT},
+            </if>
+            <if test="supplyer != null">
+                #{supplyer,jdbcType=BIGINT},
             </if>
         </trim>
         WHERE user_id = #{user_id, jdbcType=INTEGER}

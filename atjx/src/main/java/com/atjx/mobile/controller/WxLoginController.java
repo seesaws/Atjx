@@ -2,18 +2,20 @@ package com.atjx.mobile.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.atjx.mapper.SpecificationMapper;
 import com.atjx.mapper.WxOderMapper;
 import com.atjx.mapper.WxUserMapper;
 import com.atjx.mobile.pojo.WeixinUserInfo;
 import com.atjx.mobile.util.HttpClientUtil;
+import com.atjx.model.Specification;
 import com.atjx.model.WxOrder;
 import com.atjx.util.DateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,12 +27,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/mobile")
 public class WxLoginController {
-    @Autowired
+    @Resource
     private WxUserMapper wxUserMapper;
 //    @Resource//不能使用@Autowired，如果非要使用，不注明泛型类型即可
 //    private RedisTemplate<String, WeixinUserInfo> redisTemplate;
-    @Autowired
+    @Resource
     private WxOderMapper wxOderMapper;
+    @Resource
+    private SpecificationMapper specificationMapper;
     public static final String WX_APPID = "wx7738ac5a31d41ee4";
     public static final String WX_APPSECRET = "7092282a2dd53b572d39c2802b460b2f";
     private WeixinUserInfo weixinUserInfo;
@@ -61,7 +65,7 @@ public class WxLoginController {
 
     //	回调方法
     @RequestMapping("/callBack")
-    public ModelAndView wxCallBack(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+    public ModelAndView wxCallBack(HttpServletRequest request, HttpServletResponse response, Model model, Specification specification) throws IOException {
 
         HttpSession session = request.getSession();
         WeixinUserInfo weixinUserInfo= (WeixinUserInfo) session.getAttribute("weixinUserInfo");
@@ -109,13 +113,15 @@ public class WxLoginController {
                         for (WxOrder w : wxOrders) {
                             w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
                         }
+
                         Collections.reverse(wxOrders);
-                        model.addAttribute("wxOders", wxOrders);
+                        model.addAttribute("wxOrders", wxOrders);
+
+
 
                     }else {
                         wxUserMapper.update(infoList);
                     }
-                    return new ModelAndView("mobile/my");
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -132,9 +138,7 @@ public class WxLoginController {
             w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
         }
         Collections.reverse(wxOrders);
-        model.addAttribute("wxOders", wxOrders);
-
-
+        model.addAttribute("wxOrders", wxOrders);
 
         return new ModelAndView("mobile/my");
     }

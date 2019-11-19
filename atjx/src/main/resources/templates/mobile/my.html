@@ -3,13 +3,12 @@
 	<head>
 		<meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-		<script src="../js/iconfont.js" type="text/javascript" charset="utf-8"></script>
 		<script th:src="@{/js/jquery-2.1.1.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
         <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
 		<script src="../js/iconfont.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
@@ -62,20 +61,20 @@
 				</li>
 			</ul>
 			<div class="listdingdan">
-				<div class="listdingdanone" th:if="${wxOders!=null}" th:each="w : ${wxOders}">
-					<div class="listdingdanone-dianzima"><span>电子码：</span><span></span></div>
-					<input id="order_id" type="text" hidden="hidden" th:text="${w.getWxorder_id()}"/>
+				<div class="listdingdanone" th:if="${wxOrders!=null}" th:each="w : ${wxOrders}">
+					<div class="listdingdanone-dianzima"><span>电子码：</span><span id="order_id" th:text="${w.getWxorder_id()}"></span></div>
 					<div class="listdingdanone-bianhao" ><span id="order_no" th:text="'订单号:'+${w.getOrder_no()}"></span></div>
 					<div class="listdingdanone-bianhao" ><span th:text="'创建时间:'+${w.getCreatedStr()}"></span></div>
 					<div class="listdingdanone-xiangqing">
-<!--						<div id="qrcode"></div>-->
+				<!--	<div id="qrcode"></div>-->
 						<p th:text="${w.getItem_title()}"></p>
 					</div>
+					<div class="listdingdanone-usernames" th:text="'套餐:'+${w.specification?.tname}"></div>
 					<div class="listdingdanone-usernames" th:text="'姓名：'+${w.getUsername()}"></div>
 					<div class="listdingdanone-usernames" th:text="'手机号:'+${w.getPhone()}"></div>
 					<div class="listdingdanone-btns">
 						<div class="listdingdanone-btns-left" th:text="'￥'+${w.getPayment()}"></div>
-						<div class="listdingdanone-btns-right" data-toggle="modal" data-target="#myModal"   onclick="showZhuCeBig();">查看详情</div>
+						<div class="listdingdanone-btns-right" data-toggle="modal" data-target="#myModal"  th:attr="data-order_id=${w.wxorder_id}"   onclick="showZhuCeBig();">查看详情</div>
 					</div>
 					<!-- 模态框（Modal） -->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -85,7 +84,7 @@
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closed()">
 										&times;
 									</button>
-									<h4 class="modal-title" id="myModalLabel">二维码</h4>
+									<h4 class="modal-title" id="myModalLabel" style="text-align: center">二维码</h4>
 								</div>
 								<div class="modal-body" style="text-align: center">
 									<div style="margin:0 auto;width:200px;"  id="zhuce_big" ></div>
@@ -159,22 +158,24 @@
 
 
 		function showZhuCeBig(){
-			var order_no=$("#order_no").val();
-			var order_id=$("#order_id").val();
+			// var order_no=$("#order_no").val();
 			var renderStr;
+			var order_id=$(this).data('order_id');
+			console.log(order_id);
 			if (window.applicationCache) {
 				renderStr = 'canvas';
 			}
 			else{
 				renderStr = 'image';
 			}
+			var str="http://atjx.club/mobile/getSupplier?order_id="+order_id;
 			$('#zhuce_big').qrcode({
-				render: renderStr,
+				render: "canvas",
 				width: 200, //宽度
 				height:200, //高度
 				correctLevel:0,//纠错等级
 				typeNumber  : -1,      //计算模式
-				text:"http://atjx.club/mobile/"+order_no+"/"+order_id
+				text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&redirect_uri=" +str+ "&response_type=code&scope=snsapi_base&state=103#wechat_redirect"
 			});
 		}
 		/*]]>*/

@@ -13,6 +13,15 @@
         <result column="order_no" property="order_no" jdbcType="VARCHAR"/>
         <result column="item_title" property="item_title" jdbcType="VARCHAR"/>
         <result column="order_desc" property="order_desc" jdbcType="VARCHAR"/>
+        <result column="spe_id" property="spe_id" jdbcType="VARCHAR"/>
+        <collection property="specification" ofType="com.atjx.model.Specification">
+            <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
+            <result column="item_id" property="item_id" jdbcType="INTEGER"/>
+            <result column="tname" property="tname" jdbcType="VARCHAR"/>
+            <result column="sprice" property="sprice" jdbcType="BIGINT"/>
+            <result column="sdel_price" property="sdel_price" jdbcType="BIGINT"/>
+            <result column="t_describe" property="t_describe" jdbcType="VARCHAR"/>
+        </collection>
 
     </resultMap>
     <insert id="insert" parameterType="com.atjx.model.WxOrder" useGeneratedKeys="true" keyProperty="wxorder_id">
@@ -51,6 +60,9 @@
             <if test="order_desc != null">
                 order_desc,
             </if>
+            <if test="spe_id != null">
+                spe_id,
+            </if>
         </trim>
         <trim prefix="value (" suffix=")" suffixOverrides=",">
             <if test="wxorder_id != null">
@@ -86,6 +98,9 @@
             <if test="order_desc != null">
                 #{order_desc,jdbcType=VARCHAR},
             </if>
+            <if test="spe_id != null">
+                #{spe_id,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
 
@@ -94,13 +109,27 @@
     </delete>
 
     <select id="findByUser" resultMap="OrderResultMap" parameterType="java.lang.String">
-        SELECT * from tb_wxorder where openid = #{openid, jdbcType=VARCHAR}
+        SELECT w.*,s.*
+        from tb_wxorder w
+        left join tb_specification s
+        on w.spe_id = s.spe_id
+        where openid = #{openid, jdbcType=VARCHAR}
+
     </select>
 
     <select id="selectStatus" resultMap="OrderResultMap" parameterType="java.lang.String">
         SELECT * from tb_wxorder where status_code=#{status_code,jdbcType=VARCHAR} and openid = #{openid, jdbcType=VARCHAR}
     </select>
 
+    <update id="update" parameterType="com.atjx.model.WxOrder">
+        UPDATE tb_wxorder
+        <trim prefix="set" suffixOverrides=",">
+            <if test="status_code != null">
+                #{status_code,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        WHERE user_id = #{user_id, jdbcType=INTEGER}
+    </update>
 
 
 </mapper>
