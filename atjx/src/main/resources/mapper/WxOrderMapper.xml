@@ -13,7 +13,8 @@
         <result column="order_no" property="order_no" jdbcType="VARCHAR"/>
         <result column="item_title" property="item_title" jdbcType="VARCHAR"/>
         <result column="order_desc" property="order_desc" jdbcType="VARCHAR"/>
-        <result column="spe_id" property="spe_id" jdbcType="VARCHAR"/>
+        <result column="spe_id" property="spe_id" jdbcType="INTEGER"/>
+        <result column="item_id" property="item_id" jdbcType="INTEGER"/>
         <collection property="specification" ofType="com.atjx.model.Specification">
             <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
             <result column="item_id" property="item_id" jdbcType="INTEGER"/>
@@ -121,6 +122,10 @@
         SELECT * from tb_wxorder where status_code=#{status_code,jdbcType=VARCHAR} and openid = #{openid, jdbcType=VARCHAR}
     </select>
 
+    <select id="findById" resultMap="OrderResultMap" parameterType="INTEGER">
+        SELECT * from tb_wxorder where wxorder_id=#{wxorder_id,jdbcType=INTEGER}
+    </select>
+
     <update id="update" parameterType="com.atjx.model.WxOrder">
         UPDATE tb_wxorder
         <trim prefix="set" suffixOverrides=",">
@@ -128,7 +133,7 @@
                 #{status_code,jdbcType=VARCHAR},
             </if>
         </trim>
-        WHERE user_id = #{user_id, jdbcType=INTEGER}
+        WHERE wxorder_id = #{wxorder_id, jdbcType=INTEGER}
     </update>
 
 

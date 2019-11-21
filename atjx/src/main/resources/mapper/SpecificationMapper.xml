@@ -11,15 +11,47 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.atjx.model.Specification" useGeneratedKeys="true" keyProperty="spe_id">
-        insert into tb_specification (spe_id,item_id,tname,sprice,sdel_price,t_describe)
-        value (
-        #{spe_id,jdbcType=INTEGER},
-        #{item_id,jdbcType=INTEGER},
-        #{tname,jdbcType=VARCHAR},
-        #{sprice,jdbcType=INTEGER},
-        #{sdel_price,jdbcType=INTEGER},
-        #{t_describe,jdbcType=VARCHAR}
-        )
+        insert into tb_specification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spe_id != null">
+                spe_id,
+            </if>
+            <if test="item_id != null">
+                item_id,
+            </if>
+            <if test="tname != null">
+                tname,
+            </if>
+            <if test="sprice != null">
+                sprice,
+            </if>
+            <if test="sdel_price != null">
+                sdel_price,
+            </if>
+            <if test="t_describe != null">
+                t_describe,
+            </if>
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="spe_id != null">
+                #{spe_id,jdbcType=INTEGER},
+            </if>
+            <if test="item_id != null">
+                #{item_id,jdbcType=INTEGER},
+            </if>
+            <if test="tname != null">
+                #{tname,jdbcType=VARCHAR},
+            </if>
+            <if test="sprice != null">
+                #{sprice,jdbcType=INTEGER},
+            </if>
+            <if test="sdel_price != null">
+                #{sdel_price,jdbcType=INTEGER},
+            </if>
+            <if test="t_describe != null">
+                #{t_describe,jdbcType=VARCHAR},
+            </if>
+        </trim>
     </insert>
 
 

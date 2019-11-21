@@ -2,46 +2,19 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<title>商品详情</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/swiper.min.css}"/>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
-		<title>商品详情</title>
+		<link rel="stylesheet" type="text/css" href="/admin/ueditor/themes/iframe.css"/>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"> </script>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
+
 	</head>
-	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"> </script>
-	<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
-	<script th:src="@{/js/jquery-3.4.1.min.js}" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" charset="utf-8" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" ></script>
-
-	<script th:inline="javascript">
-		//初始化ueditor  建议放到最开头
-		var ue = UE.getEditor('editor',
-				{
-					toolbars:[[]],
-					//关闭字数统计  
-					wordCount:false,
-					//关闭elementPath  
-					elementPathEnabled:false,
-					//默认的编辑区域高度  
-					initialFrameHeight: '100%'
-					//更多其他参数，请参考ueditor.config.js中的配置项  
-				});
-		ue.ready(function() {
-			//不可编辑
-			ue.setDisabled();
-		});
-		//获取后台传过来的filmVo对象的filmDesc属性的内容(html字符串内容(数据库查到的))
-		// var filmDesc = [[${item.sell_Point}]];
-		// var sp=[[${item.sell_Point}]];
-		//这个监听器是亮点
-		// ue.addListener('ready',function () {
-		// 	ue.execCommand('insertHtml',filmDesc);
-		// });
-
-	</script>
 	<body>
 		<div class="container" >
 <!--			<div class="listhead">-->
@@ -137,6 +110,39 @@
 				</li>
 			</ul>
 		</div>
+		<script th:inline="javascript">
+			//初始化ueditor  建议放到最开头
+			var ue = UE.getEditor('editor',
+					{
+						toolbars:[[]],
+						//关闭字数统计  
+						wordCount:false,
+						//关闭elementPath  
+						elementPathEnabled:false,
+						//默认的编辑区域高度  
+						initialFrameHeight: '100%'
+						//更多其他参数，请参考ueditor.config.js中的配置项  
+					});
+			ue.ready(function() {
+				//不可编辑
+				ue.setDisabled();
+			});
+			//获取后台传过来的filmVo对象的filmDesc属性的内容(html字符串内容(数据库查到的))
+			// var filmDesc = [[${item.sell_Point}]];
+			// var sp=[[${item.sell_Point}]];
+			//这个监听器是亮点
+			// ue.addListener('ready',function () {
+			// 	ue.execCommand('insertHtml',filmDesc);
+			// });
+
+		</script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-2.1.1.js}"></script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+		<script type="text/javascript" charset="utf-8" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" ></script>
+
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/swiper.min.js}" ></script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/particulars.js}" ></script>
+
 
 		<script>
 			wx.config({
@@ -156,7 +162,6 @@
 			wx.error(function(res){
 				console.log(res);
 			});
-
 			$('#address').click(function () {
 				wx.openLocation({
 					latitude: 22.545538, // 纬度，浮点数，范围为90 ~ -90。如果是动态获取的数据，使用parseFloat()处理数据
@@ -169,6 +174,7 @@
 
 
 		</script>
+		<!-- 判断库存为0的情况禁用购买-->
 		<script th:inline="javascript">
 			var num=[[${item.num}]];
 			var nums=parseInt(num);
@@ -182,43 +188,32 @@
 
 		</script>
 
-		<script>
-			var jsonObject={};
-			$.ajax({
+<!--		<script>-->
+<!--			var jsonObject={};-->
+<!--			$.ajax({-->
+<!--				type: "POST",//请求方式-->
+<!--				url: '/PostServlet',//指定的链接-->
+<!--				data: JSON.stringify({//请求后端的参数-->
+<!--					tokenID: Token,-->
+<!--					schema: Schema,-->
+<!--					funData: JSON.stringify({-->
+<!--						func: 'doFunc',-->
+<!--						params: param-->
+<!--					})-->
+<!--				}),-->
+<!--				dataType: "JSON",//或"TEXT" //请求返回的数据类型-->
+<!--				async: false,  //是否需要同步-->
+<!--				cache: true,-->
+<!--				success: function (data) { //请求返回成功后执行的function-->
+<!--					//后端返回json数据可以在这里，应用上面所说的解析json方法解析-->
+<!--					var jsonArray=JSON.parse(data);//一般使用这种方法，将数据转换成JavaScript对象-->
+<!--				},-->
+<!--				error: function (data) {-->
+<!--					console.log(data.result);-->
+<!--				}-->
 
-				type: "POST",//请求方式
-
-				url: '/PostServlet',//指定的链接
-
-				data: JSON.stringify({//请求后端的参数
-
-					tokenID: Token,
-
-					schema: Schema,
-
-					funData: JSON.stringify({
-
-						func: 'doFunc',
-
-						params: param
-
-					})
-
-				}),
-
-				dataType: "JSON",//或"TEXT" //请求返回的数据类型
-				async: false,  //是否需要同步
-				cache: true,
-				success: function (data) { //请求返回成功后执行的function
-					//后端返回json数据可以在这里，应用上面所说的解析json方法解析
-					var jsonArray=JSON.parse(data);//一般使用这种方法，将数据转换成JavaScript对象
-				},
-				error: function (data) {
-					console.log(data.result);
-				}
-
-			})
-		</script>
+<!--			})-->
+<!--		</script>-->
 
 <!--		获取套餐价格-->
 		<script th:inline="javascript">
@@ -246,7 +241,6 @@
 						getattrprice(); //输出价格
 					})
 				});
-
 
 				//获取对应属性的价格
 				function getattrprice(){
@@ -294,18 +288,9 @@
 			})
 		</script>
 
-		<script th:inline="javascript">
-			var item_id = [[${item.id}]];
-
-		</script>
-
-
-
-
-		<script th:src="@{/js/swiper.min.js}" type="text/javascript" charset="utf-8"></script>
-		<script th:src="@{/js/particulars.js}" type="text/javascript" charset="utf-8"></script>
-
 
 
 	</body>
+
+
 </html>

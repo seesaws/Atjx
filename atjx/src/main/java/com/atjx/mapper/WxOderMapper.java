@@ -15,6 +15,7 @@ public interface WxOderMapper {
 
     void delete(Integer order_id);
 
+    WxOrder findById(WxOrder wxOrder);
 
     List<WxOrder> selectStatus(String status_code,String openid);
 

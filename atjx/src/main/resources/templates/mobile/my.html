@@ -2,25 +2,22 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
 	<head>
 		<meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
-		<script th:src="@{/js/jquery-2.1.1.js}"></script>
-		<script th:src="@{/js/bootstrap.min.js}"></script>
+    	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<title>个人中心</title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-        <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
-		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
-		<script src="../js/iconfont.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
-		<title>个人中心</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
+
 	</head>
 	<body>
 		<div class="container">
 			<div class="myimgbj">
 				<img src="../img/timg4.jpg" />
 				<div class="myhead">
-					<img th:src="${session.weixinUserInfo.getHeadImgUrl()}" alt="HeadImg"/><br/>
-					<span style="bottom: 45%;font-size:0.65rem" th:text="${session.weixinUserInfo.getNickname()}"></span>
+					<img th:src="${session.weixinUserInfo.getHeadImgUrl()}"/><br/>
+					<span style="bottom: 45%;font-size:0.65rem"  th:text="${session.weixinUserInfo.getNickname()}"></span>
 				</div>
 
 
@@ -74,7 +71,7 @@
 					<div class="listdingdanone-usernames" th:text="'手机号:'+${w.getPhone()}"></div>
 					<div class="listdingdanone-btns">
 						<div class="listdingdanone-btns-left" th:text="'￥'+${w.getPayment()}"></div>
-						<div class="listdingdanone-btns-right" data-toggle="modal" data-target="#myModal"  th:attr="data-order_id=${w.wxorder_id}"   onclick="showZhuCeBig();">查看详情</div>
+						<div class="listdingdanone-btns-right" data-toggle="modal" data-target="#myModal"  th:attr="data-order_id=${w.wxorder_id}"   onclick="showZhuCeBig(this);">查看详情</div>
 					</div>
 					<!-- 模态框（Modal） -->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -118,84 +115,97 @@
 				</a></li>
 			</ul>
 		</div>
+
+		<script th:src="@{/js/jquery-2.1.1.js}"></script>
+
+
+		<script th:inline="javascript">
+			// $.modal({
+			// 	autoClose : false,
+			// 	title: "测试",
+			// 	text: "文本框1<input type='text' id='test01' value=''/><br/>  文本框2<input type='text' id='test02' value=''/>",
+			// 	buttons: [
+			// 		{ text: "获取test01和test02的value值", onClick: function(){
+			//
+			// 				alert($("#test01").val());
+			// 				alert($("#test02").val());
+			// 				$.closeModal();
+			// 			} },
+			// 	]
+			// });
+			// $().ready(function() {
+			// 	$('#qrcode').qrcode({
+			// 		render:"table",//设置渲染方式 （有两种方式 table和canvas，默认是canvas）
+			// 		width: 50,//宽度
+			// 		height: 50,//高度
+			// 		correctLevel:0,//纠错等级
+			// 		typeNumber  : -1,      //计算模式
+			// 		text: "http://atjx.club/mobile/",//生成二维码的文本
+			// 		background:"rgba(0,255,0,0)",//背景色
+			// 		foreground:"#000000",//前景色
+			// 	});
+			// });
+			//模态框 关闭前事件
+			$('#myModal').on('hide.bs.modal', function () {
+				$("#zhuce_big").empty();
+			});
+			//关闭大图，同时清空加载的图片，否则第二次就有两张了
+			function closed(){
+				$("#zhuce_big").empty();
+			}
+			//查看大图
+			/*<![CDATA[*/
+
+
+			function showZhuCeBig(e){
+				// var order_no=$("#order_no").val();
+				var renderStr;
+				// var order_id=e.data("order_id");
+				var order_id=e.getAttribute("data-order_id");
+				// console.log('o='+order_id);
+				if (window.applicationCache) {
+					renderStr = 'canvas';
+				}
+				else{
+					renderStr = 'image';
+				}
+				var str="http://atjx.club/mobile/getSupplier?order_id="+order_id;
+				$('#zhuce_big').qrcode({
+					render: "canvas",
+					width: 200, //宽度
+					height:200, //高度
+					correctLevel:0,//纠错等级
+					typeNumber  : -1,      //计算模式
+					text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&redirect_uri=" +str+ "&response_type=code&scope=snsapi_base&state=103#wechat_redirect"
+				});
+			}
+			/*]]>*/
+			$(function(){
+				// dom加载完毕
+				var $m_btn = $('#modalBtn');
+				var $modal = $('#myModal');
+				$m_btn.on('click', function(){
+					$modal.modal({backdrop: 'static'});
+				});
+
+				// 测试 bootstrap 居中
+				$modal.on('show.bs.modal', function(){
+					var $this = $(this);
+					var $modal_dialog = $this.find('.modal-dialog');
+					// 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
+					$this.css('display', 'block');
+					$modal_dialog.css({'margin-top': Math.max(0, ($(window).height() - $modal_dialog.height()) / 2) });
+				});
+
+			});
+		</script>
 	</body>
-	<script th:inline="javascript">
-		// $.modal({
-		// 	autoClose : false,
-		// 	title: "测试",
-		// 	text: "文本框1<input type='text' id='test01' value=''/><br/>  文本框2<input type='text' id='test02' value=''/>",
-		// 	buttons: [
-		// 		{ text: "获取test01和test02的value值", onClick: function(){
-		//
-		// 				alert($("#test01").val());
-		// 				alert($("#test02").val());
-		// 				$.closeModal();
-		// 			} },
-		// 	]
-		// });
-		// $().ready(function() {
-		// 	$('#qrcode').qrcode({
-		// 		render:"table",//设置渲染方式 （有两种方式 table和canvas，默认是canvas）
-		// 		width: 50,//宽度
-		// 		height: 50,//高度
-		// 		correctLevel:0,//纠错等级
-		// 		typeNumber  : -1,      //计算模式
-		// 		text: "http://atjx.club/mobile/",//生成二维码的文本
-		// 		background:"rgba(0,255,0,0)",//背景色
-		// 		foreground:"#000000",//前景色
-		// 	});
-		// });
-		//模态框 关闭前事件
-		$('#myModal').on('hide.bs.modal', function () {
-			$("#zhuce_big").empty();
-		});
-		//关闭大图，同时清空加载的图片，否则第二次就有两张了
-		function closed(){
-			$("#zhuce_big").empty();
-		}
-		//查看大图
-		/*<![CDATA[*/
+	<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" charset="utf-8" src="../js/iconfont.js" ></script>
+	<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
 
-		function showZhuCeBig(){
-			// var order_no=$("#order_no").val();
-			var renderStr;
-			var order_id=$(this).data('order_id');
-			console.log(order_id);
-			if (window.applicationCache) {
-				renderStr = 'canvas';
-			}
-			else{
-				renderStr = 'image';
-			}
-			var str="http://atjx.club/mobile/getSupplier?order_id="+order_id;
-			$('#zhuce_big').qrcode({
-				render: "canvas",
-				width: 200, //宽度
-				height:200, //高度
-				correctLevel:0,//纠错等级
-				typeNumber  : -1,      //计算模式
-				text:"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&redirect_uri=" +str+ "&response_type=code&scope=snsapi_base&state=103#wechat_redirect"
-			});
-		}
-		/*]]>*/
-		$(function(){
-			// dom加载完毕
-			var $m_btn = $('#modalBtn');
-			var $modal = $('#myModal');
-			$m_btn.on('click', function(){
-				$modal.modal({backdrop: 'static'});
-			});
 
-			// 测试 bootstrap 居中
-			$modal.on('show.bs.modal', function(){
-				var $this = $(this);
-				var $modal_dialog = $this.find('.modal-dialog');
-				// 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零
-				$this.css('display', 'block');
-				$modal_dialog.css({'margin-top': Math.max(0, ($(window).height() - $modal_dialog.height()) / 2) });
-			});
 
-		});
-	</script>
 </html>

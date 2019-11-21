@@ -5,9 +5,9 @@ import com.atjx.mapper.SpecificationMapper;
 import com.atjx.mapper.WxOderMapper;
 import com.atjx.mapper.WxUserMapper;
 import com.atjx.mobile.pojo.WeixinUserInfo;
+import com.atjx.model.WxOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,14 +37,15 @@ public class SupplierController {
     @Resource
     private WxUserMapper wxUserMapper;
     @RequestMapping("/getSupplier")
-    @ResponseBody
-    public String getOpenid(HttpServletRequest request, HttpServletResponse response,PrintWriter out) throws IOException {
+    public String getOpenid(HttpServletRequest request, HttpServletResponse response, PrintWriter out, WxOrder wxOrder) throws IOException {
 
         String code = request.getParameter("code");
+        String order_id = request.getParameter("order_id");
+        System.out.println(order_id);
         String appId = "wx7738ac5a31d41ee4";
         String appSecret = "7092282a2dd53b572d39c2802b460b2f";
         String result = null;
-
+        wxOrder.setWxorder_id(Integer.parseInt(order_id));
         try {
             String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?grant_type=authorization_code";
             String getDataStr = "&appid=" + appId + "&secret=" + appSecret+"&code="+code;
@@ -54,17 +55,24 @@ public class SupplierController {
             if(openid!=null){
 
                 result=openid;
+                WeixinUserInfo weixinUserInfo1=new WeixinUserInfo();
+                request.getSession().setAttribute("weixinUserInfo",weixinUserInfo1);
                 response.setContentType("text/html; charset=utf-8");
+                //查询用户是否为核销商
                 WeixinUserInfo weixinUserInfo=wxUserMapper.select(result);
                 if (Integer.parseInt(weixinUserInfo.getSupplyer())==0){
 //                    out = response.getWriter();
 
-                    out.print("<script>alert('你的openid："+result+"非核销商户！');</script>");
+                    out.print("<script language='javascript' type='text/javascript'>alert('非核销商户！');</script>");
                 }else if(Integer.parseInt(weixinUserInfo.getSupplyer())==1){
-
-                    out.print("<script>alert('核销成功！');</script>");
+                    wxOrder=wxOderMapper.findById(wxOrder);
+                    //102已完成
+                    wxOrder.setStatus_code("102");
+                    //更新状态码
+                    wxOderMapper.update(wxOrder);
+                    out.print("<script language='javascript' type='text/javascript'>alert('核销成功！');</script>");
                 }else {
-                    out.print("<script>alert('非法扫码！');</script>");
+                    out.print("<script language='javascript' type='text/javascript'>alert('非法扫码！');</script>");
                 }
 
 //        out.flush();//有了这个，下面的return就不会执行了
@@ -81,7 +89,7 @@ public class SupplierController {
             out.close();
         }
 //
-        return result;
+        return "redirect:http://atjx.club/mobile/user";
     }
 
 }

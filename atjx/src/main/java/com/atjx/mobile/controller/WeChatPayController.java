@@ -279,6 +279,7 @@ public class WeChatPayController {
                 wxOrder.setItem_title(item.getTitle());
                 wxOrder.setOrder_desc(specification.getT_describe());
                 wxOrder.setSpe_id(Integer.parseInt(spe_id));
+                wxOrder.setItem_id(Integer.parseInt(item_id));
                 //入库
                 //更新商品销量+1,库存-1
                 //先查询库存

@@ -7,7 +7,6 @@ import com.atjx.mapper.WxOderMapper;
 import com.atjx.mapper.WxUserMapper;
 import com.atjx.mobile.pojo.WeixinUserInfo;
 import com.atjx.mobile.util.HttpClientUtil;
-import com.atjx.model.Specification;
 import com.atjx.model.WxOrder;
 import com.atjx.util.DateUtil;
 import org.springframework.ui.Model;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Collections;
@@ -39,106 +38,128 @@ public class WxLoginController {
     public static final String WX_APPSECRET = "7092282a2dd53b572d39c2802b460b2f";
     private WeixinUserInfo weixinUserInfo;
     @RequestMapping("/user")
-    public void wxLogin(HttpServletResponse response, HttpServletRequest request, WeixinUserInfo weixinUserInfo) throws IOException {
+    public ModelAndView wxLogin(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException, ServletException {
+        // 获取客户端cookie
+//        request.setCharacterEncoding("utf-8");
+//        Cookie[] cookies = request.getCookies();
+
         //查询session
-        HttpSession session = request.getSession();
-        Object object=session.getAttribute("weixinUserInfo");
-        if(object==null){
+            WeixinUserInfo weixinUserInfo1= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
+
+        if (weixinUserInfo1 == null) {
             //请求获取code的回调地址
             //用线上环境的域名或者用内网穿透，不能用ip
-            String callBack = "http://atjx.club/mobile/callBack/";
+            String callBack = "http://atjx.club/mobile/callBack";
             //请求地址
             String url = "https://open.weixin.qq.com/connect/oauth2/authorize" +
                     "?appid=" + WX_APPID +
-                    "&redirect_uri=" + URLEncoder.encode(callBack,"UTF-8") +
+                    "&redirect_uri=" + URLEncoder.encode(callBack, "UTF-8") +
                     "&response_type=code" +
                     "&scope=snsapi_userinfo" +
                     "&state=STATE#wechat_redirect";
             //重定向
             response.sendRedirect(url);
-        }
-        else{
-            response.sendRedirect("http://atjx.club/mobile/callBack/");
+        } else {
+            //转发请求
+//                request.getRequestDispatcher("http://atjx.club/mobile/callBack").forward(request,response);
+//            for (Cookie c : cookies) {
+//                if ("openid".equals(c.getName())) { //查找名为uname的cookie
+//                    String openid = c.getValue(); //获取这个cookie值，赋给uname
+//
+//                }
+//            }
+            List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo1.getOpenId());
+            for (WxOrder w : wxOrders) {
+                w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
+            }
+            Collections.reverse(wxOrders);
+            model.addAttribute("wxOrders", wxOrders);
+            request.getRequestDispatcher("http://atjx.club/mobile/callBack").forward(request,response);
         }
 
+        return null;
     }
 
     //	回调方法
     @RequestMapping("/callBack")
-    public ModelAndView wxCallBack(HttpServletRequest request, HttpServletResponse response, Model model, Specification specification) throws IOException {
+    public ModelAndView wxCallBack(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
 
-        HttpSession session = request.getSession();
-        WeixinUserInfo weixinUserInfo= (WeixinUserInfo) session.getAttribute("weixinUserInfo");
+        // 获取客户端cookie
+//        request.setCharacterEncoding("utf-8");
+//        Cookie[] cookies = request.getCookies();
+        //判断Cookies是否为空
 
-
+        WeixinUserInfo weixinUserInfo1= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
+        if(weixinUserInfo1==null){
             //获取access_token
-            if(weixinUserInfo==null) {
-                String code = request.getParameter("code");
-                String url = "https://api.weixin.qq.com/sns/oauth2/access_token" +
-                        "?appid=" + WX_APPID +
-                        "&secret=" + WX_APPSECRET +
-                        "&code=" + code +
-                        "&grant_type=authorization_code";
+            String code = request.getParameter("code");
+            String url = "https://api.weixin.qq.com/sns/oauth2/access_token" +
+                    "?appid=" + WX_APPID +
+                    "&secret=" + WX_APPSECRET +
+                    "&code=" + code +
+                    "&grant_type=authorization_code";
 
-                String result = HttpClientUtil.doGet(url);
+            String result = HttpClientUtil.doGet(url);
 
 //        System.out.println("请求获取access_token:" + result);
-                //返回结果的json对象
-                JSONObject resultObject = JSON.parseObject(result);
+            //返回结果的json对象
+            JSONObject resultObject = JSON.parseObject(result);
 
-                //请求获取userInfo
-                String infoUrl = "https://api.weixin.qq.com/sns/userinfo" +
-                        "?access_token=" + resultObject.getString("access_token") +
-                        "&openid=" + resultObject.getString("openid") +
-                        "&lang=zh_CN";
-                String resultInfo = HttpClientUtil.doGet(infoUrl);
+            //请求获取userInfo
+            String infoUrl = "https://api.weixin.qq.com/sns/userinfo" +
+                    "?access_token=" + resultObject.getString("access_token") +
+                    "&openid=" + resultObject.getString("openid") +
+                    "&lang=zh_CN";
+            String resultInfo = HttpClientUtil.doGet(infoUrl);
 
-                //此时已获取到userInfo，再根据业务进行处理
-//                System.out.println("请求获取userInfo:" + resultInfo);
-                WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
-                session.setAttribute("weixinUserInfo", infoList);
+            //此时已获取到userInfo，再根据业务进行处理
+            //System.out.println("请求获取userInfo:" + resultInfo);
+            WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
 
-                try{
-                    Integer count=wxUserMapper.findByOpenid(infoList.getOpenId());
-                    if ( count== null) {
-                        WeixinUserInfo weixinUserInfo1 = new WeixinUserInfo();
-                        weixinUserInfo1.setUser_id(0);
-                        weixinUserInfo1.setOpenId(infoList.getOpenId());
-                        weixinUserInfo1.setNickname(infoList.getNickname());
-                        weixinUserInfo1.setHeadImgUrl(infoList.getHeadImgUrl());
-                        System.out.println(weixinUserInfo1.toString());
-
-                        wxUserMapper.insert(weixinUserInfo1);
-                        List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo1.getOpenId());
-                        for (WxOrder w : wxOrders) {
-                            w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
-                        }
-
-                        Collections.reverse(wxOrders);
-                        model.addAttribute("wxOrders", wxOrders);
-
-
-
-                    }else {
-                        wxUserMapper.update(infoList);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
+            // 设置格式
+//            response.setHeader("Access-Control-Allow-Origin", "*");
+//            response.setHeader("Access-Control-Allow-Methods", "POST");
+//            response.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");
+//            response.setContentType("text/html;charset=utf-8");
+//            response.setCharacterEncoding("utf-8");
+            WeixinUserInfo weixinUserInfo = new WeixinUserInfo();
+            weixinUserInfo.setUser_id(0);
+            weixinUserInfo.setOpenId(infoList.getOpenId());
+            weixinUserInfo.setNickname(infoList.getNickname());
+            weixinUserInfo.setHeadImgUrl(infoList.getHeadImgUrl());
+            try{
+                Integer count=wxUserMapper.findByOpenid(infoList.getOpenId());
+                if ( count== null) {
+                    wxUserMapper.insert(weixinUserInfo);
+                }else {
+                    wxUserMapper.update(weixinUserInfo);
                 }
-//            }else{
-//
-//                return new ModelAndView("mobile/my");
-//            }
-            }
-        //断言
-        assert weixinUserInfo != null;
+                // 创建Cookie
+//                Cookie cookie = new Cookie("openid", URLEncoder.encode(infoList.getNickname(),"UTF-8"));
+//                Cookie cookie2 = new Cookie("username", URLEncoder.encode(infoList.getNickname(),"UTF-8"));
+//                Cookie cookie3 = new Cookie("HeadImgUrl", URLEncoder.encode(infoList.getNickname(),"UTF-8"));
+                // 有效期,秒为单位
+//                cookie.setMaxAge(30);
+//                cookie2.setMaxAge(30);
+//                cookie3.setMaxAge(30);
+                // 设置cookie
+//                response.addCookie(cookie);
+//                response.addCookie(cookie2);
+//                response.addCookie(cookie3);
 
-        List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo.getOpenId());
-        for (WxOrder w : wxOrders) {
-            w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
+                //response.getWriter().print("cookie创建成功");
+                List<WxOrder> wxOrders = wxOderMapper.findByUser(infoList.getOpenId());
+                for (WxOrder w : wxOrders) {
+                    w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
+                }
+                request.getSession().setAttribute("weixinUserInfo",weixinUserInfo);
+                Collections.reverse(wxOrders);
+                model.addAttribute("wxOrders", wxOrders);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
-        Collections.reverse(wxOrders);
-        model.addAttribute("wxOrders", wxOrders);
+
 
         return new ModelAndView("mobile/my");
     }

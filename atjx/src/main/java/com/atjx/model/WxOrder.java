@@ -20,6 +20,7 @@ public class WxOrder {
     private String item_title;
     private String order_desc;
     private Integer spe_id;
+    private Integer item_id;
     private Specification specification;
 
 
