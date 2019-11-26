@@ -145,10 +145,7 @@
 			// 		foreground:"#000000",//前景色
 			// 	});
 			// });
-			//模态框 关闭前事件
-			$('#myModal').on('hide.bs.modal', function () {
-				$("#zhuce_big").empty();
-			});
+
 			//关闭大图，同时清空加载的图片，否则第二次就有两张了
 			function closed(){
 				$("#zhuce_big").empty();
@@ -204,6 +201,12 @@
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/iconfont.js" ></script>
 	<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+	<script>
+		//模态框 关闭前事件
+		$('#myModal').on('hide.bs.modal', function () {
+			$("#zhuce_big").empty();
+		});
+	</script>
 
 
 

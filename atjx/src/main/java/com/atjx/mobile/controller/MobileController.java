@@ -3,16 +3,18 @@ package com.atjx.mobile.controller;
 import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.PicMapper;
 import com.atjx.mapper.SpecificationMapper;
+import com.atjx.mobile.model.AccessToken;
+import com.atjx.mobile.util.RedisTokenHelper;
 import com.atjx.model.Item;
 import com.atjx.model.Item_Pic;
 import com.atjx.model.Specification;
 import net.sf.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
@@ -22,12 +24,15 @@ import java.util.List;
 
 public class MobileController {
 
-    @Autowired
+    @Resource
     private ItemMapper itemMapper;
-    @Autowired
+    @Resource
     private PicMapper picMapper;
-    @Autowired
+    @Resource
     private SpecificationMapper specificationMapper;
+
+    @Resource
+    private RedisTokenHelper redisTokenHelper;
 
     //初始页
     @RequestMapping(value = "/mobile/")
@@ -62,28 +67,24 @@ public class MobileController {
 //    }
 
     @RequestMapping(value = "/mobile/goods")
-    public String goods(Item item, Model model, HttpServletRequest request) throws Exception {
-
+    public String goods(Item item, Model model, HttpServletRequest request){
+        try{
             Item item1 = itemMapper.findAllInfo(item.getId());
             String html=item1.getSell_Point();
             String unhtml= HtmlUtils.htmlUnescape(html);
             item.setSell_Point(unhtml);
-//            System.out.println(unhtml);
-        List<Item_Pic> pic=picMapper.selectAll(item1.getId());
-        model.addAttribute("picList",pic);
+            List<Item_Pic> pic=picMapper.selectAll(item1.getId());
+            model.addAttribute("picList",pic);
             model.addAttribute("item", item1);
-        //1、使用JSONObject
-        JSONObject json = JSONObject.fromObject(item1);
-        //2、使用JSONArray
-//        JSONArray array=JSONArray.fromObject(item1);
-        model.addAttribute("itemJson",json);
-//        String strJson=json.toString();
-//        String strArray=array.toString();
-//
-//        System.out.println("strJson:"+strJson);
-//        System.out.println("strArray:"+strArray);
+            JSONObject json = JSONObject.fromObject(item1);
+            model.addAttribute("itemJson",json);
+            AccessToken AccessToken= (AccessToken) redisTokenHelper.getObject("global_token");
+            System.out.println(AccessToken.getToken());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-             return "mobile/goods";
+        return "mobile/goods";
     }
 
     @RequestMapping(value = "/mobile/placeOrder")

@@ -41,4 +41,10 @@ public class HelloWorld {
         System.out.println(c);
     }
 
+    @Test
+    public void asd(){
+        System.out.println("teqr");
+    }
+
+
 }

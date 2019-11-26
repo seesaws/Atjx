@@ -4,15 +4,12 @@
 		<meta charset="utf-8"/>
     	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 		<title>商品详情</title>
+
 		<link rel="stylesheet" type="text/css" th:href="@{/css/swiper.min.css}"/>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
 		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
-		<link rel="stylesheet" type="text/css" href="/admin/ueditor/themes/iframe.css"/>
-		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
-		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"> </script>
-		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
 
 	</head>
 	<body>
@@ -66,7 +63,7 @@
 				<div class="particularsjxx">
 					<div class="particularsjxx-list" th:each="a : ${item.address}">
 						<div class="particularsjxx-name" th:text="${a?.shopname}"></div>
-						<div class="particularsjxx-jianjie">
+						<div class="particularsjxx-jianjie" >
 							<img src="../img/address.png" alt=""/>
 							<div class="address">
 								<p><span  id="address" th:text="${a?.addressInfo}"></span><a th:href="'tel:'+${a?.tel}"><img src="../img/tells.png"  alt="电话"/></a></p>
@@ -79,15 +76,31 @@
 			<div class="particulars-goroup">
 				<div class="particularsTie">详细信息</div>
 				<div class="xiangqing">
-<!--						<script id="editor" type="text/html" style="width:100%">-->
-<!--						</script>-->
-					<!--th:value="${item?.sell_Point}"-->
-					<label for="editor"></label><textarea id="editor" name="sell_Point" th:utext="${item.sell_Point}" style="width: 100%;">
-				</textarea >
+
+					<label for="editor"></label><textarea id="editor" name="sell_Point" th:utext="${item.sell_Point}" style="width: 100%;"></textarea >
+
+
 				</div>
 
 			</div>
+
+			<div class="particulars-goroup">
+				<div class="particularsTie">商家信息</div>
+				<div class="particularsjxx">
+					<div class="particularsjxx-list" th:each="a : ${item.address}">
+						<div class="particularsjxx-name" th:text="${a?.shopname}"></div>
+						<div class="particularsjxx-jianjie">
+							<img src="../img/address.png" alt=""/>
+							<div class="address" >
+								<p><span   th:text="${a?.addressInfo}"></span><a th:href="'tel:'+${a?.tel}"><img src="../img/tells.png"  alt="电话"/></a></p>
+								<p th:text="'营业时间：'+${a?.starttime}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+
 		<div class="hrefbox">
 			<div class="sharebox" id="sharebtn">
 				<div class="shareboxlist"><p th:text="'会员下单返'+${item.money}+'元'"></p></div>
@@ -110,114 +123,133 @@
 				</li>
 			</ul>
 		</div>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"> </script>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/lang/zh-cn/zh-cn.js" ></script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-2.1.1.js}"></script>
+
 		<script th:inline="javascript">
-			//初始化ueditor  建议放到最开头
-			var ue = UE.getEditor('editor',
-					{
-						toolbars:[[]],
-						//关闭字数统计  
-						wordCount:false,
-						//关闭elementPath  
-						elementPathEnabled:false,
-						//默认的编辑区域高度  
-						initialFrameHeight: '100%'
-						//更多其他参数，请参考ueditor.config.js中的配置项  
-					});
-			ue.ready(function() {
-				//不可编辑
-				ue.setDisabled();
-			});
-			//获取后台传过来的filmVo对象的filmDesc属性的内容(html字符串内容(数据库查到的))
 			// var filmDesc = [[${item.sell_Point}]];
-			// var sp=[[${item.sell_Point}]];
-			//这个监听器是亮点
-			// ue.addListener('ready',function () {
-			// 	ue.execCommand('insertHtml',filmDesc);
-			// });
+			// var htmlStr = $("#editorValue").val();
+
+			$(document).ready(function() {
+				var ue = UE.getEditor('editor',
+						{
+							toolbars: [[]],
+							//关闭字数统计  
+							wordCount: false,
+							//关闭elementPath  
+							elementPathEnabled: false,
+							//默认的编辑区域高度  
+							initialFrameHeight: '100%',
+							focus: true,
+							//更多其他参数，请参考ueditor.config.js中的配置项  
+						});
+				// ue.addListener('ready',function () {
+				// 	ue.execCommand('insertHtml',filmDesc);
+				// });
+				ue.ready(function () {
+					//初始化编辑框内容
+					// ue.setContent(htmlStr, false);
+
+					ue.setDisabled();
+
+				});
+			});
 
 		</script>
-		<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-2.1.1.js}"></script>
-		<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-3.4.1.min.js}"></script>
 		<script type="text/javascript" charset="utf-8" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" ></script>
+
 
 		<script type="text/javascript" charset="utf-8" th:src="@{/js/swiper.min.js}" ></script>
 		<script type="text/javascript" charset="utf-8" th:src="@{/js/particulars.js}" ></script>
-
-
-		<script>
-			wx.config({
-				debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-				appId: '', // 必填，公众号的唯一标识
-				timestamp: '', // 必填，生成签名的时间戳
-				nonceStr: '', // 必填，生成签名的随机串
-				signature: '',// 必填，签名
-				jsApiList: ['openLocation'] // 必填，需要使用的JS接口列表 这里填写需要用到的微信api openlocation为使用微信内置地图查看位置接口
+<!--		微信JSAPI配置信息-->
+		<script type="text/javascript" th:inline="javascript">
+			$(function () {
+				configWx();
 			});
-			wx.ready(function () {
-				wx.checkJsApi({
-					jsApiList: ['checkJsApi','openLocation'],
-					success: function (res) {}
+			function configWx() {
+				var thisPageUrl = location.href.split('#')[0];
+				var json = {
+					url : thisPageUrl
+				};
+				$.get("/getJSAPIConfig", json, function(result) {
+					if (data != null) {
+						configWeiXin(result.data.appId, result.data.timestamp, result.data.nonceStr, result.data.signature);
+					} else {
+						console.log("配置weixin jsapi失败");
+					}
+				}, function() {
+					console.log("配置请求错误");
 				});
-			});
-			wx.error(function(res){
-				console.log(res);
-			});
-			$('#address').click(function () {
-				wx.openLocation({
-					latitude: 22.545538, // 纬度，浮点数，范围为90 ~ -90。如果是动态获取的数据，使用parseFloat()处理数据
-					longitude: 114.054565, // 经度，浮点数，范围为180 ~ -180。如果是动态获取的数据，使用parseFloat()处理数据；
-					name: '这里填写位置名', // 位置名
-					address: '位置名的详情说明', // 地址详情说明
-					scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
-				});
-			})
-
-
-		</script>
-		<!-- 判断库存为0的情况禁用购买-->
-		<script th:inline="javascript">
-			var num=[[${item.num}]];
-			var nums=parseInt(num);
-			if(nums===0){
-				// alert("判断成功");
-				$(".active").attr("disabled",true);
-				$(".footer footlist li").removeClass();
-				$('.footer footlist a').css("pointer-events","none");
-				$('.footlist ul li.active').css("background","#808080");
 			}
 
+			function configWeiXin(appId, timestamp, nonceStr, signature) {
+				wx.config({
+					debug : false,// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+					appId : appId,
+					timestamp : timestamp,
+					nonceStr : nonceStr,
+					signature : signature,
+					jsApiList : [ 'chooseImage', 'uploadImage', 'downloadImage',
+						'previewImage', 'openLocation', 'getLocation',
+						'scanQRCode', 'checkJsApi', 'onMenuShareTimeline',
+						'onMenuShareAppMessage', 'onMenuShareQQ',
+						'onMenuShareWeibo', 'onMenuShareQZone' ]
+				});
+
+			}
+			function getLocation() {
+				// wx.getLocation({
+				// 	type : 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+				// 	success : function(res) {
+				// 		//使用微信内置地图查看位置接口
+				// 		wx.openLocation({
+				// 			latitude : res.latitude, // 纬度，浮点数，范围为90 ~ -90
+				// 			longitude : res.longitude, // 经度，浮点数，范围为180 ~ -180。
+				// 			name : '我的位置', // 位置名
+				// 			address : '东航大厦', // 地址详情说明
+				// 			scale : 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
+				// 			infoUrl : 'http://atjx.club/mobile', // 在查看位置界面底部显示的超链接,可点击跳转（测试好像不可用）
+				// 			success: res => {
+				// 				console.log(res)
+				// 			}
+				// 		});
+				// 	},
+				// 	cancel : function(res) {
+				//
+				// 	}
+				// });
+				wx.openLocation({
+					latitude:23.132006, // 纬度，浮点数，范围为90 ~ -90
+					longitude:113.377785, // 经度，浮点数，范围为180 ~ -180。
+					name: '艾特鲸选', // 位置名
+					address: '东航大厦', // 地址详情说明
+					scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
+					infoUrl: 'http://atjx.club/mobile/' // 在查看位置界面底部显示的超链接,可点击跳转
+				});
+			}
 		</script>
 
-<!--		<script>-->
-<!--			var jsonObject={};-->
-<!--			$.ajax({-->
-<!--				type: "POST",//请求方式-->
-<!--				url: '/PostServlet',//指定的链接-->
-<!--				data: JSON.stringify({//请求后端的参数-->
-<!--					tokenID: Token,-->
-<!--					schema: Schema,-->
-<!--					funData: JSON.stringify({-->
-<!--						func: 'doFunc',-->
-<!--						params: param-->
-<!--					})-->
-<!--				}),-->
-<!--				dataType: "JSON",//或"TEXT" //请求返回的数据类型-->
-<!--				async: false,  //是否需要同步-->
-<!--				cache: true,-->
-<!--				success: function (data) { //请求返回成功后执行的function-->
-<!--					//后端返回json数据可以在这里，应用上面所说的解析json方法解析-->
-<!--					var jsonArray=JSON.parse(data);//一般使用这种方法，将数据转换成JavaScript对象-->
-<!--				},-->
-<!--				error: function (data) {-->
-<!--					console.log(data.result);-->
-<!--				}-->
-
-<!--			})-->
-<!--		</script>-->
+		<!-- 判断库存为0的情况禁用购买 -->
+		<script th:inline="javascript">
+			$(document).ready(function(){
+				var num=[[${item.num}]];
+				var nums=parseInt(num);
+				if(nums===0){
+					// alert("判断成功");
+					$(".active").attr("disabled",true);
+					$(".footer footlist li").removeClass();
+					$('.footer footlist a').css("pointer-events","none");
+					$('.footlist ul li.active').css("background","#808080");
+				}
+			})
+		</script>
 
 <!--		获取套餐价格-->
 		<script th:inline="javascript">
 			// 获取标识数据
+			$(document).ready(function(){
 			var jsonObject=[[${itemJson}]];
 			// console.log(jsonObject);
 			$(function(){
@@ -226,22 +258,10 @@
 					var i=$(this);
 					var p=i.find("div");
 					p.click(function(){
-						// if(!!$(this).hasClass("active")){
-						// 	$(this).removeClass("active");
-						// 	i.removeAttr("data-attrval");
-						// }else{
-						// 	$(this).addClass("active").siblings().removeClass("active");
-						// 	i.attr("data-attrval",$(this).attr("data-aid"));
-						// }
-						//选择套餐
-
-						// $(".particularsel").on("click","div",function(){
 							$(this).addClass("active").siblings().removeClass("active");
-						// });
 						getattrprice(); //输出价格
 					})
 				});
-
 				//获取对应属性的价格
 				function getattrprice(){
 					// var defaultstats=true;
@@ -259,32 +279,21 @@
 					var str="http://atjx.club/mobile/placeOrder?id=" + item_id;
 					$("#item_url").attr("href", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx7738ac5a31d41ee4&redirect_uri=" +str+ "&response_type=code&scope=snsapi_base&state="+spe_id+"#wechat_redirect");
 					/*]]>*/
-					// $(".particularsjxx .particularsel").each(function(){
-					// 	var i=$(this);
-					// 	var v=i.attr("data-attrval");
-					// 	if(!v){
-					// 		defaultstats=false;
-					// 	}else{
-					// 		_val+=_val!==""?"_":"";
-					// 		_val+=v;
-					// 	}
-					// });
-					// if(!!spe){
 						_mktprice=jsonObject['specification'][spe]['sdel_price'];
 						_price=jsonObject['specification'][spe]['sprice'];
 						_text=jsonObject['specification'][spe]['t_describe'];
-
-					// }
-					// else{
-					// 	_mktprice=jsonObject['del_price'];
-					// 	_price=jsonObject['price'];
-					// }
-
 					//输出价格
 					$(_resp.mktprice).text('原价'+_mktprice);  ///其中的math.round为截取小数点位数
 					$(_resp.price).text('￥'+_price);
 					$(_resp.text).text(_text);
 				}
+			})
+			})
+		</script>
+		<!--  点击地址调用OpenJDK-->
+		<script th:inline="javascript">
+			$(".address").click(function () {
+				getLocation();
 			})
 		</script>
 

@@ -358,12 +358,12 @@
 }
 .xiangqing{
 	background: #fff;
-	padding: 1rem 2rem;
+	/*padding: 1rem 2rem;*/
 }
 .hrefbox{
 	overflow: hidden;
 	position: fixed;
-	top: 60%;right: 5%;
+	top: 60%;right: 1%;
 	z-index: 50;
 	width: 23%;
 }

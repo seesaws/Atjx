@@ -68,13 +68,16 @@ public class WxLoginController {
 //
 //                }
 //            }
+
+//            request.getRequestDispatcher("http://atjx.club/mobile/callBack").forward(request,response);
+
             List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo1.getOpenId());
             for (WxOrder w : wxOrders) {
                 w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
             }
             Collections.reverse(wxOrders);
             model.addAttribute("wxOrders", wxOrders);
-            request.getRequestDispatcher("http://atjx.club/mobile/callBack").forward(request,response);
+            return new ModelAndView("mobile/my");
         }
 
         return null;
@@ -158,7 +161,15 @@ public class WxLoginController {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }else{
+            List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo1.getOpenId());
+            for (WxOrder w : wxOrders) {
+                w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
+            }
+            Collections.reverse(wxOrders);
+            model.addAttribute("wxOrders", wxOrders);
         }
+
 
 
         return new ModelAndView("mobile/my");
