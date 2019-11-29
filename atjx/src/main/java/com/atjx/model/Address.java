@@ -11,5 +11,5 @@ public class Address {
     private String addressInfo;
     private String tel;
     private String starttime;
-
+    private String latitudeLongitude;
 }

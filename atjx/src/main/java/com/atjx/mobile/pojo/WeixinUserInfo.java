@@ -1,12 +1,16 @@
 package com.atjx.mobile.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 微信用户的基本信息
  * @author
  *
  */
+@Data
 public class WeixinUserInfo implements Serializable {
 
     private Integer user_id;
@@ -31,96 +35,16 @@ public class WeixinUserInfo implements Serializable {
     // 用户头像
     private String headImgUrl;
 
-    private int money;
+    private BigDecimal money;
+    private BigDecimal used_money;
+    private BigDecimal back_money;
+    private BigDecimal group_money;
+    private BigDecimal sum_money;
+    private int supplyer;
+    private String username;
+    private String phone;
+    private int u_level;
+    private int buyNum;
 
-    private String supplyer;
 
-    public String getSupplyer() {
-        return supplyer;
-    }
-
-    public void setSupplyer(String supplyer) {
-        this.supplyer = supplyer;
-    }
-
-    public int getMoney() {
-        return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-    public int getSubscribe() {
-        return subscribe;
-    }
-    public void setSubscribe(int subscribe) {
-        this.subscribe = subscribe;
-    }
-    public String getSubscribeTime() {
-        return subscribeTime;
-    }
-    public void setSubscribeTime(String subscribeTime) {
-        this.subscribeTime = subscribeTime;
-    }
-    public String getNickname() {
-        return nickname;
-    }
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-    public int getSex() {
-        return sex;
-    }
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-    public String getCountry() {
-        return country;
-    }
-    public void setCountry(String country) {
-        this.country = country;
-    }
-    public String getProvince() {
-        return province;
-    }
-    public void setProvince(String province) {
-        this.province = province;
-    }
-    public String getCity() {
-        return city;
-    }
-    public void setCity(String city) {
-        this.city = city;
-    }
-    public String getLanguage() {
-        return language;
-    }
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-    public String getHeadImgUrl() {
-        return headImgUrl;
-    }
-    public void setHeadImgUrl(String headImgUrl) {
-        this.headImgUrl = headImgUrl;
-    }
-
-    public WeixinUserInfo() {
-
-    }
 }

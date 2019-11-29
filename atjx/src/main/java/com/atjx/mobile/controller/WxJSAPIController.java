@@ -42,7 +42,7 @@ public class WxJSAPIController {
 
         @RequestMapping("/getJSAPIConfig")
         @ResponseBody
-        public Map<String, String> sign(HttpServletRequest request) {
+        public JSONObject sign(HttpServletRequest request) {
             String url=request.getParameter("url");
             Map<String, String> ret = new HashMap<String, String>();
             String nonce_str = create_nonce_str();
@@ -57,7 +57,7 @@ public class WxJSAPIController {
                     "&noncestr=" + nonce_str +
                     "&timestamp=" + timestamp +
                     "&url=" + url;
-            System.out.println(string1);
+//            System.out.println(string1);
 
             try {
                 MessageDigest crypt = MessageDigest.getInstance("SHA-1");
@@ -67,14 +67,14 @@ public class WxJSAPIController {
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
+            ret.put("appId",appId);
             ret.put("url", url);
             ret.put("jsapi_ticket", jsapi_ticket);
             ret.put("nonceStr", nonce_str);
             ret.put("timestamp", timestamp);
             ret.put("signature", signature);
 
-            return ret;
+            return (JSONObject) JSONObject.toJSON(ret);
         }
 
         private static String byteToHex(final byte[] hash) {
@@ -117,7 +117,7 @@ public class WxJSAPIController {
             is.read(jsonBytes);
             String message = new String(jsonBytes, "UTF-8");
             JSONObject demoJson = JSONObject.parseObject(message);
-            System.out.println("JSON字符串："+demoJson);
+//            System.out.println("JSON字符串："+demoJson);
             ticket = demoJson.getString("ticket");
             is.close();
         } catch (Exception e) {

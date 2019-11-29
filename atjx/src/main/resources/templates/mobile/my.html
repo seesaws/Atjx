@@ -4,7 +4,7 @@
 		<meta charset="utf-8"/>
     	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 		<title>个人中心</title>
-		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+		<link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
 		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
@@ -116,8 +116,12 @@
 			</ul>
 		</div>
 
-		<script th:src="@{/js/jquery-2.1.1.js}"></script>
-
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			/*<![CDATA[*/
+			window.jQuery || document.write("<script src='/js/jquery-3.4.1.min.js'>" + "<" + "/script>");
+			/*]]>*/
+		</script>
 
 		<script th:inline="javascript">
 			// $.modal({
@@ -197,8 +201,8 @@
 			});
 		</script>
 	</body>
-	<script type="text/javascript" charset="utf-8" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-	<script th:src="@{/js/bootstrap.min.js}"></script>
+
+	<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/iconfont.js" ></script>
 	<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 	<script>

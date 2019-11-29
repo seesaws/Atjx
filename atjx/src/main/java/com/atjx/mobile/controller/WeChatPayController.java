@@ -1,10 +1,13 @@
 package com.atjx.mobile.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.SpecificationMapper;
 import com.atjx.mapper.WxOderMapper;
+import com.atjx.mapper.WxUserMapper;
 import com.atjx.mobile.model.ResultInfo;
+import com.atjx.mobile.pojo.WeixinUserInfo;
 import com.atjx.mobile.util.WXPayUtil;
 import com.atjx.model.Item;
 import com.atjx.model.Specification;
@@ -34,14 +37,17 @@ public class WeChatPayController {
     @Resource
     private WxOderMapper wxOderMapper;
     @Resource
+    private WxUserMapper wxUserMapper;
+    @Resource
     private SpecificationMapper specificationMapper;
     @RequestMapping("/getOpenid")
     @ResponseBody
-    public String getOpenid(HttpServletRequest request) {
+    public JSONObject getOpenid(HttpServletRequest request) {
         String code = request.getParameter("code");
         String appId = "wx7738ac5a31d41ee4";
         String appSecret = "7092282a2dd53b572d39c2802b460b2f";
-        String result = null;
+        JSONObject jsonObject=new JSONObject();
+
         try {
             String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?grant_type=authorization_code";
             String getDataStr = "&appid=" + appId + "&secret=" + appSecret+"&code="+code;
@@ -49,16 +55,20 @@ public class WeChatPayController {
             net.sf.json.JSONObject json = net.sf.json.JSONObject.fromObject(str);
             String openid = (String)json.get("openid");
             if(openid!=null){
-                result=openid;
+                jsonObject.put("openid",openid);
+                WeixinUserInfo weixinUserInfo=wxUserMapper.select(openid);
+                jsonObject.put("username",weixinUserInfo.getUsername());
+                jsonObject.put("phone",weixinUserInfo.getPhone());
             }else{
                 //获取失败的处理
                 System.out.println("获取openid失败");
             }
         } catch (Exception e) {
             // 异常的处理
+            e.printStackTrace();
             System.out.println("获取openid异常");
         }
-        return result;
+        return jsonObject;
     }
 
     //HttpGet方法
@@ -281,17 +291,6 @@ public class WeChatPayController {
                 wxOrder.setSpe_id(Integer.parseInt(spe_id));
                 wxOrder.setItem_id(Integer.parseInt(item_id));
                 //入库
-                //更新商品销量+1,库存-1
-                //先查询库存
-                    item=itemMapper.findById(item);
-                    if(item.getNum()>0){
-                        item.setNum(item.getNum()-1);
-                        item.setSales(item.getSales()+1);
-                        itemMapper.update(item);
-                        System.out.println("库存销量更新成功!");
-                    }else{
-                        System.out.println("更新商品信息失败!");
-                    }
                 try{
                     wxOderMapper.insert(wxOrder);
                 }catch(Exception e){
@@ -312,29 +311,70 @@ public class WeChatPayController {
 
         return resultInfo;
     }
-
+//    样例
+//    <bank_type><![CDATA[CFT]]></bank_type>
+//    <cash_fee><![CDATA[1]]></cash_fee>
+//    <fee_type><![CDATA[CNY]]></fee_type>
+//    <is_subscribe><![CDATA[Y]]></is_subscribe>
+//    <mch_id><![CDATA[1554775991]]></mch_id>
+//    <nonce_str><![CDATA[OGG7CvbNTURFX3NSWoEPmy2qTu9I3nhW]]></nonce_str>
+//    <openid><![CDATA[ok9MWvyZxGwi7XgXi2jhyPGP8-TM]]></openid>
+//    <out_trade_no><![CDATA[20191128143315NICUwh]]></out_trade_no>
+//    <result_code><![CDATA[SUCCESS]]></result_code>
+//    <return_code><![CDATA[SUCCESS]]></return_code>
+//    <sign><![CDATA[ACFE64BF3695C0CB433B2C5C187BC790]]></sign>
+//    <time_end><![CDATA[20191128143321]]></time_end>
+//    <total_fee>1</total_fee>
+//    <trade_type><![CDATA[JSAPI]]></trade_type>
+//    <transaction_id><![CDATA[4200000467201911281682504036]]></transaction_id>
     @RequestMapping("/callback")
     @ResponseBody
-    public ResultInfo payCallBack(HttpServletRequest request, HttpServletResponse response, Item item){
+    public ResultInfo payCallBack(HttpServletRequest request, HttpServletResponse response){
 //        String item_id=request.getParameter("id");
 //        item.setId(Integer.parseInt(item_id));
+        WxOrder wxOrder=new WxOrder();
+        Item item=new Item();
         ResultInfo resultInfo =new ResultInfo();
         InputStream inputStream = null;
         try {
             inputStream = request.getInputStream();
             String xml = WXPayUtil.inputStream2String(inputStream, "UTF-8");
             Map<String, String> notifyMap = WXPayUtil.xmlToMap(xml);//将微信发的xml转map
-            //System.out.println("支付系统返回支付结果"+xml);
+//            System.out.println("支付系统返回支付结果"+xml);
+//            System.out.println(notifyMap);
             if(notifyMap.get("return_code").equals("SUCCESS")){
-                System.out.println("return_code是："+notifyMap.get("return_code"));
+                System.out.println("return_code："+notifyMap.get("return_code"));
                 // 交易成功
                 if(notifyMap.get("result_code").equals("SUCCESS")){
                     // 接下来进行一些业务处理
-
-
-                    //更新用户金库
-
-
+                    String openid=notifyMap.get("openid");
+                    String out_trade_no =notifyMap.get("out_trade_no");
+                    wxOrder.setOrder_no(out_trade_no);
+                    wxOrder=wxOderMapper.findByOrderNo(wxOrder);
+                    WeixinUserInfo weixinUserInfo=wxUserMapper.select(openid);
+                    weixinUserInfo.setUsername(wxOrder.getUsername());
+                    weixinUserInfo.setPhone(wxOrder.getPhone());
+                    wxUserMapper.update(weixinUserInfo);
+                    item.setId(wxOrder.getItem_id());
+                    item=itemMapper.findById(item);
+                    wxOrder.setStatus_code("100");
+                    //更新商品销量+1,库存-1
+                    //先查询库存
+                    if(item.getNum()>0){
+                        item.setNum(item.getNum()-1);
+                        item.setSales(item.getSales()+1);
+                        itemMapper.update(item);
+                        System.out.println("库存销量更新成功!");
+                    }else{
+                        System.out.println("更新商品信息失败!");
+                    }
+                        //更新状态码
+                        wxOderMapper.update(wxOrder);
+                        //更新用户金库信息
+                        //反商品佣金
+                        weixinUserInfo.setMoney(weixinUserInfo.getMoney().add(item.getMoney()));
+                        //更新用户信息
+                        wxUserMapper.update(weixinUserInfo);
                 }
             }else{
                 // 交易失败的处理
@@ -352,6 +392,7 @@ public class WeChatPayController {
             inputStream.close();
 
         } catch (Exception e) {
+            e.printStackTrace();
             // 异常的处理
             System.out.println("回调异常");
         }

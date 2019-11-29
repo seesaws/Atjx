@@ -328,7 +328,7 @@
 	width: 100%;
 	font-size: 0.85rem;
 	color: #4C4C4C;
-	object-fit: hidden;
+	object-fit: contain;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
@@ -337,6 +337,9 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+}
+.particularsjxx-jianjie :hover{
+	background-color: rgb(155, 155, 155);
 }
 .particularsjxx-jianjie img{
 	width: 0.65rem;
@@ -601,7 +604,7 @@
 	text-align: center;
 	font-size: 0.9rem;
 	color: #fff;
-	background: #3FDC36;
+	background: #04BE02;
 	padding: 0.6rem 0;
 }
 /* 我的鲸库 */
@@ -681,7 +684,7 @@
 	margin-bottom: 1.2rem;
 }
 .tixianform form input:last-child{
-	background: #3FDC36;
+	background: #04BE02;
 	color: #fff;
 }
 .tixiantishi{

@@ -8,16 +8,20 @@
         <result column="address" property="addressInfo" jdbcType="VARCHAR"/>
         <result column="tel" property="tel" jdbcType="INTEGER"/>
         <result column="starttime" property="starttime" jdbcType="VARCHAR"/>
+        <result column="latitudeLongitude" property="latitudeLongitude" jdbcType="VARCHAR"/>
+
     </resultMap>
     <insert id="insert" parameterType="com.atjx.model.Address" useGeneratedKeys="true" keyProperty="add_id">
-        insert into tb_address (add_id,item_id,shopname,address,tel,starttime)
+        insert into tb_address (add_id,item_id,shopname,address,tel,starttime,latitudeLongitude)
         value (
         #{add_id,jdbcType=INTEGER},
         #{item_id,jdbcType=INTEGER},
         #{shopname,jdbcType=VARCHAR},
         #{addressInfo,jdbcType=VARCHAR},
+        #{latitudeLongitude,jdbcType=VARCHAR},
         #{tel,jdbcType=INTEGER},
         #{starttime,jdbcType=VARCHAR}
+
         )
     </insert>
 

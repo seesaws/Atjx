@@ -3,7 +3,8 @@ package com.atjx.mobile.controller;
 import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.PicMapper;
 import com.atjx.mapper.SpecificationMapper;
-import com.atjx.mobile.model.AccessToken;
+import com.atjx.mapper.WxUserMapper;
+import com.atjx.mobile.pojo.WeixinUserInfo;
 import com.atjx.mobile.util.RedisTokenHelper;
 import com.atjx.model.Item;
 import com.atjx.model.Item_Pic;
@@ -30,6 +31,8 @@ public class MobileController {
     private PicMapper picMapper;
     @Resource
     private SpecificationMapper specificationMapper;
+    @Resource
+    private WxUserMapper wxUserMapper;
 
     @Resource
     private RedisTokenHelper redisTokenHelper;
@@ -67,7 +70,7 @@ public class MobileController {
 //    }
 
     @RequestMapping(value = "/mobile/goods")
-    public String goods(Item item, Model model, HttpServletRequest request){
+    public String goods(Item item, Model model){
         try{
             Item item1 = itemMapper.findAllInfo(item.getId());
             String html=item1.getSell_Point();
@@ -78,8 +81,6 @@ public class MobileController {
             model.addAttribute("item", item1);
             JSONObject json = JSONObject.fromObject(item1);
             model.addAttribute("itemJson",json);
-            AccessToken AccessToken= (AccessToken) redisTokenHelper.getObject("global_token");
-            System.out.println(AccessToken.getToken());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -103,8 +104,14 @@ public class MobileController {
     }
 
     @RequestMapping(value = "/mobile/jingku")
-    public String  jingku() {
-
+    public String  jingku(HttpServletRequest request,Model model) {
+        WeixinUserInfo weixinUserInfo1= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
+        try{
+            weixinUserInfo1=wxUserMapper.select(weixinUserInfo1.getOpenId());
+            model.addAttribute("wxuser", weixinUserInfo1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "mobile/jingku";
     }
 

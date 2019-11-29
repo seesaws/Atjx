@@ -152,13 +152,14 @@
         <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
         <result column="del_price" property="del_price" jdbcType="BIGINT"/>
         <result column="sales" property="sales" jdbcType="INTEGER"/>
-        <result column="money" property="money" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
         <collection  property="address" ofType="com.atjx.model.Address">
             <id column="add_id" property="add_id" jdbcType="INTEGER"/>
             <result column="shopname" property="shopname" jdbcType="VARCHAR"/>
             <result column="address" property="addressInfo" jdbcType="VARCHAR"/>
             <result column="tel" property="tel" jdbcType="INTEGER"/>
             <result column="starttime" property="starttime" jdbcType="VARCHAR"/>
+            <result column="latitudeLongitude" property="latitudeLongitude" jdbcType="VARCHAR"/>
         </collection>
         <collection property="specification" ofType="com.atjx.model.Specification">
             <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>

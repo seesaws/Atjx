@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 		<title></title>
 	</head>
 	<body>
@@ -61,10 +62,19 @@
 		</div>
 		<div class="orderpay">
 			<div class="orderpay-left"><span>小计：</span><span id="totalmoney" th:text="'￥'+${specification.sprice}"></span></div>
-			<div class="paybtn" id="paybtn" onclick="pay()">微信支付</div>
+			<div class="paybtn" id="paybtn" onclick="isMobileNumber()">微信支付</div>
 		</div>
-		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+		<script type="text/javascript">
+			/*<![CDATA[*/
+			window.jQuery || document.write("<script src='/js/jquery-3.4.1.min.js'>" + "<" + "/script>");
+			/*]]>*/
+		</script>
+
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/common.js"></script>
+
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			function GetQueryString(name) {
@@ -76,11 +86,18 @@
 				return null; //返回参数值
 			}
 			var openid=null;
+			var username=null;
+			var phone=null;
+
 			window.onload = function () {
 				var code = GetQueryString("code"); //获取code
 				$.post("/getOpenid", {code: code}, function (msg) {  //将code传到后台用于获取openid
-					openid=msg;
-				})};
+					openid=msg.openid;
+					username=msg.username;
+					phone=msg.phone;
+					$('#ordername').val(username);
+					$('#ordertel').val(phone);
+				},)};
 			function pay() {
 
 					var orderFee = [[${specification.sprice}]];
@@ -144,7 +161,6 @@
 											function(){
 												window.location.href = "http://atjx.club/mobile/user";
 											}, 0);
-
 								} else if (msg.err_msg == "get_brand_wcpay_request:cancel") {
 
 									console.log('支付取消');
@@ -160,125 +176,37 @@
 				}
 
 			}
-
-
 		</script>
 
 		<script type="text/javascript">
+			function isMobileNumber() {
+				// var flag = false;
+				var phone=$('#ordertel').val();
+				var message = "";
+				var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
 
-			var ordertel = document.getElementById('ordertel');
-			var ordername = document.getElementById('ordername');
-			var namestr = ordername.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
-			var str = ordertel.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+				if (phone === '') {
+					// console.log("手机号码不能为空");
+					message = toastr.error("手机号码不能为空！");
 
-			if (str == '' || str == undefined || str == null) {
-
-				alert('请填写手机号码');
+				} else if (phone.length !== 11) {
+					//console.log("请输入11位手机号码！");
+					message = toastr.warning("请输入11位手机号码！");
+				} else if (!myreg.test(phone)) {
+					//console.log("请输入有效的手机号码！");
+					message = toastr.warning("请输入有效的手机号码！");
+				} else {
+					// flag = true;
+					pay();
+				}
+				if (message !== "") {
+					// alert(message);
+					message;
+				}
+				// return flag;
 			}
-			if(namestr==''||namestr==null||namestr==undefined) {
-				alert('请填写姓名');
-
-			}
-			//return false;
-
 		</script>
 
-
-
-
-		<!--<script th:inline="javascript" charset="utf-8">
-			$(function() {
-				var p=[[${item.price}]];
-				console.log(p);
-				var price =parseInt(p,10); //商品单价
-				// 商品数量增减
-				$(".orderbtns").on("click", "span", function() {
-					var num = $("#ordernum").val();
-					/*<![CDATA[*/
-					if ($(this).data("type") == "-" && $("#ordernum").val() > 1) {
-						num&#45;&#45;;
-					} else if ($(this).data("type") == "+") {
-						num++;
-					}
-					/*]]>*/
-					$("#ordernum").val(num);
-					$("#totalmoney").text('￥' + price * num)
-				})
-				// 商品支付
-				$("#paybtn").click(function() {
-					if($("#ordername").val() == ""){
-						return
-					}
-					if($("#ordertel").val() == ""){
-						return
-					}
-					var username = $("#ordername").val();//用户姓名
-					var usertel = $("#ordertel").val();//用户电话
-					var orderremark = $("#orderremark").val();//用户备注
-					var num = $("#ordernum").val();//数量
-					var totalmoney = $("#totalmoney").text().slice(1);//总价
-					var currurl = decodeURIComponent(location.href.split('#')[0]);
-					//ajax注入权限验证
-					$.ajax({
-						url: "", //后台接口地址
-						dataType: 'json',
-						data: {
-							'url': currurl
-						},
-						complete: function(XMLHttpRequest, textStatus) {},
-						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							alert("发生错误：" + errorThrown);
-						},
-						success: function(res) {
-							var appId = res.appId;
-							var nonceStr = res.nonceStr;
-							var jsapi_ticket = res.jsapi_ticket;
-							var timestamp = res.timestamp;
-							var signature = res.signature;
-							// alert(appId +" " + nonceStr +" "+jsapi_ticket+" "+timestamp+" "+signature);
-							wx.config({
-								debug: false, //开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-								appId: appId, //必填，公众号的唯一标识
-								timestamp: timestamp, // 必填，生成签名的时间戳
-								nonceStr: nonceStr, //必填，生成签名的随机串
-								signature: signature, // 必填，签名，见附录1
-								jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] //必填，需要使用的JS接口列表，所有JS接口列表 见附录2
-							}); // end wx.config
-							wx.ready(function() {
-								$.ajax({
-									url: "",//后台支付接口
-									type: "post",
-									dataType: "json",
-									success: function(result) {
-										wx.chooseWXPay({
-											timestamp: result.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-											nonceStr: result.nonceStr, // 支付签名随机串，不长于 32 位
-											package: "prepay_id=" + result.prepay_id,
-											signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-											paySign: result.paySign, // 支付签名
-											success: function(res) {
-
-											}
-										});
-									},
-									error: function(data) {
-										alert(data);
-									}
-								})
-							}); // end ready
-
-							wx.error(function(res) {
-								// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-								alert('error');
-							});
-						}
-					});
-				})
-			})
-
-
-
-		</script>-->
 
 	</body>
 </html>

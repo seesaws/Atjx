@@ -9,9 +9,9 @@ import com.atjx.mobile.pojo.WeixinUserInfo;
 import com.atjx.mobile.util.HttpClientUtil;
 import com.atjx.model.WxOrder;
 import com.atjx.util.DateUtil;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -23,7 +23,7 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/mobile")
 public class WxLoginController {
     @Resource
@@ -85,12 +85,7 @@ public class WxLoginController {
 
     //	回调方法
     @RequestMapping("/callBack")
-    public ModelAndView wxCallBack(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-
-        // 获取客户端cookie
-//        request.setCharacterEncoding("utf-8");
-//        Cookie[] cookies = request.getCookies();
-        //判断Cookies是否为空
+    public String wxCallBack(HttpServletRequest request,Model model){
 
         WeixinUserInfo weixinUserInfo1= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
         if(weixinUserInfo1==null){
@@ -116,17 +111,10 @@ public class WxLoginController {
             String resultInfo = HttpClientUtil.doGet(infoUrl);
 
             //此时已获取到userInfo，再根据业务进行处理
-            //System.out.println("请求获取userInfo:" + resultInfo);
+
             WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
 
-            // 设置格式
-//            response.setHeader("Access-Control-Allow-Origin", "*");
-//            response.setHeader("Access-Control-Allow-Methods", "POST");
-//            response.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");
-//            response.setContentType("text/html;charset=utf-8");
-//            response.setCharacterEncoding("utf-8");
             WeixinUserInfo weixinUserInfo = new WeixinUserInfo();
-            weixinUserInfo.setUser_id(0);
             weixinUserInfo.setOpenId(infoList.getOpenId());
             weixinUserInfo.setNickname(infoList.getNickname());
             weixinUserInfo.setHeadImgUrl(infoList.getHeadImgUrl());
@@ -137,20 +125,7 @@ public class WxLoginController {
                 }else {
                     wxUserMapper.update(weixinUserInfo);
                 }
-                // 创建Cookie
-//                Cookie cookie = new Cookie("openid", URLEncoder.encode(infoList.getNickname(),"UTF-8"));
-//                Cookie cookie2 = new Cookie("username", URLEncoder.encode(infoList.getNickname(),"UTF-8"));
-//                Cookie cookie3 = new Cookie("HeadImgUrl", URLEncoder.encode(infoList.getNickname(),"UTF-8"));
-                // 有效期,秒为单位
-//                cookie.setMaxAge(30);
-//                cookie2.setMaxAge(30);
-//                cookie3.setMaxAge(30);
-                // 设置cookie
-//                response.addCookie(cookie);
-//                response.addCookie(cookie2);
-//                response.addCookie(cookie3);
 
-                //response.getWriter().print("cookie创建成功");
                 List<WxOrder> wxOrders = wxOderMapper.findByUser(infoList.getOpenId());
                 for (WxOrder w : wxOrders) {
                     w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
@@ -170,8 +145,6 @@ public class WxLoginController {
             model.addAttribute("wxOrders", wxOrders);
         }
 
-
-
-        return new ModelAndView("mobile/my");
+        return "mobile/my";
     }
 }

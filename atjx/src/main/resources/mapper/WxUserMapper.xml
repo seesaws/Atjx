@@ -6,8 +6,16 @@
         <result column="openId" property="openId" jdbcType="VARCHAR"/>
         <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
         <result column="headImgUrl" property="headImgUrl" jdbcType="VARCHAR"/>
-        <result column="money" property="money" jdbcType="BIGINT"/>
-        <result column="supplyer" property="supplyer" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="supplyer" property="supplyer" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="u_level" property="u_level" jdbcType="INTEGER"/>
+        <result column="buyNum" property="buyNum" jdbcType="INTEGER"/>
+        <result column="used_money" property="used_money" jdbcType="DECIMAL"/>
+        <result column="back_money" property="back_money" jdbcType="DECIMAL"/>
+        <result column="group_money" property="group_money" jdbcType="DECIMAL"/>
+        <result column="sum_money" property="sum_money" jdbcType="DECIMAL"/>
 
     </resultMap>
 
@@ -24,7 +32,7 @@
     </delete>
 
 
-    <insert id="insert" parameterType="com.atjx.mobile.pojo.WeixinUserInfo" useGeneratedKeys="true" keyProperty="user_id">
+    <insert id="insert" parameterType="com.atjx.mobile.pojo.WeixinUserInfo">
         INSERT INTO tb_wxuserinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="user_id != null">
@@ -45,6 +53,30 @@
             <if test="supplyer != null">
                 supplyer,
             </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="u_level != null">
+                u_level,
+            </if>
+            <if test="buyNum != null">
+                buyNum,
+            </if>
+            <if test="used_money != null">
+                used_money,
+            </if>
+            <if test="back_money != null">
+                back_money,
+            </if>
+            <if test="group_money != null">
+                group_money,
+            </if>
+            <if test="sum_money != null">
+                sum_money =,
+            </if>
         </trim>
         <trim prefix="value (" suffix=")" suffixOverrides=",">
             <if test="user_id != null">
@@ -60,10 +92,34 @@
                 #{headImgUrl,jdbcType=VARCHAR},
             </if>
             <if test="money != null">
-                #{money,jdbcType=BIGINT},
+                #{money,jdbcType=DECIMAL},
             </if>
             <if test="supplyer != null">
-                #{supplyer,jdbcType=BIGINT},
+                #{supplyer,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="u_level != null">
+                #{u_level,jdbcType=INTEGER},
+            </if>
+            <if test="buyNum != null">
+                #{buyNum,jdbcType=INTEGER},
+            </if>
+            <if test="used_money != null">
+                used_money = #{used_money, jdbcType=DECIMAL},
+            </if>
+            <if test="back_money != null">
+                back_money = #{back_money, jdbcType=DECIMAL},
+            </if>
+            <if test="group_money != null">
+                group_money = #{group_money, jdbcType=DECIMAL},
+            </if>
+            <if test="sum_money != null">
+                sum_money = #{sum_money, jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
@@ -72,24 +128,48 @@
         UPDATE tb_wxuserinfo
         <trim prefix="set" suffixOverrides=",">
             <if test="user_id != null">
-                user_id = #{user_id, jdbcType=VARCHAR},
+                user_id= #{user_id, jdbcType=INTEGER},
             </if>
             <if test="openId != null">
                 openId= #{openId, jdbcType=VARCHAR},
             </if>
             <if test="nickname != null">
-                nickname = #{nickname, jdbcType=BIGINT},
+                nickname = #{nickname, jdbcType=VARCHAR},
             </if>
             <if test="headImgUrl != null">
-                headImgUrl = #{headImgUrl, jdbcType=INTEGER},
+                headImgUrl = #{headImgUrl, jdbcType=VARCHAR},
             </if>
             <if test="money != null">
-                money = #{money, jdbcType=BIGINT},
+                money = #{money, jdbcType=DECIMAL},
             </if>
             <if test="supplyer != null">
-                #{supplyer,jdbcType=BIGINT},
+                supplyer=#{supplyer,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                username=#{username,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone=#{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="u_level != null">
+                u_level=#{u_level,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                buyNum=#{buyNum,jdbcType=INTEGER},
+            </if>
+            <if test="used_money != null">
+                used_money = #{used_money, jdbcType=DECIMAL},
+            </if>
+            <if test="back_money != null">
+                back_money = #{back_money, jdbcType=DECIMAL},
+            </if>
+            <if test="group_money != null">
+                group_money = #{group_money, jdbcType=DECIMAL},
+            </if>
+            <if test="sum_money != null">
+                sum_money = #{sum_money, jdbcType=DECIMAL},
             </if>
         </trim>
-        WHERE user_id = #{user_id, jdbcType=INTEGER}
+        WHERE openId = #{openId, jdbcType=VARCHAR}
     </update>
 </mapper>

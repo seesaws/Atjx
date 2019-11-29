@@ -88,6 +88,7 @@
                                                 <th>商品ID</th>
                                                 <th>店铺名</th>
                                                 <th>地址</th>
+                                                <th>经纬</th>
                                                 <th>营业时间</th>
                                                 <th>电话</th>
                                                 <th>操作</th>
@@ -100,6 +101,7 @@
                                                 <td th:text="${l.item_id}"></td>
                                                 <td th:text="${l.shopname}"></td>
                                                 <td th:text="${l.addressInfo}"></td>
+                                                <td th:text="${l.latitudeLongitude}"></td>
                                                 <td th:text="${l.starttime}"></td>
                                                 <td th:text="${l.tel}"></td>
                                                 <td>
@@ -141,6 +143,8 @@
                                                 <input id="shopname" name="shopname" type="text" class="form-control"  placeholder="请输入店铺名"/>
                                                 <label for="addressInfo">地址:</label>
                                                 <input id="addressInfo" name="addressInfo" type="text" class="form-control"  placeholder="请输入地址"/>
+                                                <label for="latitudeLongitude">经纬:</label>
+                                                <input id="latitudeLongitude" name="latitudeLongitude" type="text" class="form-control"  placeholder="请输入纬度，经度"/>
                                                 <label for="tel">电话:</label>
                                                 <input id="tel" name="tel" type="text" class="form-control"  placeholder="请输入电话"/>
                                                 <label for="starttime">营业:</label>

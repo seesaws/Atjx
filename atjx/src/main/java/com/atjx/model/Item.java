@@ -2,6 +2,7 @@ package com.atjx.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Item extends BaseObject {
     private Integer maxNum;
     private Integer del_price;
     private int sales;
-    private Integer money;
+    private BigDecimal money;
     private List<Address> address;
     private List<Specification> specification;
 

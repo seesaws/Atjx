@@ -60,12 +60,12 @@ public class SupplierController {
                 response.setContentType("text/html; charset=utf-8");
                 //查询用户是否为核销商
                 WeixinUserInfo weixinUserInfo=wxUserMapper.select(result);
-                if (Integer.parseInt(weixinUserInfo.getSupplyer())==0){
+                if (weixinUserInfo.getSupplyer()==0){
 //                    out = response.getWriter();
 
                     out.print("<script language='javascript' type='text/javascript'>alert('非核销商户！');</script>");
-                }else if(Integer.parseInt(weixinUserInfo.getSupplyer())==1){
-                    wxOrder=wxOderMapper.findById(wxOrder);
+                }else if(weixinUserInfo.getSupplyer()==1){
+                    wxOrder=wxOderMapper.findByOrderNo(wxOrder);
                     //102已完成
                     wxOrder.setStatus_code("102");
                     //更新状态码
@@ -79,6 +79,7 @@ public class SupplierController {
             }else{
                 //获取失败的处理
                 System.out.println("获取openid失败");
+                out.print("<script language='javascript' type='text/javascript'>alert('获取openId失败！');</script>");
             }
         } catch (Exception e) {
             // 异常的处理

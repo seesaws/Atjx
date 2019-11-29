@@ -24,6 +24,7 @@
             <result column="t_describe" property="t_describe" jdbcType="VARCHAR"/>
         </collection>
 
+
     </resultMap>
     <insert id="insert" parameterType="com.atjx.model.WxOrder" useGeneratedKeys="true" keyProperty="wxorder_id">
         insert into tb_wxorder
@@ -64,6 +65,9 @@
             <if test="spe_id != null">
                 spe_id,
             </if>
+            <if test="item_id != null">
+                item_id,
+            </if>
         </trim>
         <trim prefix="value (" suffix=")" suffixOverrides=",">
             <if test="wxorder_id != null">
@@ -102,6 +106,9 @@
             <if test="spe_id != null">
                 #{spe_id,jdbcType=INTEGER},
             </if>
+            <if test="item_id != null">
+                #{item_id,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
 
@@ -114,27 +121,25 @@
         from tb_wxorder w
         left join tb_specification s
         on w.spe_id = s.spe_id
-        where openid = #{openid, jdbcType=VARCHAR}
-
+        where openid = #{openid, jdbcType=VARCHAR} and status_code = 100
     </select>
 
     <select id="selectStatus" resultMap="OrderResultMap" parameterType="java.lang.String">
         SELECT * from tb_wxorder where status_code=#{status_code,jdbcType=VARCHAR} and openid = #{openid, jdbcType=VARCHAR}
     </select>
 
-    <select id="findById" resultMap="OrderResultMap" parameterType="INTEGER">
-        SELECT * from tb_wxorder where wxorder_id=#{wxorder_id,jdbcType=INTEGER}
+    <select id="findByOrderNo" resultMap="OrderResultMap" parameterType="java.lang.String">
+        SELECT * from tb_wxorder where order_no=#{order_no,jdbcType=VARCHAR}
     </select>
 
     <update id="update" parameterType="com.atjx.model.WxOrder">
         UPDATE tb_wxorder
         <trim prefix="set" suffixOverrides=",">
             <if test="status_code != null">
-                #{status_code,jdbcType=VARCHAR},
+                status_code=#{status_code,jdbcType=VARCHAR},
             </if>
         </trim>
-        WHERE wxorder_id = #{wxorder_id, jdbcType=INTEGER}
+        WHERE order_no = #{order_no, jdbcType=VARCHAR}
     </update>
-
 
 </mapper>
