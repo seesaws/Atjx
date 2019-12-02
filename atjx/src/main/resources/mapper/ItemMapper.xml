@@ -155,6 +155,7 @@
         <result column="money" property="money" jdbcType="DECIMAL"/>
         <collection  property="address" ofType="com.atjx.model.Address">
             <id column="add_id" property="add_id" jdbcType="INTEGER"/>
+            <result column="item_id" property="item_id" jdbcType="INTEGER"/>
             <result column="shopname" property="shopname" jdbcType="VARCHAR"/>
             <result column="address" property="addressInfo" jdbcType="VARCHAR"/>
             <result column="tel" property="tel" jdbcType="INTEGER"/>

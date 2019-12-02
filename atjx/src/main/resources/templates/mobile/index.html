@@ -9,7 +9,21 @@
 		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
 	</head>
+
+<!--	<div class="loading-div">-->
+<!--		<div class="spinner">-->
+
+<!--			<div class="bounce1"></div>-->
+
+<!--			<div class="bounce2"></div>-->
+
+<!--			<div class="bounce3"></div>-->
+
+<!--		</div>-->
+<!--	</div>-->
+
 	<body>
+
 		<div class="container">
 <!--			<div class="listhead" >-->
 <!--				<img src="../img/headimg.png" />-->
@@ -41,7 +55,7 @@
 
 
 
-		<div class="footer">
+		<div class="footermy">
 			<ul>
 				<li><a href="#">
 					<div>
@@ -67,10 +81,29 @@
 					</a></li>
 			</ul>
 		</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+		window.jQuery || document.write("<script src='/js/jquery-3.4.1.min.js'>" + "<" + "/script>");
+		/*]]>*/
+	</script>
+		<script>
+			// $("html,body").animate({"scrollTop":top})
+			// document.onreadystatechange = function () {
+			// 	if (document.readyState == "complete") {
+			// 		$(".loading-div").fadeOut();
+			// 	}
+			// 	// setTimeout(function(){
+			// 	// 	$(".loading-div").fadeOut();
+			// 	// },2000)
+			//
+			// };
+		</script>
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/iconfont.js}" ></script>
 	</body>
-<script>
-	console.log('彩蛋')
-</script>
-	<script type="text/javascript" charset="utf-8" th:src="@{/js/iconfont.js}" ></script>
+
+
 
 </html>

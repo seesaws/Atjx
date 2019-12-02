@@ -1,5 +1,7 @@
 package com.atjx.mobile.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.atjx.mapper.ItemMapper;
 import com.atjx.mapper.PicMapper;
 import com.atjx.mapper.SpecificationMapper;
@@ -9,7 +11,6 @@ import com.atjx.mobile.util.RedisTokenHelper;
 import com.atjx.model.Item;
 import com.atjx.model.Item_Pic;
 import com.atjx.model.Specification;
-import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,14 +73,16 @@ public class MobileController {
     @RequestMapping(value = "/mobile/goods")
     public String goods(Item item, Model model){
         try{
+            String itemStr=null;
             Item item1 = itemMapper.findAllInfo(item.getId());
             String html=item1.getSell_Point();
             String unhtml= HtmlUtils.htmlUnescape(html);
             item.setSell_Point(unhtml);
+            itemStr=JSON.toJSONString(item1);
             List<Item_Pic> pic=picMapper.selectAll(item1.getId());
             model.addAttribute("picList",pic);
             model.addAttribute("item", item1);
-            JSONObject json = JSONObject.fromObject(item1);
+            JSONObject json = JSON.parseObject(itemStr);
             model.addAttribute("itemJson",json);
         }catch (Exception e){
             e.printStackTrace();
