@@ -47,6 +47,11 @@
       "defaultValue": 0,
       "name": "redis.timeout",
       "type": "java.lang.Integer"
+    },
+    {
+      "name": "web.upload-path",
+      "description": "Description for web.upload-path.",
+      "type": "java.lang.String"
     }
   ]
 }

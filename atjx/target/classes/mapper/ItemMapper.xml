@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atjx.mapper.ItemMapper">
+    <resultMap id="BaseResultMap" type="com.atjx.model.Item">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sell_Point" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
+        <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="del_price" property="del_price" jdbcType="BIGINT"/>
+        <result column="sales" property="sales" jdbcType="INTEGER"/>
+        <result column="money" property="money" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT * from tb_item
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * from tb_item
+    </select>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="com.atjx.model.Item">
+        SELECT i.* , t.name as categoryName FROM tb_item i LEFT JOIN tb_category t ON i.cid = t.id WHERE i.status = 1
+        <if test="title != null">
+            AND title LIKE concat('%', #{title, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="cid != 0">
+            AND cid = #{cid, jdbcType=INTEGER}
+        </if>
+        <if test="minPrice != null and maxPrice != null">
+            AND price BETWEEN #{minPrice, jdbcType=BIGINT} AND #{maxPrice, jdbcType=BIGINT}
+        </if>
+        ORDER BY updated desc
+        limit #{start, jdbcType=INTEGER},#{end, jdbcType=INTEGER}
+    </select>
+
+    <select id="listS" resultMap="BaseResultMap" parameterType="com.atjx.model.Item">
+        SELECT i.* , t.name as categoryName FROM tb_item i LEFT JOIN tb_category t ON i.cid = t.id WHERE i.status = 1
+        <if test="title != null">
+            AND title LIKE concat('%', #{title, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="cid != 0">
+            AND cid = #{cid, jdbcType=INTEGER}
+        </if>
+        <if test="minNum != null and maxNum != null">
+            AND num BETWEEN #{minNum, jdbcType=INTEGER} AND #{maxNum, jdbcType=INTEGER}
+            ORDER BY num
+        </if>
+        limit #{start, jdbcType=INTEGER},#{end, jdbcType=INTEGER}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="com.atjx.model.Item">
+        SELECT count(*) from tb_item i LEFT JOIN tb_category t ON i.cid = t.id WHERE i.status = 1
+        <if test="title != null">
+            AND title LIKE concat('%', #{title, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="cid != 0">
+            AND cid = #{cid, jdbcType=INTEGER}
+        </if>
+
+        <if test="minPrice != null and maxPrice != null">
+            AND price BETWEEN #{minPrice, jdbcType=BIGINT} AND #{maxPrice, jdbcType=BIGINT}
+            ORDER BY price
+        </if>
+    </select>
+    <insert id="insert" parameterType="com.atjx.model.Item" useGeneratedKeys="true" keyProperty="id">
+         INSERT INTO tb_item (id, title, sell_point, price, num, barcode, image, cid, status, created, updated,del_price,sales,money)
+         VALUE (
+         #{id, jdbcType=INTEGER},
+         #{title, jdbcType=VARCHAR},
+         #{sell_Point, jdbcType=VARCHAR},
+         #{price, jdbcType=BIGINT},
+         #{num, jdbcType=INTEGER},
+         #{barcode, jdbcType=VARCHAR},
+         #{image, jdbcType=VARCHAR},
+         #{cid, jdbcType=INTEGER},
+         1,
+         NOW(),
+         NOW(),
+         #{del_price, jdbcType=BIGINT},
+         0,
+         #{money, jdbcType=BIGINT}
+          )
+    </insert>
+
+    <update id="update" parameterType="com.atjx.model.Item" >
+        UPDATE tb_item
+        <trim prefix="set" suffixOverrides=",">
+        <if test="title != null">
+            title = #{title, jdbcType=VARCHAR},
+        </if>
+        <if test="sell_Point != null">
+            sell_point= #{sell_Point, jdbcType=VARCHAR},
+        </if>
+        <if test="price != null">
+            price = #{price, jdbcType=BIGINT},
+        </if>
+        <if test="num != null">
+            num = #{num, jdbcType=INTEGER},
+        </if>
+        <if test="cid != null">
+            cid = #{cid, jdbcType=INTEGER},
+        </if>
+        <if test="updated != null">
+            updated = NOW(),
+        </if>
+        <if test="image != null">
+            image = #{image, jdbcType=VARCHAR},
+        </if>
+        <if test="del_price != null">
+            del_price = #{del_price, jdbcType=BIGINT},
+        </if>
+        <if test="sales != null">
+            sales = #{sales, jdbcType=INTEGER},
+        </if>
+        <if test="money != null">
+            money = #{money, jdbcType=BIGINT},
+        </if>
+        </trim>
+        WHERE id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete" parameterType="com.atjx.model.Item">
+        DELETE FROM tb_item WHERE id = #{id, jdbcType=INTEGER}
+    </delete>
+
+    <select id="findMaxId" resultType="INTEGER">
+       SELECT id FROM tb_item ORDER BY id DESC LIMIT 0,1
+    </select>
+
+    <resultMap id="AllInfoResultMap" type="com.atjx.model.Item">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sell_Point" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
+        <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="del_price" property="del_price" jdbcType="BIGINT"/>
+        <result column="sales" property="sales" jdbcType="INTEGER"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <collection  property="address" ofType="com.atjx.model.Address">
+            <id column="add_id" property="add_id" jdbcType="INTEGER"/>
+            <result column="item_id" property="item_id" jdbcType="INTEGER"/>
+            <result column="shopname" property="shopname" jdbcType="VARCHAR"/>
+            <result column="address" property="addressInfo" jdbcType="VARCHAR"/>
+            <result column="tel" property="tel" jdbcType="INTEGER"/>
+            <result column="starttime" property="starttime" jdbcType="VARCHAR"/>
+            <result column="latitudeLongitude" property="latitudeLongitude" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="specification" ofType="com.atjx.model.Specification">
+            <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
+            <result column="item_id" property="item_id" jdbcType="INTEGER"/>
+            <result column="tname" property="tname" jdbcType="VARCHAR"/>
+            <result column="sprice" property="sprice" jdbcType="BIGINT"/>
+            <result column="sdel_price" property="sdel_price" jdbcType="BIGINT"/>
+            <result column="t_describe" property="t_describe" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllInfo" resultMap="AllInfoResultMap" >
+        select i.*,a.*,s.*
+        from tb_item i
+        left join tb_address a
+        on i.id = a.item_id
+        left join tb_specification s
+        on i.id=s.item_id
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+
+
+
+    
+</mapper>

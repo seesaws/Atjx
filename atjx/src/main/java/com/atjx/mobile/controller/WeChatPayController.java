@@ -227,6 +227,7 @@ public class WeChatPayController {
             // 注意，参数的顺序不能错！！！！否则无法成功下单
             Map<String, String> paraMap = new HashMap<String, String>();
             paraMap.put("appid", appId);
+            //paraMap.put("attach", attach);//附加数据 	attach 	否 	String(127)  	附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
             paraMap.put("body", "艾特鲸选-商品");
             paraMap.put("mch_id", "1554775991");
             paraMap.put("nonce_str", WXPayUtil.generateNonceStr());//随机字符串，这里产生的是格式化的时间戳和随机字符
@@ -368,13 +369,26 @@ public class WeChatPayController {
                     }else{
                         System.out.println("更新商品信息失败!");
                     }
-                        //更新状态码
-                        wxOderMapper.update(wxOrder);
+
                         //更新用户金库信息
                         //反商品佣金
                         weixinUserInfo.setMoney(weixinUserInfo.getMoney().add(item.getMoney()));
                         //更新用户信息
+                        //购买订单数+1
+                        weixinUserInfo.setBuyNum(weixinUserInfo.getBuyNum()+1);
+                        //判断订单数升级大V
+                        if(weixinUserInfo.getBuyNum()>=5){
+                            weixinUserInfo.setU_level(1);
+                        }
+                        //直卖收益
+                        weixinUserInfo.setBack_money(weixinUserInfo.getBack_money().add(item.getMoney()));
+                        //总收益=直卖+团队收益
+                        weixinUserInfo.setSum_money(weixinUserInfo.getSum_money().add(item.getMoney()));
+
+//                        if(weixinUserInfo.getU_level()==0)
                         wxUserMapper.update(weixinUserInfo);
+                    //更新状态码
+                    wxOderMapper.update(wxOrder);
                 }
             }else{
                 // 交易失败的处理

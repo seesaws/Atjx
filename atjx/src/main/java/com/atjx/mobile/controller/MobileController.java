@@ -14,6 +14,7 @@ import com.atjx.model.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
@@ -119,9 +120,31 @@ public class MobileController {
     }
 
 
-    @RequestMapping(value = "/mobile/rechargeSuccess")
+    @RequestMapping(value = "/mobile/tixian")
+    @ResponseBody
     public String  rechargeSuccess() {
 
-        return "mobile/rechargeSuccess";
+        return "提现申请已提交";
+    }
+
+    @RequestMapping(value = "/mobile/test")
+
+    public String test(Item item, Model model) {
+        try{
+            String itemStr=null;
+            Item item1 = itemMapper.findAllInfo(item.getId());
+            String html=item1.getSell_Point();
+            String unhtml= HtmlUtils.htmlUnescape(html);
+            item.setSell_Point(unhtml);
+            itemStr=JSON.toJSONString(item1);
+            List<Item_Pic> pic=picMapper.selectAll(item1.getId());
+            model.addAttribute("picList",pic);
+            model.addAttribute("item", item1);
+            JSONObject json = JSON.parseObject(itemStr);
+            model.addAttribute("itemJson",json);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "mobile/index_test";
     }
 }
