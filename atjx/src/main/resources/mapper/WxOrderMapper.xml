@@ -15,6 +15,7 @@
         <result column="order_desc" property="order_desc" jdbcType="VARCHAR"/>
         <result column="spe_id" property="spe_id" jdbcType="INTEGER"/>
         <result column="item_id" property="item_id" jdbcType="INTEGER"/>
+        <result column="s_opid" property="s_opid" jdbcType="VARCHAR"/>
         <collection property="specification" ofType="com.atjx.model.Specification">
             <id column="spe_id" property="spe_id" jdbcType="INTEGER"/>
             <result column="item_id" property="item_id" jdbcType="INTEGER"/>
@@ -68,6 +69,9 @@
             <if test="item_id != null">
                 item_id,
             </if>
+            <if test="s_opid != null">
+                s_opid,
+            </if>
         </trim>
         <trim prefix="value (" suffix=")" suffixOverrides=",">
             <if test="wxorder_id != null">
@@ -108,6 +112,9 @@
             </if>
             <if test="item_id != null">
                 #{item_id,jdbcType=INTEGER},
+            </if>
+            <if test="s_opid != null">
+                #{s_opid,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>

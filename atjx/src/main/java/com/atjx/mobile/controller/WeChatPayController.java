@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -174,9 +175,10 @@ public class WeChatPayController {
         String openId= request.getParameter("openid");//openid
         String item_id= request.getParameter("item_id");
         String spe_id= request.getParameter("spe_id");
+        String op= request.getParameter("op");
         String paternerKey="atjx100410251625asd15gf15r51g54s";
         String appId = "wx7738ac5a31d41ee4";
-
+//        System.out.println(op);
         item.setId(Integer.parseInt(item_id));
         item=itemMapper.findById(item);
         specification.setSpe_id(Integer.parseInt(spe_id));
@@ -227,7 +229,7 @@ public class WeChatPayController {
             // 注意，参数的顺序不能错！！！！否则无法成功下单
             Map<String, String> paraMap = new HashMap<String, String>();
             paraMap.put("appid", appId);
-            //paraMap.put("attach", attach);//附加数据 	attach 	否 	String(127)  	附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
+            paraMap.put("attach", op);//附加数据 	attach 	否 	String(127)  	附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
             paraMap.put("body", "艾特鲸选-商品");
             paraMap.put("mch_id", "1554775991");
             paraMap.put("nonce_str", WXPayUtil.generateNonceStr());//随机字符串，这里产生的是格式化的时间戳和随机字符
@@ -291,6 +293,7 @@ public class WeChatPayController {
                 wxOrder.setOrder_desc(specification.getT_describe());
                 wxOrder.setSpe_id(Integer.parseInt(spe_id));
                 wxOrder.setItem_id(Integer.parseInt(item_id));
+                wxOrder.setS_opid(op);
                 //入库
                 try{
                     wxOderMapper.insert(wxOrder);
@@ -348,7 +351,9 @@ public class WeChatPayController {
                 // 交易成功
                 if(notifyMap.get("result_code").equals("SUCCESS")){
                     // 接下来进行一些业务处理
+                    //获取购买人openid
                     String openid=notifyMap.get("openid");
+                    //获取订单号
                     String out_trade_no =notifyMap.get("out_trade_no");
                     wxOrder.setOrder_no(out_trade_no);
                     wxOrder=wxOderMapper.findByOrderNo(wxOrder);
@@ -358,6 +363,11 @@ public class WeChatPayController {
                     wxUserMapper.update(weixinUserInfo);
                     item.setId(wxOrder.getItem_id());
                     item=itemMapper.findById(item);
+                    BigDecimal item_money=item.getMoney();
+                    BigDecimal a=new BigDecimal("0.6");
+                    BigDecimal b=new BigDecimal("0.4");
+                    BigDecimal six=item_money.multiply(a);
+                    BigDecimal four=item_money.multiply(b);
                     wxOrder.setStatus_code("100");
                     //更新商品销量+1,库存-1
                     //先查询库存
@@ -372,23 +382,52 @@ public class WeChatPayController {
 
                         //更新用户金库信息
                         //反商品佣金
-                        weixinUserInfo.setMoney(weixinUserInfo.getMoney().add(item.getMoney()));
+                        weixinUserInfo.setMoney(weixinUserInfo.getMoney().add(item_money));
                         //更新用户信息
                         //购买订单数+1
                         weixinUserInfo.setBuyNum(weixinUserInfo.getBuyNum()+1);
                         //判断订单数升级大V
                         if(weixinUserInfo.getBuyNum()>=5){
-                            weixinUserInfo.setU_level(1);
+                            weixinUserInfo.setU_level("1");
                         }
                         //直卖收益
-                        weixinUserInfo.setBack_money(weixinUserInfo.getBack_money().add(item.getMoney()));
+                        weixinUserInfo.setBack_money(weixinUserInfo.getBack_money().add(item_money));
                         //总收益=直卖+团队收益
-                        weixinUserInfo.setSum_money(weixinUserInfo.getSum_money().add(item.getMoney()));
+                        weixinUserInfo.setSum_money(weixinUserInfo.getSum_money().add(item_money));
 
 //                        if(weixinUserInfo.getU_level()==0)
                         wxUserMapper.update(weixinUserInfo);
                     //更新状态码
                     wxOderMapper.update(wxOrder);
+
+                    //获取分享人openid
+
+                    String share_op =notifyMap.get("attach");
+                    if(share_op!=null){
+
+                        try{
+
+                            //购买人60%商品佣金
+                            weixinUserInfo.setGroup_money(weixinUserInfo.getGroup_money().add(six));//团队收益
+                            //总收益=直卖+团队收益
+                            weixinUserInfo.setSum_money(weixinUserInfo.getSum_money().add(six));//总收益
+
+                            weixinUserInfo.setMoney(weixinUserInfo.getMoney().add(six));//余额
+                            wxUserMapper.update(weixinUserInfo);
+                            //查询分享人
+                            WeixinUserInfo share_userInfo=wxUserMapper.select(share_op);
+                            //分享人40%商品佣金
+                            share_userInfo.setMoney(share_userInfo.getMoney().add(four));//余额
+                            //总收益=直卖+团队收益
+                            share_userInfo.setSum_money(share_userInfo.getSum_money().add(four));//总收益
+                            share_userInfo.setGroup_money(share_userInfo.getGroup_money().add(four));//团队收益
+                            wxUserMapper.update(share_userInfo);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            System.out.println("查询分享人异常!");
+                        }
+                    }
+
                 }
             }else{
                 // 交易失败的处理

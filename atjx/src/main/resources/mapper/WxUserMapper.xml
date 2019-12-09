@@ -7,16 +7,15 @@
         <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
         <result column="headImgUrl" property="headImgUrl" jdbcType="VARCHAR"/>
         <result column="money" property="money" jdbcType="DECIMAL"/>
-        <result column="supplyer" property="supplyer" jdbcType="INTEGER"/>
+        <result column="supplyer" property="supplyer" jdbcType="VARCHAR"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
-        <result column="u_level" property="u_level" jdbcType="INTEGER"/>
+        <result column="u_level" property="u_level" jdbcType="VARCHAR"/>
         <result column="buyNum" property="buyNum" jdbcType="INTEGER"/>
         <result column="used_money" property="used_money" jdbcType="DECIMAL"/>
         <result column="back_money" property="back_money" jdbcType="DECIMAL"/>
         <result column="group_money" property="group_money" jdbcType="DECIMAL"/>
         <result column="sum_money" property="sum_money" jdbcType="DECIMAL"/>
-
     </resultMap>
 
     <select id="select" resultMap="WeixinUserResultMap" parameterType="java.lang.String">

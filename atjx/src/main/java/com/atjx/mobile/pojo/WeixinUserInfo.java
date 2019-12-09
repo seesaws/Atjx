@@ -40,11 +40,11 @@ public class WeixinUserInfo implements Serializable {
     private BigDecimal back_money;
     private BigDecimal group_money;
     private BigDecimal sum_money;
-    private int supplyer;
+    private String supplyer;
     private String username;
     private String phone;
-    private int u_level;
-    private int buyNum;
+    private String u_level;
+    private Integer buyNum;
 
 
 }

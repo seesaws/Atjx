@@ -21,6 +21,7 @@ public class WxOrder {
     private String order_desc;
     private Integer spe_id;
     private Integer item_id;
+    private String s_opid;
     private Specification specification;
 
 

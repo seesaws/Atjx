@@ -24,6 +24,7 @@
 
         )
     </insert>
+    <update id="update"></update>
 
     <delete id="delete" parameterType="java.lang.Integer">
         delete from tb_address where add_id=#{add_id,jdbcType=INTEGER}

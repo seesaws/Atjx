@@ -14,7 +14,7 @@ public interface UserMapper {
 
     int update(User user);
 
-    int selectIsName(User user);
+    void selectIsName(User user);
 
     String selectPasswordByName(User user);
 }

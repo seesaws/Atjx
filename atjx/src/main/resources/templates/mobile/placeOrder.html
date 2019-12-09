@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+		<link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
 		<title></title>
 	</head>
 	<body>
@@ -72,7 +72,7 @@
 			/*]]>*/
 		</script>
 
-		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+		<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="../js/common.js"></script>
 
 		<script th:inline="javascript">
@@ -88,7 +88,8 @@
 			var openid=null;
 			var username=null;
 			var phone=null;
-
+			var op=GetQueryString('op');
+			// console.log(op);
 			window.onload = function () {
 				var code = GetQueryString("code"); //获取code
 				$.post("/getOpenid", {code: code}, function (msg) {  //将code传到后台用于获取openid
@@ -117,7 +118,8 @@
 						tel: usertel,
 						remark: orderremark,
 						item_id: item_id,
-						spe_id: spe_id
+						spe_id: spe_id,
+						op:op,
 					}, function (result) {
 						// 以下是后台发来的“第二堆参数”，
 						var appId = result.data.appId;

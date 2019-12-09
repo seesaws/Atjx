@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atjx.mapper.TixianMapper">
+    <resultMap id="TixianResultMap" type="com.atjx.model.Tixian">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="t_openid" property="t_openid" jdbcType="VARCHAR"/>
+        <result column="t_nickname" property="t_nickname" jdbcType="VARCHAR"/>
+        <result column="t_money" property="t_money" jdbcType="DECIMAL"/>
+        <result column="creatTime" property="creatTime" jdbcType="TIMESTAMP"/>
+        <result column="t_status" property="t_status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.atjx.model.Tixian" >
+        insert into tb_tixian
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t_openid != null">
+                t_openid,
+            </if>
+            <if test="t_nickname != null">
+                t_nickname,
+            </if>
+            <if test="t_money != null">
+                t_money,
+            </if>
+
+            creatTime,
+
+            <if test="t_status != null">
+                t_status,
+            </if>
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="t_openid != null">
+                #{t_openid,jdbcType=VARCHAR},
+            </if>
+            <if test="t_nickname != null">
+                #{t_nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="t_money != null">
+                #{t_money,jdbcType=DECIMAL},
+            </if>
+                NOW(),
+            <if test="t_status != null">
+                #{t_status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from tb_tixian where id=#{id,jdbcType=INTEGER}
+    </delete>
+
+    <select id="findByUser" resultMap="TixianResultMap" parameterType="java.lang.String">
+        SELECT *
+        from tb_tixian
+        where t_openid = #{t_openid, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectStatus" resultMap="TixianResultMap" parameterType="java.lang.String">
+        SELECT * from tb_tixian where t_status=#{t_status,jdbcType=VARCHAR} and t_openid = #{t_openid, jdbcType=VARCHAR}
+    </select>
+
+    <select id="findByOrderNo" resultMap="TixianResultMap" parameterType="java.lang.String">
+        SELECT * from tb_tixian where order_no=#{order_no,jdbcType=VARCHAR}
+    </select>
+
+
+    <update id="update" parameterType="com.atjx.model.Tixian">
+        UPDATE tb_tixian
+        <trim prefix="set" suffixOverrides=",">
+            <if test="status != null">
+                status=#{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        WHERE t_openid = #{t_openid, jdbcType=VARCHAR}
+    </update>
+</mapper>

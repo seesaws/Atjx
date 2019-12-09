@@ -4,14 +4,14 @@ $(function(){
 		$(this).addClass("active").siblings().removeClass("active");
 		var ids = $(this).children().attr("href").slice(1);
 		$("#"+ids).show().siblings().hide()
-	})
+	});
 	// 表单提交
-	$("#submitbtns").click(function(){
-		if($("#tixianjine").val() != '' || $("#tixianjine").val() != 0){
-			var money = $("#tixianjine").val();
-			console.log(money)
-			// 这里写后台接口
-		}
-		return false;
-	})
-})
+	// $("#submitbtns").click(function(){
+	// 	if($("#tixianjine").val() != '' || $("#tixianjine").val() != 0){
+	// 		var money = $("#tixianjine").val();
+	// 		console.log(money)
+	// 		// 这里写后台接口
+	// 	}
+	// 	return false;
+	// })
+});

@@ -37,14 +37,15 @@ public class SupplierController {
     @Resource
     private WxUserMapper wxUserMapper;
     @RequestMapping("/getSupplier")
-    public String getOpenid(HttpServletRequest request, HttpServletResponse response, PrintWriter out, WxOrder wxOrder) throws IOException {
+    public String getOpenid(HttpServletRequest request, HttpServletResponse response, PrintWriter out) throws IOException {
 
         String code = request.getParameter("code");
         String order_id = request.getParameter("order_id");
-        System.out.println(order_id);
+        System.out.println(Integer.parseInt(order_id));
         String appId = "wx7738ac5a31d41ee4";
         String appSecret = "7092282a2dd53b572d39c2802b460b2f";
         String result = null;
+        WxOrder wxOrder=new WxOrder();
         wxOrder.setWxorder_id(Integer.parseInt(order_id));
         try {
             String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?grant_type=authorization_code";
@@ -60,11 +61,11 @@ public class SupplierController {
                 response.setContentType("text/html; charset=utf-8");
                 //查询用户是否为核销商
                 WeixinUserInfo weixinUserInfo=wxUserMapper.select(result);
-                if (weixinUserInfo.getSupplyer()==0){
+                if (weixinUserInfo.getSupplyer().equals("0")){
 //                    out = response.getWriter();
 
                     out.print("<script language='javascript' type='text/javascript'>alert('非核销商户！');</script>");
-                }else if(weixinUserInfo.getSupplyer()==1){
+                }else if(weixinUserInfo.getSupplyer().equals("1")){
                     wxOrder=wxOderMapper.findByOrderNo(wxOrder);
                     //102已完成
                     wxOrder.setStatus_code("102");
@@ -90,7 +91,8 @@ public class SupplierController {
             out.close();
         }
 //
-        return "redirect:http://atjx.club/mobile/user";
+        response.sendRedirect("http://atjx.club/mobile/user");
+        return null;
     }
 
 }

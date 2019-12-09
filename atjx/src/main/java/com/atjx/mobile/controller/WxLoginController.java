@@ -36,7 +36,6 @@ public class WxLoginController {
     private SpecificationMapper specificationMapper;
     public static final String WX_APPID = "wx7738ac5a31d41ee4";
     public static final String WX_APPSECRET = "7092282a2dd53b572d39c2802b460b2f";
-    private WeixinUserInfo weixinUserInfo;
     @RequestMapping("/user")
     public ModelAndView wxLogin(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException, ServletException {
         // 获取客户端cookie
@@ -85,7 +84,7 @@ public class WxLoginController {
 
     //	回调方法
     @RequestMapping("/callBack")
-    public String wxCallBack(HttpServletRequest request,Model model){
+    public String wxCallBack(HttpServletRequest request,Model model,WeixinUserInfo weixinUserInfo){
 
         WeixinUserInfo weixinUserInfo1= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
         if(weixinUserInfo1==null){
@@ -114,15 +113,16 @@ public class WxLoginController {
 
             WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
 
-            WeixinUserInfo weixinUserInfo = new WeixinUserInfo();
             weixinUserInfo.setOpenId(infoList.getOpenId());
             weixinUserInfo.setNickname(infoList.getNickname());
             weixinUserInfo.setHeadImgUrl(infoList.getHeadImgUrl());
             try{
-                Integer count=wxUserMapper.findByOpenid(infoList.getOpenId());
-                if ( count== null) {
+                 weixinUserInfo=wxUserMapper.select(infoList.getOpenId());
+                if ( weixinUserInfo== null) {
+
                     wxUserMapper.insert(weixinUserInfo);
                 }else {
+
                     wxUserMapper.update(weixinUserInfo);
                 }
 
