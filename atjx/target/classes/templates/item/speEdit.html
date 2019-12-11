@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>后台信息管理系统</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
+
+    <!-- Toastr style -->
+    <link th:href="@{/css/plugins/toastr/toastr.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <!-- summernote style -->
+    <link th:href="@{/css/plugins/summernote/summernote.css}" rel="stylesheet"/>
+    <link th:href="@{/css/plugins/summernote/summernote-bs3.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation" th:include="nav :: navigation"></nav>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="border-bottom" th:include="header :: headerTop"></div>
+        <div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+            <div class="col-lg-10">
+                <h2>商品管理</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">首页</a>
+                    </li>
+                    <li>
+                        <a>商品管理</a>
+                    </li>
+                    <li class="active">
+                        <strong>套餐管理</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>修改套餐</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div  class="form-horizontal">
+
+                                <div class="form-group"><label class="col-sm-2 control-label">商品id：</label>
+                                    <div class="col-sm-10">
+                                        <label for="id"></label><input id="id" name="id" readonly="readonly" type="text" class="form-control"
+                                                                       th:value="${item.id}"/>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">标题：</label>
+                                    <div class="col-sm-10">
+                                        <label for="title"></label><input id="title" name="title" type="text" class="form-control"
+                                                                          th:value="${item.title}" readonly="readonly"/>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">套餐信息管理：</label>
+                                    <div class="col-sm-10">
+                                        <table class="table table-hover table-bordered" >
+                                            <thead>
+                                            <tr>
+                                                <th>套餐ID</th>
+                                                <th>商品ID</th>
+                                                <th>套餐名</th>
+                                                <th>价格</th>
+                                                <th>原价</th>
+                                                <th>描述</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <!-- BEGIN list -->
+                                            <tr th:each="l :${list}">
+                                                <td th:text="${l.spe_id}"></td>
+                                                <td th:text="${l.item_id}"></td>
+                                                <td th:text="${l.tname}"></td>
+                                                <td th:text="${l.sprice}"></td>
+                                                <td th:text="${l.sdel_price}"></td>
+                                                <td th:text="${l.t_describe}"></td>
+
+                                                <td>
+                                                    <a id="ModSpe" th:href="'/speFind?spe_id='+${l.spe_id}+'&amp;id='+${item.id}" class="btn btn-info" data-toggle="modal" onclick="" data-target="#modifyModal">编辑</a>
+                                                    &nbsp;&nbsp;
+                                                    <a id="DelSpe" th:href="'/speDelete?spe_id='+${l.spe_id}+'&amp;id='+${item.id}" type="button" class="btn btn-danger"
+                                                            title="彻底删除">删除</a>
+                                                </td>
+
+                                            </tr>
+
+                                            <!-- END list -->
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div style="text-align: center">
+                                    <!-- 按钮触发模态框 -->
+                                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertModal">添加套餐信息</button>
+                                </div>
+
+                                <!-- 新增模态框（Modal） -->
+                                <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">添加套餐信息</h4>
+                                            </div>
+                                            <form id="form1" name="form1" action="/user/spePost" method="post">
+                                            <div class="modal-body">
+                                                <label for="spe_id">套餐id：</label>
+                                                <input  id="spe_id" name="spe_id" readonly="readonly" type="text" class="form-control" value="0"/>
+                                                <label for="item_id">商品id：</label>
+                                                <input  id="item_id" name="item_id" readonly="readonly" type="text" class="form-control" th:value="${item.id}"/>
+                                                <label for="tname">套餐:</label>
+                                                <input type="text" class="form-control" id="tname" name="tname" placeholder="请输入套餐名"  />
+                                                <label for="sprice">价格:</label>
+                                                <input type="text" class="form-control" id="sprice" name="sprice" placeholder="请输入价格"/>
+                                                <label for="sdel_price">原价:</label>
+                                                <input type="text" class="form-control" id="sdel_price" name="sdel_price" placeholder="请输入原价"/>
+                                                <label for="t_describe">描述:</label>
+                                                <textarea  class="form-control" id="t_describe" name="t_describe" placeholder="请输入描述"></textarea>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                <button type="submit" class="btn btn-primary">确认添加/修改</button>
+                                            </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+
+                                    <!-- 修改模态框（Modal） -->
+                                    <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel1">修改套餐信息</h4>
+                                                </div>
+                                                <form id="form2" name="form1" action="/user/spePost" method="post">
+                                                    <div class="modal-body">
+                                                        <label for="spe_id1">套餐id：</label>
+                                                        <input  id="spe_id1" name="spe_id" readonly="readonly" type="text" class="form-control" value="0" />
+                                                        <label for="item_id1">商品id：</label>
+                                                        <input  id="item_id1" name="item_id" readonly="readonly" type="text" class="form-control" th:value="${item.id}"/>
+                                                        <label for="tname1">套餐:</label>
+                                                        <input type="text" class="form-control" id="tname1" name="tname" placeholder="请输入套餐名"  />
+                                                        <label for="sprice1">价格:</label>
+                                                        <input type="text" class="form-control" id="sprice1" name="sprice" placeholder="请输入价格"/>
+                                                        <label for="sdel_price1">原价:</label>
+                                                        <input type="text" class="form-control" id="sdel_price1" name="sdel_price" placeholder="请输入原价"/>
+                                                        <label for="t_describe1">描述:</label>
+                                                        <input type="text" class="form-control" id="t_describe1" name="t_describe" placeholder="请输入描述"/>
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="submit" class="btn btn-primary">确认添加/修改</button>
+                                                    </div>
+                                                </form>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer" th:include="footer :: copyright"></div>
+
+    </div>
+</div>
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- Peity -->
+<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Toastr script -->
+<script th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+
+<!-- common -->
+<script th:src="@{/js/common1.js}"></script>
+
+<!-- SUMMERNOTE -->
+<script th:src="@{/js/plugins/summernote/summernote.min.js}"></script>
+
+<script th:inline="javascript">
+    // 执行修改通知内容操作
+    function updateSpe() {
+        $.post("/speUpdate.action",$("#edit_notice_form").serialize(), function (data) {
+            if (data == "OK") {
+                alert("信息更新成功！" + data);
+                window.location.reload();
+            } else {
+                alert("信息更新失败！" + data);
+                window.location.reload();
+            }
+        });
+    }
+</script>
+
+
+
+</body>
+
+</html>

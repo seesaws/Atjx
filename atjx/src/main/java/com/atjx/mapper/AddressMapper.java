@@ -17,4 +17,6 @@ public interface AddressMapper {
     void delete(Integer add_id);
 
     List<Address> selectAll(Integer item_id);
+
+    void findByItem(Integer integer);
 }

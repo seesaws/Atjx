@@ -84,10 +84,10 @@ public class WxLoginController {
 
     //	回调方法
     @RequestMapping("/callBack")
-    public String wxCallBack(HttpServletRequest request,Model model,WeixinUserInfo weixinUserInfo){
+    public String wxCallBack(HttpServletRequest request,Model model){
 
-        WeixinUserInfo weixinUserInfo1= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
-        if(weixinUserInfo1==null){
+        WeixinUserInfo weixinUserInfo= (WeixinUserInfo) request.getSession().getAttribute("weixinUserInfo");
+        if(weixinUserInfo==null){
             //获取access_token
             String code = request.getParameter("code");
             String url = "https://api.weixin.qq.com/sns/oauth2/access_token" +
@@ -101,7 +101,6 @@ public class WxLoginController {
 //        System.out.println("请求获取access_token:" + result);
             //返回结果的json对象
             JSONObject resultObject = JSON.parseObject(result);
-
             //请求获取userInfo
             String infoUrl = "https://api.weixin.qq.com/sns/userinfo" +
                     "?access_token=" + resultObject.getString("access_token") +
@@ -110,34 +109,26 @@ public class WxLoginController {
             String resultInfo = HttpClientUtil.doGet(infoUrl);
 
             //此时已获取到userInfo，再根据业务进行处理
-
             WeixinUserInfo infoList = JSON.parseObject(resultInfo, WeixinUserInfo.class);
-
-            weixinUserInfo.setOpenId(infoList.getOpenId());
-            weixinUserInfo.setNickname(infoList.getNickname());
-            weixinUserInfo.setHeadImgUrl(infoList.getHeadImgUrl());
             try{
-                 weixinUserInfo=wxUserMapper.select(infoList.getOpenId());
-                if ( weixinUserInfo== null) {
-
-                    wxUserMapper.insert(weixinUserInfo);
+                if (wxUserMapper.select(infoList.getOpenId())==null) {
+                    wxUserMapper.insert(infoList);
                 }else {
 
-                    wxUserMapper.update(weixinUserInfo);
+                    wxUserMapper.update(infoList);
                 }
-
                 List<WxOrder> wxOrders = wxOderMapper.findByUser(infoList.getOpenId());
                 for (WxOrder w : wxOrders) {
                     w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
                 }
-                request.getSession().setAttribute("weixinUserInfo",weixinUserInfo);
+                request.getSession().setAttribute("weixinUserInfo",infoList);
                 Collections.reverse(wxOrders);
                 model.addAttribute("wxOrders", wxOrders);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }else{
-            List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo1.getOpenId());
+            List<WxOrder> wxOrders = wxOderMapper.findByUser(weixinUserInfo.getOpenId());
             for (WxOrder w : wxOrders) {
                 w.setCreatedStr(DateUtil.getDateStr(w.getCreat_time()));
             }

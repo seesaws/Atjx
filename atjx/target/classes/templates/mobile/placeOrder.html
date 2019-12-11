@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css"/>
+		<link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+		<title></title>
+	</head>
+	<body>
+		<header>
+			<a  onclick="window.history.go(-1)"><div><span class="back"></span></div></a>
+			<div class="headtit">提交订单</div>
+		</header>
+		<div class="boxs">
+			<div class="orderbox">
+				<div class="order-form">
+					<form action="" method="">
+						<div class="orderform-group">
+							<img src="../img/order1.png" />
+							<span>姓名：</span>
+							<input type="text" name="ordername" id="ordername" value=""  maxlength="10" />
+						</div>
+						<div class="orderform-group">
+							<img src="../img/order2.png" />
+							<span>手机号：</span>
+							<input type="text" name="ordertel" id="ordertel" value=""  oninput = "value=value.replace(/[^\d]/g,'')" maxlength="11"/>
+						</div>
+						<div class="orderform-group">
+							<img src="../img/order3.png" />
+							<span>备注：</span>
+							<input type="text" name="orderremark" id="orderremark" value="" placeholder="备注信息"/>
+						</div>
+					</form>
+				</div>
+				<div class="ordermes">
+					<div class="orderTit">商品信息</div>
+					<div class="ordertypes">
+						<img th:src="${item.image}" />
+						<div th:text="${item.title}"></div>
+					</div>
+					<div class="ordertypes">
+						<p th:text="${specification.tname}"></p>
+						<p id="price" th:text="'￥'+${specification.sprice}"></p>
+					</div>
+				</div>
+				<div class="ordernum">
+					<div class="ordernumtext">购买数量：</div>
+					<div class="orderbtns">
+						 <span data-type="-">-</span>
+						 <input type="tel" name="" id="ordernum" value="1" disabled="disabled"/>
+						 <span data-type="+">+</span>
+					</div>
+				</div>
+				<div class="xieyi">
+					<input type="checkbox" name="" id="readxieyi" value="" checked="checked"/>
+					<span>我已阅读，并同意</span>
+					<a href="javascript:;">《平台用户服务协议》</a>
+				</div>
+			</div>
+		</div>
+		<div class="orderpay">
+			<div class="orderpay-left"><span>小计：</span><span id="totalmoney" th:text="'￥'+${specification.sprice}"></span></div>
+			<div class="paybtn" id="paybtn" onclick="isMobileNumber()">微信支付</div>
+		</div>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+		<script type="text/javascript">
+			/*<![CDATA[*/
+			window.jQuery || document.write("<script src='/js/jquery-3.4.1.min.js'>" + "<" + "/script>");
+			/*]]>*/
+		</script>
+
+		<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/common.js"></script>
+
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");//构造一个含有目标参数的正则表达式对象
+				var r = window.location.search.substr(1).match(reg);//匹配目标参数
+
+				if (r != null) return unescape(r[2]);
+				/*]]>*/
+				return null; //返回参数值
+			}
+			var openid=null;
+			var username=null;
+			var phone=null;
+			var op=GetQueryString('op');
+			// console.log(op);
+			window.onload = function () {
+				var code = GetQueryString("code"); //获取code
+				$.post("/getOpenid", {code: code}, function (msg) {  //将code传到后台用于获取openid
+					openid=msg.openid;
+					username=msg.username;
+					phone=msg.phone;
+					$('#ordername').val(username);
+					$('#ordertel').val(phone);
+				},)};
+			function pay() {
+
+					var orderFee = [[${specification.sprice}]];
+					var item_id = [[${item.id}]];
+					var spe_id = [[${specification.spe_id}]];
+					// var price =orderFee.replace(/[^0-9]/ig,"");
+					var price = parseInt(orderFee);
+					// 将用户的金额
+					var username = $("#ordername").val();//用户姓名
+					var usertel = $("#ordertel").val();//用户电话
+					var orderremark = $("#orderremark").val();//用户备注
+
+					$.post("/pay/order", {
+						orderFee: price,
+						openid: openid,
+						name: username,
+						tel: usertel,
+						remark: orderremark,
+						item_id: item_id,
+						spe_id: spe_id,
+						op:op,
+					}, function (result) {
+						// 以下是后台发来的“第二堆参数”，
+						var appId = result.data.appId;
+						var timeStamp = result.data.timeStamp;
+						var nonceStr = result.data.nonceStr;
+						var packageStr = result.data.package;
+						var signType = result.data.signType;
+						var paySign = result.data.paySign;
+						if (typeof WeixinJSBridge == "undefined") {
+							if (document.addEventListener) {
+								document.addEventListener('WeixinJSBridgeReady',
+										onBridgeReady, false);
+							} else if (document.attachEvent) {
+								document.attachEvent('WeixinJSBridgeReady',
+										onBridgeReady);
+								document.attachEvent('onWeixinJSBridgeReady',
+										onBridgeReady);
+							}
+						} else {
+							// 唤起支付页面
+							onBridgeReady(appId, timeStamp, nonceStr, packageStr, signType, paySign);
+						}
+					});
+				//微信JSDK唤起支付
+				function onBridgeReady (appId,timeStamp,nonceStr,packageStr,signType,paySign) {
+					//放到pay里了，这些数据啥时候用？zx
+					WeixinJSBridge.invoke('getBrandWCPayRequest', {
+								"appId": appId,
+								"timeStamp": timeStamp,
+								"nonceStr": nonceStr,
+								"package": packageStr,
+								"signType": signType,
+								"paySign": paySign
+							},
+							function (res) {
+								if (res.err_msg == "get_brand_wcpay_request:ok") {
+									console.log('支付成功');
+									// alert("成功");
+									//支付成功后跳转的页面
+									setTimeout(
+											function(){
+												window.location.href = "http://atjx.club/mobile/user";
+											}, 0);
+								} else if (msg.err_msg == "get_brand_wcpay_request:cancel") {
+
+									console.log('支付取消');
+									window.location.href = "http://atjx.club/mobile/user";
+								} else if (msg.err_msg == "get_brand_wcpay_request:fail") {
+									console.log('支付失败');
+									alert("支付异常");
+									WeixinJSBridge.call('closeWindow');
+								} //使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok,但并不保证它绝对可靠。
+							}
+					);
+
+				}
+
+			}
+		</script>
+
+		<script type="text/javascript">
+			function isMobileNumber() {
+				// var flag = false;
+				var phone=$('#ordertel').val();
+				var message = "";
+				var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+
+				if (phone === '') {
+					// console.log("手机号码不能为空");
+					message = toastr.error("手机号码不能为空！");
+
+				} else if (phone.length !== 11) {
+					//console.log("请输入11位手机号码！");
+					message = toastr.warning("请输入11位手机号码！");
+				} else if (!myreg.test(phone)) {
+					//console.log("请输入有效的手机号码！");
+					message = toastr.warning("请输入有效的手机号码！");
+				} else {
+					// flag = true;
+					pay();
+				}
+				if (message !== "") {
+					// alert(message);
+					message;
+				}
+				// return flag;
+			}
+		</script>
+
+
+	</body>
+</html>

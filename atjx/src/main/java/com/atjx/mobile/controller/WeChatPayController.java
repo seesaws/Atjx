@@ -403,7 +403,7 @@ public class WeChatPayController {
                     //获取分享人openid
 
                     String share_op =notifyMap.get("attach");
-                    if(share_op!=null){
+                    if(share_op!=null&&!weixinUserInfo.getU_level().equals("1")){
 
                         try{
 
