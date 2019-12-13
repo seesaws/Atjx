@@ -182,6 +182,9 @@
         where id = #{id, jdbcType=INTEGER}
     </select>
 
+    <select id="getItemPage" resultType="integer">
+            select count(*) from tb_item;
+    </select>
 
 
 

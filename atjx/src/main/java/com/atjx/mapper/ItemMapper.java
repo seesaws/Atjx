@@ -29,5 +29,5 @@ public interface ItemMapper {
     List<Item> selectAll();
 
     Item findAllInfo(Integer id );
-
+    Integer getItemPage();
 }

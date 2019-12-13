@@ -12,11 +12,13 @@ import com.atjx.model.Tixian;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -50,26 +52,36 @@ public class MobileController {
 
     @RequestMapping(value = "/mobile/index")
     public String index( Model model) {
-
         List<Item> list = itemMapper.selectAll();
         Collections.reverse(list);
         model.addAttribute("itemlist",list);
 
         return "mobile/index";
     }
+    //基本属性
+//    private int currentPage;//当前页数，由用户指定
+//    private int pageSize = 5 ;//每页显示的条数，固定的
+//    private int totalRecords;//总记录条数，数据库查出来的
+//    private int startIndex;//每页开始记录的索引，计算出来的
+//    private int prePage;//上一页
+//    private int nextPage;//下一页
+//    private int startPage;//开始页码
+//    private int endPage;//结束页码
+    @RequestMapping(value = "/mobile/getItemPage",method = RequestMethod.GET)
+    @ResponseBody
+    public int page(HttpServletRequest req, HttpServletResponse resp) {
+        //获取当前页参数，第一次访问为空
+        String currPage = req.getParameter("num");
+        System.out.println(currPage);
+        //页长
+        int size = Integer.parseInt(req.getParameter("size"));
+        //总页数，计算出来的
+        System.out.println(size);
+        int totalPage = itemMapper.getItemPage();
+        return totalPage%size==0?(totalPage/size):(totalPage/size+1);
+    }
 
-//    @RequestMapping(value = "/mobile/user")
-//    public String  user(Model model,Item item) {
-//        // 获取接口访问凭证
-////        String accessToken = CommonUtil.getToken("wxb8ef126b92b8c857", "761a8370a5dd929f19186beacb9545e1").getToken();
-//        /**
-//         * 获取用户信息
-//         */
-////        WeixinUserInfo user = CommonUtil.getUserInfo(accessToken, "ocUlj5jz8hHcGur0EmTlyOvfqzKk");
-////            model.addAttribute("user",user);
-//
-//        return "mobile/my";
-//    }
+
 
     @RequestMapping(value = "/mobile/goods")
     public String goods(Item item, Model model){

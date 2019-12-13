@@ -3,11 +3,20 @@
 	<head>
 		<meta charset="utf-8"/>
     	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+		<link rel="stylesheet" href="../css/loading.css"/>
+		<link rel="stylesheet" href="https://unpkg.com/mescroll.js@1.4.1/mescroll.min.css"/>
 		<link th:href="@{/css/styles.css}" rel="stylesheet"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet"/>
 		<title>艾特鲸选</title>
-		<link rel="icon" th:href="@{../favicon.ico}" type="image/x-icon" />
-		<link rel="shortcut icon" th:href="@{../favicon.ico}" type="image/x-icon" />
+
+		<style>
+			.mescroll{
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				height: auto; /*如设置bottom:50px,则需height:auto才能生效*/
+			}
+		</style>
 	</head>
 
 <!--	<div class="loading-div">-->
@@ -24,32 +33,37 @@
 
 	<body>
 
-		<div class="container">
-<!--			<div class="listhead" >-->
-<!--				<img src="../img/headimg.png" />-->
-<!--				<span> </span>-->
-<!--			</div>-->
-			<div  th:each="item :${ itemlist}" >
-			<a th:href="@{'goods?id='+${item.id}}">
-				<div class="listcontent" >
-					<img th:src="${item.image}" class="shoppingimg"/>
-					<img th:src="@{img/qianggou.png}" class="qgbtn"/>
-<!--					<div class="daojishi">12:00</div>-->
-					<div class="particulars-box"></div>
-						<div class="listcontent-tit">
-							<!-- <div class="titiles"></div> -->
-							<div class="jianjie" th:text="${item.title}"></div>
-						</div>
-						<div class="listcontent-price">
-							<div class="listcontent-price-left">
-								<span class="prices" th:text="'￥'+${item.price}"></span>
-								<p class="yuan">&nbsp;原价：</p><s class="yuan" th:text="${item.del_price}"></s>&nbsp;
-								<span class="fan" th:text="'返'+${item.money}+'元'"></span>
+		<div id="mescroll" class="mescroll">
+			<div>
+				<div class="container">
+					<!--			<div class="listhead" >-->
+					<!--				<img src="../img/headimg.png" />-->
+					<!--				<span> </span>-->
+					<!--			</div>-->
+					<div  th:each="item :${ itemlist}" >
+						<a th:href="@{'goods?id='+${item.id}}">
+							<div class="listcontent" >
+								<img src="/img/img_20191213102612.png" class="shoppingimg" th:attr="imgurl=${item.image}" />
+								<img src="" th:attr="imgurl=@{img/qianggou.png}" class="qgbtn"/>
+								<!--					<div class="daojishi">12:00</div>-->
+								<div class="particulars-box"></div>
+								<div class="listcontent-tit">
+									<!-- <div class="titiles"></div> -->
+									<div class="jianjie" th:text="${item.title}"></div>
+								</div>
+								<div class="listcontent-price">
+									<div class="listcontent-price-left">
+										<span class="prices" th:text="'￥'+${item.price}"></span>
+										<p class="yuan">&nbsp;原价：</p><s class="yuan" th:text="${item.del_price}"></s>&nbsp;
+										<span class="fan" th:text="'返'+${item.money}+'元'"></span>
+									</div>
+									<div class="listcontent-price-right"><p class="yuan" th:style="yuan" th:text="'销量'+${item.sales}"></p></div>
+								</div>
 							</div>
-							<div class="listcontent-price-right"><p class="yuan" th:style="yuan" th:text="'销量'+${item.sales}"></p></div>
-							</div>
+						</a>
+					</div>
 				</div>
-			</a>
+
 			</div>
 		</div>
 
@@ -82,26 +96,117 @@
 		</div>
 
 
-	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script src="../js/loading.js"></script>
+		<script src="https://unpkg.com/mescroll.js@1.4.1/mescroll.min.js" charset="utf-8"></script>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
 		window.jQuery || document.write("<script src='/js/jquery-3.4.1.min.js'>" + "<" + "/script>");
-		/*]]>*/
-	</script>
-		<script>
-			// $("html,body").animate({"scrollTop":top})
-			// document.onreadystatechange = function () {
-			// 	if (document.readyState == "complete") {
-			// 		$(".loading-div").fadeOut();
-			// 	}
-			// 	// setTimeout(function(){
-			// 	// 	$(".loading-div").fadeOut();
-			// 	// },2000)
-			//
-			// };
 
+
+			var mescroll = new MeScroll("mescroll", { //第一个参数"mescroll"对应上面布局结构div的id (1.3.5版本支持传入dom对象)
+				//如果您的下拉刷新是重置列表数据,那么down完全可以不用配置,具体用法参考第一个基础案例
+				//解析: down.callback默认调用mescroll.resetUpScroll(),而resetUpScroll会将page.num=1,再触发up.callback
+				down: {
+					callback: downCallback //下拉刷新的回调,别写成downCallback(),多了括号就自动执行方法了
+				},
+				up: {
+					callback: upCallback, //上拉加载的回调
+					//以下是一些常用的配置,当然不写也可以的.
+					page: {
+						num: 0, //当前页 默认0,回调之前会加1; 即callback(page)会从1开始
+						size: 3 //每页数据条数,默认10
+					},
+					htmlNodata: '<p class="upwarp-nodata">-- END --</p>',
+					noMoreSize: 3, //如果列表已无数据,可设置列表的总数量要大于5才显示无更多数据;
+
+					// toTop: {
+					// 	//回到顶部按钮
+					// 	src: "", //图片路径,默认null,支持网络图
+					// 	offset: 1000 //列表滚动1000px才显示回到顶部按钮
+					// },
+					empty: {
+						//列表第一页无任何数据时,显示的空提示布局; 需配置warpId才显示
+						warpId:	"xxid", //父布局的id (1.3.5版本支持传入dom元素)
+						icon: "../img/mescroll-empty.png", //图标,默认null,支持网络图
+						tip: "暂无相关数据~" //提示
+					},
+					lazyLoad: {
+						use: true, // 是否开启懒加载,默认false
+						attr: 'imgurl', // 标签中网络图的属性名 : img imgurl='网络图  src='占位图''
+						showClass: 'mescroll-lazy-in',
+						delay: 500,
+						offset: 200
+					}
+				}
+			});
+
+			//下拉刷新的回调
+			function downCallback() {
+				$.ajax({
+					url: '/mobile/',
+					success: function(data) {
+						//联网成功的回调,隐藏下拉刷新的状态;
+						mescroll.endSuccess(); //无参. 注意结束下拉刷新是无参的
+						//设置数据
+						//setXxxx(data);//自行实现 TODO
+					},
+					error: function(data) {
+						//联网失败的回调,隐藏下拉刷新的状态
+						mescroll.endErr();
+					}
+				});
+			}
+
+			//上拉加载的回调 page = {num:1, size:10}; num:当前页 默认从1开始, size:每页数据条数,默认10
+			function upCallback(page) {
+				var pageNum = page.num; // 页码, 默认从1开始 如何修改从0开始 ?
+				var pageSize = page.size; // 页长, 默认每页10条
+				$.ajax({
+					url: '/mobile/getItemPage?num=' + pageNum + "&size=" + pageSize,
+					dataType:'json',
+					success: function(data) {
+						// var curPageData = data.xxx; // 接口返回的当前页数据列表
+						var totalPage = data; // 接口返回的总页数 (比如列表有26个数据,每页10条,共3页; 则totalPage值为3)
+						// var totalSize = data.xxx; // 接口返回的总数据量(比如列表有26个数据,每页10条,共3页; 则totalSize值为26)
+						// var hasNext = data.xxx; // 接口返回的是否有下一页 (true/false)
+
+						//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+						//mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空,显示empty配置的内容;
+						//列表如果无下一页数据,则提示无更多数据,(注意noMoreSize的配置)
+
+						//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+						//必传参数(当前页的数据个数, 总页数)
+						mescroll.endByPage(curPageData.length, totalPage);
+
+						//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+						//必传参数(当前页的数据个数, 总数据量)
+						//mescroll.endBySize(curPageData.length, totalSize);
+
+						//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+						//必传参数(当前页的数据个数, 是否有下一页true/false)
+						//mescroll.endSuccess(curPageData.length, hasNext);
+
+						//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.
+						//如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+						//如果传了hasNext,则翻到第二页即可显示无更多数据.
+						//mescroll.endSuccess(curPageData.length);
+
+						//curPageData.length必传的原因:
+
+						//设置列表数据
+						//setListData(curPageData);//自行实现 TODO
+					},
+					error: function(e) {
+						//联网失败的回调,隐藏下拉刷新和上拉加载的状态
+						mescroll.endErr();
+					}
+				});
+			}
+		/*]]>*/
 		</script>
+
 		<script type="text/javascript" charset="utf-8" th:src="@{/js/iconfont.js}" ></script>
 	</body>
 

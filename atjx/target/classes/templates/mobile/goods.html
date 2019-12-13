@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
     <title>商品详情</title>
+    <link rel="stylesheet" href="../css/loading.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/swiper.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
@@ -150,6 +151,7 @@
         </li>
     </ul>
 </div>
+<script src="../js/loading.js"></script>
 
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/jquery-weui/0.8.3/js/jquery-weui.min.js"></script>
@@ -235,7 +237,7 @@
                 } else {
                     // 本地存储这个openid，并刷新页面
                     sessionStorage.setItem("openid", res.openid);
-                    console.log(res.openid);
+                    // console.log(res.openid);
                     location.reload();
                 }
             }
