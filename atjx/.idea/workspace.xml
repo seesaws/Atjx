@@ -2,127 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="740a3df4-b6b5-4714-b475-dffe9191691a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atjx/mobile/pojo/ItemPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/loading.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/F1mqkn.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/img/img_20191213102612.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/loading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atjx/mapper/ItemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atjx/mapper/ItemMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atjx/mobile/controller/MobileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atjx/mobile/controller/MobileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ItemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ItemMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/common.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/common.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/img/sys_item_selected.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/index2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/20181051164_7067/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/css/common.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/css/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/css/swiper.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/goods.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mobile/goods.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/address.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/foot1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/foot1_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/foot2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/foot2_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/headimg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/jinbi.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/myimg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/mynavbar1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/mynavbar2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/mynavbar3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/mynavbar4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/mynavbar5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/mynavbar6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/order1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/order2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/order3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/projects.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/qianggou.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/tells.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/timg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/img/tops.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mobile/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/index_test.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mobile/index_test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/common.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/iconfont.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/jingku.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/jquery-3.4.1.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/particulars.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/placeOrder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mobile/js/swiper.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/atjx-a1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/atjx-a1.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atjx/mapper/ItemMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atjx/mapper/ItemMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atjx/mobile/controller/MobileController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atjx/mobile/controller/MobileController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atjx/mobile/controller/WxLoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atjx/mobile/controller/WxLoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ItemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/ItemMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/css/common.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/common.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/img/sys_item_selected.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/index2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/20181051164_7067/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/css/common.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/css/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/css/swiper.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/goods.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mobile/goods.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/address.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/foot1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/foot1_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/foot2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/foot2_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/headimg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/jinbi.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/myimg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/mynavbar1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/mynavbar2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/mynavbar3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/mynavbar4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/mynavbar5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/mynavbar6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/order1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/order2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/order3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/projects.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/qianggou.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/tells.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/timg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/img/tops.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mobile/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/index_test.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mobile/index_test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/common.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/iconfont.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/jingku.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/jquery-3.4.1.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/particulars.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/placeOrder.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mobile/js/swiper.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.atjx.ApplicationTests.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.atjx.demo.DemoApplicationTests.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.atjx.ApplicationTests.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.atjx.demo.DemoApplicationTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atjx/controller/UtilsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atjx/controller/UtilsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atjx/mobile/controller/WeChatPayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atjx/mobile/controller/WeChatPayController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -391,11 +273,6 @@
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="Failed" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
             </expand>
             <select />
           </treeState>
@@ -502,7 +379,8 @@
       <workItem from="1576026733333" duration="16401000" />
       <workItem from="1576113258175" duration="9873000" />
       <workItem from="1576199078364" duration="8313000" />
-      <workItem from="1576208600860" duration="1043000" />
+      <workItem from="1576208600860" duration="1395000" />
+      <workItem from="1576458272000" duration="5789000" />
     </task>
     <task id="LOCAL-00001" summary="可运行，jar包正常">
       <created>1570614235822</created>
@@ -714,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576058533459</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="//mescroll">
+      <created>1576209996230</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1576209996230</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -764,7 +649,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Merge branch 'master' of https://github.com/Linran0808/Atjx&#10;&#10;# Conflicts:&#10;#&#9;atjx/pom.xml&#10;#&#9;atjx/src/main/resources/application.properties" />
     <MESSAGE value="add UEditor file" />
     <MESSAGE value="商品详情显示成功" />
     <MESSAGE value="linux下上传图片异常" />
@@ -789,7 +673,8 @@
     <MESSAGE value="//add weui" />
     <MESSAGE value="//二级分销" />
     <MESSAGE value="//" />
-    <option name="LAST_COMMIT_MESSAGE" value="//" />
+    <MESSAGE value="//mescroll" />
+    <option name="LAST_COMMIT_MESSAGE" value="//mescroll" />
   </component>
   <component name="WindowStateProjectService">
     <state x="486" y="192" key="#SQL_Dialects" timestamp="1575600316837">
@@ -820,62 +705,62 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="642" y="270" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1575599573345" />
-    <state x="438" y="116" key="CommitChangelistDialog2" timestamp="1576058527907">
+    <state x="438" y="116" key="CommitChangelistDialog2" timestamp="1576209992298">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="438" y="116" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1576058527907" />
+    <state x="438" y="116" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1576209992298" />
     <state x="740" y="277" key="FileChooserDialogImpl" timestamp="1575599402830">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="277" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1575599402830" />
-    <state width="1384" height="173" key="GridCell.Tab.0.bottom" timestamp="1576209870256">
+    <state width="1443" height="207" key="GridCell.Tab.0.bottom" timestamp="1576210012018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.0.center" timestamp="1576209870255">
+    <state width="1443" height="207" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012018" />
+    <state width="1443" height="207" key="GridCell.Tab.0.center" timestamp="1576210012018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870255" />
-    <state width="1384" height="173" key="GridCell.Tab.0.left" timestamp="1576209870255">
+    <state width="1443" height="207" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012018" />
+    <state width="1443" height="207" key="GridCell.Tab.0.left" timestamp="1576210012018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870255" />
-    <state width="1384" height="173" key="GridCell.Tab.0.right" timestamp="1576209870256">
+    <state width="1443" height="207" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012018" />
+    <state width="1443" height="207" key="GridCell.Tab.0.right" timestamp="1576210012018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.1.bottom" timestamp="1576209870256">
+    <state width="1443" height="207" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012018" />
+    <state width="1384" height="173" key="GridCell.Tab.1.bottom" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.1.center" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
+    <state width="1384" height="173" key="GridCell.Tab.1.center" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.1.left" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
+    <state width="1384" height="173" key="GridCell.Tab.1.left" timestamp="1576210012014">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.1.right" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012014" />
+    <state width="1384" height="173" key="GridCell.Tab.1.right" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.2.bottom" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
+    <state width="1384" height="173" key="GridCell.Tab.2.bottom" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.2.center" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
+    <state width="1384" height="173" key="GridCell.Tab.2.center" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.2.left" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
+    <state width="1384" height="173" key="GridCell.Tab.2.left" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
-    <state width="1384" height="173" key="GridCell.Tab.2.right" timestamp="1576209870256">
+    <state width="1384" height="173" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
+    <state width="1384" height="173" key="GridCell.Tab.2.right" timestamp="1576210012015">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1384" height="173" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576209870256" />
+    <state width="1384" height="173" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576210012015" />
     <state width="1544" height="253" key="GridCell.Tab.3.bottom" timestamp="1575599929476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -912,10 +797,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1576049152839" />
-    <state x="652" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1576208600476">
+    <state x="652" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1576458400906">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="652" y="347" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1576208600476" />
+    <state x="652" y="347" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1576458400906" />
     <state x="611" y="342" key="jetbrains.nodejs.interpreters-dialog" timestamp="1575599404064">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

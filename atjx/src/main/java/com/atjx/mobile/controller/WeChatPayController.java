@@ -294,6 +294,7 @@ public class WeChatPayController {
                 wxOrder.setSpe_id(Integer.parseInt(spe_id));
                 wxOrder.setItem_id(Integer.parseInt(item_id));
                 wxOrder.setS_opid(op);
+
                 //入库
                 try{
                     wxOderMapper.insert(wxOrder);
