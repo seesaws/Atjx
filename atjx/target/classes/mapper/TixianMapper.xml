@@ -9,7 +9,7 @@
         <result column="creatTime" property="creatTime" jdbcType="TIMESTAMP"/>
         <result column="t_status" property="t_status" jdbcType="VARCHAR"/>
     </resultMap>
-    <insert id="insert" parameterType="com.atjx.model.Tixian" >
+    <insert id="insert" parameterType="com.atjx.model.Tixian" useGeneratedKeys="true" keyProperty="id">
         insert into tb_tixian
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="t_openid != null">
@@ -49,18 +49,21 @@
         delete from tb_tixian where id=#{id,jdbcType=INTEGER}
     </delete>
 
-    <select id="findByUser" resultMap="TixianResultMap" parameterType="java.lang.String">
+    <select id="findByid" parameterType="java.lang.Integer" resultType="com.atjx.model.Tixian">
         SELECT *
         from tb_tixian
-        where t_openid = #{t_openid, jdbcType=VARCHAR}
+        where id = #{id, jdbcType=INTEGER}
     </select>
 
     <select id="selectStatus" resultMap="TixianResultMap" parameterType="java.lang.String">
         SELECT * from tb_tixian where t_status=#{t_status,jdbcType=VARCHAR} and t_openid = #{t_openid, jdbcType=VARCHAR}
     </select>
 
-    <select id="findByOrderNo" resultMap="TixianResultMap" parameterType="java.lang.String">
-        SELECT * from tb_tixian where order_no=#{order_no,jdbcType=VARCHAR}
+    <select id="count"  parameterType="com.atjx.model.Tixian" resultType="java.lang.Integer">
+        SELECT count(*) from tb_tixian
+    </select>
+    <select id="TIXIAN_LIST" resultType="com.atjx.model.Tixian">
+        SELECT * from tb_tixian
     </select>
 
 

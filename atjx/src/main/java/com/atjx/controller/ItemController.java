@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -37,19 +38,21 @@ import java.util.Random;
 @Controller
 public class ItemController {
 
-    @Autowired
+    @Resource
     private ItemMapper itemMapper;
 
-    @Autowired
+    @Resource
     private ItemCategoryMapper itemCategoryMapper;
 
-    @Autowired
+    @Resource
     private ReItemMapper reItemMapper;
 
-    @Autowired
+    @Resource
     private SpecificationMapper specificationMapper;
-    @Autowired
+    @Resource
     private AddressMapper addressMapper;
+    @Resource
+    private TixianMapper tixianMapper;
 
     public static final String ROOT = "src/main/resources/static/img/item/";
 
@@ -187,6 +190,29 @@ public class ItemController {
         model.addAttribute("pageHTML", pageHTML);
         model.addAttribute("item", item);
         return "item/speManage";
+    }
+
+    @RequestMapping("/user/TixianManage_{pageCurrent}_{pageSize}_{pageCount}")
+    public String TixianManage(Tixian tixian, @PathVariable Integer pageCurrent,
+                                @PathVariable Integer pageSize,
+                                @PathVariable Integer pageCount,
+                                Model model) {
+        if (pageSize == 0) pageSize = 50;
+        if (pageCurrent == 0) pageCurrent = 1;
+
+        int rows = tixianMapper.count();
+        if (pageCount == 0) pageCount = rows % pageSize == 0 ? (rows / pageSize) : (rows / pageSize) + 1;
+        tixian.setStart((pageCurrent - 1) * pageSize);
+        tixian.setEnd(pageSize);
+        List<Tixian> tixians = tixianMapper.TIXIAN_LIST();
+        for (Tixian i : tixians) {
+            i.setCreateStr(DateUtil.getDateStr(i.getCreatTime()));
+        }
+        model.addAttribute("tixianList", tixians);
+        String pageHTML = PageUtil.getPageContent("TixianManage_{pageCurrent}_{pageSize}_{pageCount}?", pageCurrent, pageSize, pageCount);
+        model.addAttribute("pageHTML", pageHTML);
+        model.addAttribute("item", tixian);
+        return "item/TixianList";
     }
 
     @RequestMapping("/user/download1")
@@ -472,5 +498,24 @@ public class ItemController {
     @RequestMapping("/user/itemPicPost")
     public String picPost(){
         return "redirect:picManage_0_0_0";
+    }
+
+    @RequestMapping("/user/tixian")
+    private String tixian(Model model,HttpServletRequest request) {
+        try{
+            String id= request.getParameter("id");
+            Tixian tixian1 = tixianMapper.findByid(Integer.parseInt(id));
+            System.out.println(tixian1);
+            model.addAttribute("tixian", tixian1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "item/tixianedit";
+    }
+    //删除提现记录
+    @RequestMapping("/tixianDelete")
+    public String DeleteTixian(HttpServletRequest request, Specification spe){
+
+        return null;
     }
 }

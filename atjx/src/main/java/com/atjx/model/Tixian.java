@@ -2,7 +2,6 @@ package com.atjx.model;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,8 +13,8 @@ import java.util.Date;
  */
 
 @Data
-public class Tixian implements Serializable {
-    private int id;
+public class Tixian extends BaseObject {
+    private Integer id;
     private String  t_openid;
     private BigDecimal t_money;
     private String t_nickname;
