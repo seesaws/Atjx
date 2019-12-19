@@ -236,7 +236,7 @@ public class WeChatPayController {
             paraMap.put("openid", openId);
             paraMap.put("out_trade_no",orderId );//订单号
             paraMap.put("spbill_create_ip", ip);
-            paraMap.put("total_fee","1");//金额
+            paraMap.put("total_fee",orderFee);//金额
             paraMap.put("trade_type", "JSAPI");//支付方式
             paraMap.put("notify_url","http://atjx.club/callback");// 此路径是微信服务器调用支付结果通知路径
             String sign = WXPayUtil.generateSignature(paraMap, paternerKey);

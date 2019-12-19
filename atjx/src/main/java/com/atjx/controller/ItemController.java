@@ -309,20 +309,6 @@ public class ItemController {
     @ResponseBody
     @PostMapping("/user/itemEditState")
     public ResObject<Object> itemEditState(Item item1) {
-        Item item = itemMapper.findById(item1);
-        ReItem reItem = new ReItem();
-        reItem.setId(item.getId());
-        reItem.setBarcode(item.getBarcode());
-        reItem.setCid(item.getCid());
-        reItem.setImage(item.getImage());
-        reItem.setPrice(item.getPrice());
-        reItem.setNum(item.getNum());
-        reItem.setSell_Point(item.getSell_Point());
-        reItem.setStatus(item.getStatus());
-        reItem.setTitle(item.getTitle());
-        reItem.setRecovered(new Date());
-        reItem.setDel_price(item.getDel_price());
-        reItemMapper.insert(reItem);
         itemMapper.delete(item1);
         ResObject<Object> object = new ResObject<Object>(Constant.Code01, Constant.Msg01, null, null);
         return object;
