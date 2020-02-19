@@ -1,3 +1,3 @@
 # Atjx
 @
-just funny
+a traditional HTML webapp,Useless
